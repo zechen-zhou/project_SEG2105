@@ -1,6 +1,4 @@
 <resources>
     <string name="app_name">ProjectTraining</string>
     <string name="select">I am a...</string>
-    <string name="slogan">Meals made with love</string>
-    <string name="login">Login</string>
 </resources>

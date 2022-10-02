@@ -1,16 +1,197 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     tools:context=".WelcomeCook">
 
     <!-- TODO: Update blank fragment layout -->
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="You are logged in as a Cook"
+        android:text="You are logged in as a cook"
         android:textSize="18sp"
-        android:textStyle="italic" />
+        android:textStyle="italic"
+        tools:layout_editor_absoluteX="31dp"
+        tools:layout_editor_absoluteY="4dp" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/greeting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="15dp"
+        />
+
+    <TextView
+        android:id="@+id/aboutMeTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="88dp"
+        android:layout_marginTop="8dp"
+        android:text="- About Me -"
+        android:textColor="#F38525"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="@+id/greeting"
+        app:layout_constraintTop_toBottomOf="@+id/greeting" />
+
+    <TextView
+        android:id="@+id/firstNameTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="76dp"
+        android:text="First name:"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="@+id/greeting"
+        app:layout_constraintTop_toBottomOf="@+id/greeting" />
+
+    <TextView
+        android:id="@+id/firstName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/firstNameTitle"
+        app:layout_constraintLeft_toLeftOf="@+id/firstNameTitle"
+        android:layout_marginLeft="30dp"
+        android:textSize="20sp"
+        />
+
+    <TextView
+        android:id="@+id/lastNameTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Last Name:"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/firstName"
+        app:layout_constraintLeft_toLeftOf="@+id/greeting"
+        android:layout_marginTop="0dp"
+        android:textSize="20sp"
+        />
+
+    <TextView
+        android:id="@+id/lastName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/lastNameTitle"
+        app:layout_constraintLeft_toLeftOf="@+id/firstNameTitle"
+        android:layout_marginLeft="30dp"
+        android:textSize="20sp"
+        />
+    
+    <TextView
+        android:id="@+id/emailAddressTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email Address: "
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/lastName"
+        app:layout_constraintLeft_toLeftOf="@+id/lastNameTitle"
+        android:layout_marginTop="0dp"
+        android:textSize="20sp"
+        />
+
+    <TextView
+        android:id="@+id/emailAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/emailAddressTitle"
+        app:layout_constraintLeft_toLeftOf="@+id/lastNameTitle"
+        android:layout_marginLeft="30dp"
+        android:textSize="20sp"
+        />
+
+    <TextView
+        android:id="@+id/homeAddressTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Home Address:"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/emailAddress"
+        app:layout_constraintLeft_toLeftOf="@+id/emailAddressTitle"
+        android:layout_marginTop="0dp"
+        android:textSize="20sp"
+        />
+
+    <TextView
+        android:id="@+id/homeAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/homeAddressTitle"
+        app:layout_constraintLeft_toLeftOf="@+id/emailAddressTitle"
+        android:layout_marginLeft="30dp"
+        android:textSize="20sp"
+        />
+
+    <TextView
+        android:id="@+id/shortDescriptionTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Short Description:"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/homeAddress"
+        app:layout_constraintLeft_toLeftOf="@+id/homeAddressTitle"
+        android:layout_marginTop="0dp"
+        android:textSize="20sp"
+        />
+
+    <TextView
+        android:id="@+id/shortDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/shortDescriptionTitle"
+        app:layout_constraintLeft_toLeftOf="@+id/homeAddressTitle"
+        android:layout_marginLeft="30dp"
+        android:textSize="20sp"
+        />
+
+
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:backgroundTint="#9C9B9B"
+        android:text="Log out"
+        tools:layout_editor_absoluteX="281dp"
+        tools:layout_editor_absoluteY="1dp" />
+
+    <Button
+        android:id="@+id/purchaseRequestsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="My Purchase Requests"
+        tools:layout_editor_absoluteX="80dp"
+        tools:layout_editor_absoluteY="648dp" />
+
+    <Button
+        android:id="@+id/accessMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Access my Menu"
+        tools:layout_editor_absoluteX="108dp"
+        tools:layout_editor_absoluteY="532dp" />
+
+    <Button
+        android:id="@+id/accessOfferedMealsList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="my offered meals list"
+        tools:layout_editor_absoluteX="83dp"
+        tools:layout_editor_absoluteY="588dp" />
+
+    <Button
+        android:id="@+id/accessMessages"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="my messages"
+        tools:layout_editor_absoluteX="119dp"
+        tools:layout_editor_absoluteY="477dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
