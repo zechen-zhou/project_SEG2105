@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".RegisterUser">
+    tools:context=".RegisterClient">
 
     <TextView
         android:id="@+id/banner"
@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:fontFamily="sans-serif"
-        android:text="Register as a Cook"
+        android:text="Register as a Client"
         android:textAlignment="center"
         android:textColor="#3C3B3B"
         android:textSize="40sp"
@@ -122,46 +122,31 @@
         app:layout_constraintTop_toBottomOf="@+id/password" />
 
     <EditText
-        android:id="@+id/pictureVoidCheque"
+        android:id="@+id/creditCardInfo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="16dp"
         android:ems="10"
-        android:hint="Submit picture of Void Cheque"
-        android:inputType=""
+        android:hint="Credit Card Number"
+        android:inputType="numberPassword"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/homeAddress" />
 
-    <EditText
-        android:id="@+id/cookDescription"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="16dp"
-        android:ems="10"
-        android:hint="Add a description"
-        android:inputType=""
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pictureVoidCheque" />
-
     <TextView
         android:id="@+id/backToSignIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="25dp"
         android:text="Back to Sign In"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cookDescription" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/creditCardInfo" />
 
     <TextView
         android:id="@+id/submit"
@@ -173,6 +158,6 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cookDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/creditCardInfo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

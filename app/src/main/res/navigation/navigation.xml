@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/login">
+
+    <fragment
+        android:id="@+id/login"
+        android:name="com.example.projecttraining.Login"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_login_to_registerCook"
+            app:destination="@id/registerCook" />
+        <action
+            android:id="@+id/action_login_to_registerClient"
+            app:destination="@id/registerClient" />
+        <action
+            android:id="@+id/action_login_to_welcomeCook"
+            app:destination="@id/welcomeCook" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerCook"
+        android:name="com.example.projecttraining.RegisterCook"
+        android:label="fragment_register_cook"
+        tools:layout="@layout/fragment_register_cook" />
+    <fragment
+        android:id="@+id/registerClient"
+        android:name="com.example.projecttraining.RegisterClient"
+        android:label="fragment_register_client"
+        tools:layout="@layout/fragment_register_client" />
+    <fragment
+        android:id="@+id/welcomeCook"
+        android:name="com.example.projecttraining.WelcomeCook"
+        android:label="fragment_welcome_cook"
+        tools:layout="@layout/fragment_welcome_cook" />
+</navigation>
