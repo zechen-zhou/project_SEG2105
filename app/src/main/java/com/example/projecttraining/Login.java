@@ -52,8 +52,8 @@ public class Login extends Fragment {
         });
 
         register.setOnClickListener(click -> {
-            // TODO: Update the navigate parameter (It's currently navigating to register cook as a demo)
-            Navigation.findNavController(view).navigate(R.id.action_login_to_registerCook);
+            // TODO: Update the navigate parameter (It's currently navigating to register page as a demo)
+            Navigation.findNavController(view).navigate(R.id.action_login_to_registerSelect);
         });
 
         login.setOnClickListener(click -> {

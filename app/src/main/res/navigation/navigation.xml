@@ -11,14 +11,11 @@
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
-            android:id="@+id/action_login_to_registerCook"
-            app:destination="@id/registerCook" />
-        <action
-            android:id="@+id/action_login_to_registerClient"
-            app:destination="@id/registerClient" />
-        <action
             android:id="@+id/action_login_to_welcomeCook"
             app:destination="@id/welcomeCook" />
+        <action
+            android:id="@+id/action_login_to_registerSelect"
+            app:destination="@id/registerSelect" />
     </fragment>
     <fragment
         android:id="@+id/registerCook"
@@ -35,4 +32,19 @@
         android:name="com.example.projecttraining.WelcomeCook"
         android:label="fragment_welcome_cook"
         tools:layout="@layout/fragment_welcome_cook" />
+    <fragment
+        android:id="@+id/registerSelect"
+        android:name="com.example.projecttraining.Register"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_registerSelect_to_registerCook"
+            app:destination="@id/registerCook" />
+        <action
+            android:id="@+id/action_registerSelect_to_registerClient"
+            app:destination="@id/registerClient" />
+        <action
+            android:id="@+id/action_registerSelect_to_login"
+            app:destination="@id/login" />
+    </fragment>
 </navigation>
