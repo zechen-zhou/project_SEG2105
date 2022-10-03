@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "411727187199",
+    "project_id": "mealer-dd302",
+    "storage_bucket": "mealer-dd302.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:411727187199:android:c0b12cd7191b02a107d0ca",
+        "android_client_info": {
+          "package_name": "com.example.projecttraining"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "411727187199-tbblg97319gogrmem4gilviflda449v3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJBs5KqFcS80QbgWux6m1Pj3z2iL_fcc4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "411727187199-tbblg97319gogrmem4gilviflda449v3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
