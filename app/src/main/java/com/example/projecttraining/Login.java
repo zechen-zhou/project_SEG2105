@@ -12,10 +12,14 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.projecttraining.databinding.FragmentLoginBinding;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * Shows a login page
@@ -26,6 +30,8 @@ public class Login extends Fragment {
     ArrayAdapter<String> adapterItems;
 
     private FragmentLoginBinding binding;
+
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://mealer-dd302-default-rtdb.firebaseio.com/");
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,6 +48,8 @@ public class Login extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        EditText email = binding.email;
+        EditText password = binding.password;
         TextView register = binding.register;
         Button login = binding.signIn;
         AutoCompleteTextView autoCompleteTxt = binding.autoCompleteTxt;
@@ -52,12 +60,10 @@ public class Login extends Fragment {
         });
 
         register.setOnClickListener(click -> {
-            // TODO: Update the navigate parameter (It's currently navigating to register page as a demo)
             Navigation.findNavController(view).navigate(R.id.action_login_to_registerSelect);
         });
 
         login.setOnClickListener(click -> {
-            // TODO: Update the navigate parameter (It's currently navigating to welcome cook as a demo)
             Navigation.findNavController(view).navigate(R.id.action_login_to_welcomeCook);
         });
     }
