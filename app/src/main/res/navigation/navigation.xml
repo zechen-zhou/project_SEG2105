@@ -26,7 +26,14 @@
         android:id="@+id/registerClient"
         android:name="com.example.projecttraining.RegisterClient"
         android:label="fragment_register_client"
-        tools:layout="@layout/fragment_register_client" />
+        tools:layout="@layout/fragment_register_client" >
+        <action
+            android:id="@+id/action_registerCook_to_welcomeCook"
+            app:destination="@id/welcomeCook"/>
+        <action
+            android:id="@+id/action_registerCook_to_login"
+            app:destination="@id/login" />
+    </fragment>
     <fragment
         android:id="@+id/welcomeCook"
         android:name="com.example.projecttraining.WelcomeCook"
