@@ -23,6 +23,7 @@ public class RegisterClient extends Fragment {
     private FragmentRegisterClientBinding binding;
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://mealer-dd302-default-rtdb.firebaseio.com/");
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -48,7 +49,6 @@ public class RegisterClient extends Fragment {
         welcomeCook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.action_registerCook_to_welcomeCook);
 
                 //get data from EditText from String variables
                 String firstnameText = firstname.getText().toString();
@@ -59,8 +59,10 @@ public class RegisterClient extends Fragment {
                 String descriptionText = description.getText().toString();
 
                 // check if user fill all the fields
-                if (firstnameText.isEmpty() || lastnameText.isEmpty() ||emailText.isEmpty() || passwordText.isEmpty() || addressText.isEmpty()) {
+                if (firstnameText.isEmpty() || lastnameText.isEmpty() || emailText.isEmpty() || passwordText.isEmpty() || addressText.isEmpty()) {
                     Toast.makeText(getActivity(), "Please fill up all fields", Toast.LENGTH_SHORT).show();
+                } else {
+                    Navigation.findNavController(view).navigate(R.id.action_registerCook_to_welcomeCook);
                 }
 
                 databaseReference.child("user").child(emailText).child("firstname").setValue(firstnameText);
@@ -75,7 +77,7 @@ public class RegisterClient extends Fragment {
         backToSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(view).navigate((R.id.action_registerCook_to_login));
+                Navigation.findNavController(view).navigate((R.id.action_registerClient_to_login));
             }
         });
     }

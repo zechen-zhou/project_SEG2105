@@ -9,7 +9,7 @@
         android:id="@+id/login"
         android:name="com.example.projecttraining.Login"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_login_to_welcomeCook"
             app:destination="@id/welcomeCook" />
@@ -21,17 +21,21 @@
         android:id="@+id/registerCook"
         android:name="com.example.projecttraining.RegisterCook"
         android:label="fragment_register_cook"
-        tools:layout="@layout/fragment_register_cook" />
+        tools:layout="@layout/fragment_register_cook" >
+        <action
+            android:id="@+id/action_registerCook_to_login"
+            app:destination="@id/login" />
+    </fragment>
     <fragment
         android:id="@+id/registerClient"
         android:name="com.example.projecttraining.RegisterClient"
         android:label="fragment_register_client"
-        tools:layout="@layout/fragment_register_client" >
+        tools:layout="@layout/fragment_register_client">
         <action
             android:id="@+id/action_registerCook_to_welcomeCook"
-            app:destination="@id/welcomeCook"/>
+            app:destination="@id/welcomeCook" />
         <action
-            android:id="@+id/action_registerCook_to_login"
+            android:id="@+id/action_registerClient_to_login"
             app:destination="@id/login" />
     </fragment>
     <fragment
@@ -43,7 +47,7 @@
         android:id="@+id/registerSelect"
         android:name="com.example.projecttraining.Register"
         android:label="fragment_register"
-        tools:layout="@layout/fragment_register" >
+        tools:layout="@layout/fragment_register">
         <action
             android:id="@+id/action_registerSelect_to_registerCook"
             app:destination="@id/registerCook" />
