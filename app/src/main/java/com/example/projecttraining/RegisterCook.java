@@ -20,8 +20,6 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import org.w3c.dom.Text;
 
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-
 
 public class RegisterCook extends Fragment {
 
@@ -70,11 +68,11 @@ public class RegisterCook extends Fragment {
                     Navigation.findNavController(view).navigate(R.id.action_registerCook_to_welcomeCook);
                 }
 
-                databaseReference.child("user").child(emailText).child("firstname").setValue(firstnameText);
-                databaseReference.child("user").child(emailText).child("lastname").setValue(lastnameText);
-                databaseReference.child("user").child(emailText).child("password").setValue(passwordText);
-                databaseReference.child("user").child(emailText).child("address").setValue(addressText);
-                databaseReference.child("user").child(emailText).child("description").setValue(descriptionText);
+                databaseReference.child("CookUser").child(emailText).child("firstname").setValue(firstnameText);
+                databaseReference.child("CookUser").child(emailText).child("lastname").setValue(lastnameText);
+                databaseReference.child("CookUser").child(emailText).child("password").setValue(passwordText);
+                databaseReference.child("CookUser").child(emailText).child("address").setValue(addressText);
+                databaseReference.child("CookUser").child(emailText).child("description").setValue(descriptionText);
 
             }
         });
