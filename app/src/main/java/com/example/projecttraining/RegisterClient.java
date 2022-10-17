@@ -65,11 +65,11 @@ public class RegisterClient extends Fragment {
                     Navigation.findNavController(view).navigate(R.id.action_registerCook_to_welcomeCook);
                 }
 
-                databaseReference.child("user").child(emailText).child("firstname").setValue(firstnameText);
-                databaseReference.child("user").child(emailText).child("lastname").setValue(lastnameText);
-                databaseReference.child("user").child(emailText).child("password").setValue(passwordText);
-                databaseReference.child("user").child(emailText).child("address").setValue(addressText);
-                databaseReference.child("user").child(emailText).child("description").setValue(descriptionText);
+                databaseReference.child("ClientUser").child(emailText).child("firstname").setValue(firstnameText);
+                databaseReference.child("ClientUser").child(emailText).child("lastname").setValue(lastnameText);
+                databaseReference.child("ClientUser").child(emailText).child("password").setValue(passwordText);
+                databaseReference.child("ClientUser").child(emailText).child("address").setValue(addressText);
+                databaseReference.child("ClientUser").child(emailText).child("description").setValue(descriptionText);
 
             }
         });
