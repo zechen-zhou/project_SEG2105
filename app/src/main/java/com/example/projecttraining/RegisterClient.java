@@ -15,8 +15,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.projecttraining.databinding.FragmentRegisterClientBinding;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.function.ToIntBiFunction;
 
 public class RegisterClient extends Fragment {
 
@@ -63,14 +68,28 @@ public class RegisterClient extends Fragment {
                     Toast.makeText(getActivity(), "Please fill up all fields", Toast.LENGTH_SHORT).show();
                 } else {
                     Navigation.findNavController(view).navigate(R.id.action_registerCook_to_welcomeCook);
+
+                    databaseReference.child("ClientUser").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.hasChild(emailText)) {
+                                Toast.makeText(getActivity(), "Email is registered", Toast.LENGTH_SHORT).show();
+                            } else {
+                                databaseReference.child("ClientUser").child(emailText).child("firstname").setValue(firstnameText);
+                                databaseReference.child("ClientUser").child(emailText).child("lastname").setValue(lastnameText);
+                                databaseReference.child("ClientUser").child(emailText).child("password").setValue(passwordText);
+                                databaseReference.child("ClientUser").child(emailText).child("address").setValue(addressText);
+                                databaseReference.child("ClientUser").child(emailText).child("description").setValue(descriptionText);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
                 }
-
-                databaseReference.child("ClientUser").child(emailText).child("firstname").setValue(firstnameText);
-                databaseReference.child("ClientUser").child(emailText).child("lastname").setValue(lastnameText);
-                databaseReference.child("ClientUser").child(emailText).child("password").setValue(passwordText);
-                databaseReference.child("ClientUser").child(emailText).child("address").setValue(addressText);
-                databaseReference.child("ClientUser").child(emailText).child("description").setValue(descriptionText);
-
             }
         });
 
