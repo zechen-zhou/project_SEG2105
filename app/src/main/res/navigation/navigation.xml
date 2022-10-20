@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_login_to_registerSelect"
             app:destination="@id/registerSelect" />
+        <action
+            android:id="@+id/action_login_to_welcomeClient"
+            app:destination="@id/welcomeClient" />
     </fragment>
     <fragment
         android:id="@+id/registerCook"
@@ -43,6 +46,13 @@
         android:name="com.example.projecttraining.WelcomeCook"
         android:label="fragment_welcome_cook"
         tools:layout="@layout/fragment_welcome_cook" />
+
+    <fragment
+        android:id="@+id/welcomeClient"
+        android:name="com.example.projecttraining.WelcomeCook"
+        android:label="fragment_welcome_client"
+        tools:layout="@layout/fragment_welcome_client" />
+
     <fragment
         android:id="@+id/registerSelect"
         android:name="com.example.projecttraining.Register"

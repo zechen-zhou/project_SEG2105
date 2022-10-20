@@ -83,11 +83,11 @@ public class Login extends Fragment {
                            if (getPassword.equals(passwordText)) {
 
                                Toast.makeText(getActivity(), "Logged in! Welcome back", Toast.LENGTH_SHORT).show();
-                               Navigation.findNavController(view).navigate(R.id.action_login_to_welcomeCook);
+                               Navigation.findNavController(view).navigate(R.id.action_login_to_welcomeClient);
 
                            } else {
 
-                               Toast.makeText(getActivity(), "wrong password1" , Toast.LENGTH_SHORT).show();
+                               Toast.makeText(getActivity(), "wrong password" , Toast.LENGTH_SHORT).show();
                            }
                         } else {
                             Toast.makeText(getActivity(), "Wrong email or You haven't register yet!" , Toast.LENGTH_SHORT).show();
@@ -101,6 +101,32 @@ public class Login extends Fragment {
                 });
 
                 databaseReference.child("CookUser").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        if (snapshot.hasChild(emailText)) {
+                            String getPassword = snapshot.child(emailText).child("password").getValue(String.class);
+                            if (getPassword.equals(passwordText)) {
+
+                                Toast.makeText(getActivity(), "Logged in! Welcome back", Toast.LENGTH_SHORT).show();
+                                Navigation.findNavController(view).navigate(R.id.action_login_to_welcomeCook);
+
+                            } else {
+
+                                Toast.makeText(getActivity(), "wrong password1" , Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(getActivity(), "Wrong email or You haven't register yet!" , Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+                databaseReference.child("Admin").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
 
