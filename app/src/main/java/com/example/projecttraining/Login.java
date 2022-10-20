@@ -14,7 +14,6 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,9 +57,6 @@ public class Login extends Fragment {
         Button login = binding.signIn;
         AutoCompleteTextView autoCompleteTxt = binding.autoCompleteTxt;
 
-        String emailText = email.getText().toString();
-        String passwordText = password.getText().toString();
-
         autoCompleteTxt.setOnItemClickListener((AdapterView<?> parent, View view1, int position, long id) -> {
                 String item = parent.getItemAtPosition(position).toString();
                 Toast.makeText(getActivity(), "Item: " + item, Toast.LENGTH_SHORT).show();
@@ -70,6 +66,8 @@ public class Login extends Fragment {
         });
 
         login.setOnClickListener(click -> {
+            String emailText = email.getText().toString();
+            String passwordText = password.getText().toString();
             if (emailText.isEmpty() || passwordText.isEmpty()) {
                 Toast.makeText(getActivity(), "Please enter your email or password", Toast.LENGTH_SHORT).show();
             } else {

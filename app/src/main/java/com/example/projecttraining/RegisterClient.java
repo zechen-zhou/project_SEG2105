@@ -43,7 +43,7 @@ public class RegisterClient extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Button welcomeCook = binding.submit;
+        Button welcomeClient = binding.submit;
         Button backToSignIn = binding.backToSignIn;
 
         EditText firstname = binding.firstName;
@@ -53,7 +53,7 @@ public class RegisterClient extends Fragment {
         EditText address = binding.homeAddress;
         EditText creditCardInfo = binding.creditCardInfo;
 
-        welcomeCook.setOnClickListener(new View.OnClickListener() {
+        welcomeClient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Client client;
@@ -84,6 +84,8 @@ public class RegisterClient extends Fragment {
                                 databaseReference.child("ClientUser").child(emailText).child("password").setValue(client.getPassword());
                                 databaseReference.child("ClientUser").child(emailText).child("address").setValue(client.getEmail());
                                 databaseReference.child("ClientUser").child(emailText).child("creditCardInfo").setValue(client.getCreditCardInfo());
+
+
                             }
                         }
 

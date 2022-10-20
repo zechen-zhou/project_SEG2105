@@ -15,8 +15,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.projecttraining.databinding.FragmentRegisterCookBinding;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.example.projecttraining.user.Cook;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 
@@ -52,6 +56,7 @@ public class RegisterCook extends Fragment {
         welcomeCook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Cook cook;
 
                 //get data from EditText from String variables
                 String firstnameText = firstname.getText().toString();
@@ -65,15 +70,28 @@ public class RegisterCook extends Fragment {
                 if (firstnameText.isEmpty() || lastnameText.isEmpty() || emailText.isEmpty() || passwordText.isEmpty() || addressText.isEmpty()) {
                     Toast.makeText(getActivity(), "Please fill up all fields", Toast.LENGTH_SHORT).show();
                 } else {
+                    cook = new Cook(firstnameText, lastnameText, emailText, passwordText, addressText, descriptionText);
                     Navigation.findNavController(view).navigate(R.id.action_registerCook_to_welcomeCook);
+                    databaseReference.child("CookUser").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.hasChild(emailText)) {
+                                Toast.makeText(getActivity(), "Email is registered", Toast.LENGTH_SHORT).show();
+                            } else {
+                                databaseReference.child("CookUser").child(emailText).child("firstname").setValue(cook.getFirstName());
+                                databaseReference.child("CookUser").child(emailText).child("lastname").setValue(cook.getLastName());
+                                databaseReference.child("CookUser").child(emailText).child("password").setValue(cook.getPassword());
+                                databaseReference.child("CookUser").child(emailText).child("address").setValue(cook.getAddress());
+                                databaseReference.child("CookUser").child(emailText).child("description").setValue(cook.getCookDescription());
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
                 }
-
-                databaseReference.child("CookUser").child(emailText).child("firstname").setValue(firstnameText);
-                databaseReference.child("CookUser").child(emailText).child("lastname").setValue(lastnameText);
-                databaseReference.child("CookUser").child(emailText).child("password").setValue(passwordText);
-                databaseReference.child("CookUser").child(emailText).child("address").setValue(addressText);
-                databaseReference.child("CookUser").child(emailText).child("description").setValue(descriptionText);
-
             }
         });
 
