@@ -15,6 +15,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.projecttraining.databinding.FragmentRegisterClientBinding;
+import com.example.projecttraining.user.Client;
+import com.example.projecttraining.user.Cook;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -49,11 +51,12 @@ public class RegisterClient extends Fragment {
         EditText email = binding.email;
         EditText password = binding.password;
         EditText address = binding.homeAddress;
-        EditText description = binding.ClientDescription;
+        EditText creditCardInfo = binding.creditCardInfo;
 
         welcomeCook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Client client;
 
                 //get data from EditText from String variables
                 String firstnameText = firstname.getText().toString();
@@ -61,12 +64,13 @@ public class RegisterClient extends Fragment {
                 String emailText = email.getText().toString();
                 String passwordText = password.getText().toString();
                 String addressText = address.getText().toString();
-                String descriptionText = description.getText().toString();
+                String creditCardInfoText = creditCardInfo.getText().toString();
 
                 // check if user fill all the fields
                 if (firstnameText.isEmpty() || lastnameText.isEmpty() || emailText.isEmpty() || passwordText.isEmpty() || addressText.isEmpty()) {
                     Toast.makeText(getActivity(), "Please fill up all fields", Toast.LENGTH_SHORT).show();
                 } else {
+                    client = new Client(firstnameText, lastnameText, emailText, passwordText, addressText, creditCardInfoText);
                     Navigation.findNavController(view).navigate(R.id.action_registerCook_to_welcomeCook);
 
                     databaseReference.child("ClientUser").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -75,11 +79,11 @@ public class RegisterClient extends Fragment {
                             if (snapshot.hasChild(emailText)) {
                                 Toast.makeText(getActivity(), "Email is registered", Toast.LENGTH_SHORT).show();
                             } else {
-                                databaseReference.child("ClientUser").child(emailText).child("firstname").setValue(firstnameText);
-                                databaseReference.child("ClientUser").child(emailText).child("lastname").setValue(lastnameText);
-                                databaseReference.child("ClientUser").child(emailText).child("password").setValue(passwordText);
-                                databaseReference.child("ClientUser").child(emailText).child("address").setValue(addressText);
-                                databaseReference.child("ClientUser").child(emailText).child("description").setValue(descriptionText);
+                                databaseReference.child("ClientUser").child(emailText).child("firstname").setValue(client.getFirstName());
+                                databaseReference.child("ClientUser").child(emailText).child("lastname").setValue(client.getLastName());
+                                databaseReference.child("ClientUser").child(emailText).child("password").setValue(client.getPassword());
+                                databaseReference.child("ClientUser").child(emailText).child("address").setValue(client.getEmail());
+                                databaseReference.child("ClientUser").child(emailText).child("creditCardInfo").setValue(client.getCreditCardInfo());
                             }
                         }
 
