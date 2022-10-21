@@ -71,7 +71,7 @@ public class RegisterClient extends Fragment {
                     Toast.makeText(getActivity(), "Please fill up all fields", Toast.LENGTH_SHORT).show();
                 } else {
                     client = new Client(firstnameText, lastnameText, emailText, passwordText, addressText, creditCardInfoText);
-                    Navigation.findNavController(view).navigate(R.id.action_registerCook_to_welcomeCook);
+                    Navigation.findNavController(view).navigate(R.id.action_registerClient_to_welcomeClient);
 
                     databaseReference.child("ClientUser").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
