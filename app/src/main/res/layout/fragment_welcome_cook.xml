@@ -135,16 +135,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/homeAddressTitle" />
 
+
     <TextView
         android:id="@+id/shortDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/shortDescriptionTitle"
-        app:layout_constraintTop_toTopOf="@+id/shortDescriptionTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/shortDescriptionTitle"
         tools:text="I am abc" />
-
 
     <Button
         android:id="@+id/logout"
