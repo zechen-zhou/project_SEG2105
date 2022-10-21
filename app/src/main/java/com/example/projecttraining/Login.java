@@ -72,7 +72,8 @@ public class Login extends Fragment {
         });
 
         login.setOnClickListener(click -> {
-            String emailText = email.getText().toString();
+            String oddEmailText = email.getText().toString();
+            String emailText = oddEmailText.replace('.',',');
             String passwordText = password.getText().toString();
 
             if (emailText.isEmpty() || passwordText.isEmpty()) {
