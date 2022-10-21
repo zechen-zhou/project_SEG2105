@@ -61,7 +61,8 @@ public class RegisterClient extends Fragment {
                 //get data from EditText from String variables
                 String firstnameText = firstname.getText().toString();
                 String lastnameText = lastname.getText().toString();
-                String emailText = email.getText().toString();
+                String oddEmailText = email.getText().toString();
+                String emailText = oddEmailText.replace('.',',');
                 String passwordText = password.getText().toString();
                 String addressText = address.getText().toString();
                 String creditCardInfoText = creditCardInfo.getText().toString();
@@ -79,7 +80,7 @@ public class RegisterClient extends Fragment {
                             if (snapshot.hasChild(emailText)) {
                                 Toast.makeText(getActivity(), "Email is registered", Toast.LENGTH_SHORT).show();
                             } else {
-                                databaseReference.child("ClientUser").child(emailText).child("firstname").setValue(client.getFirstName());
+                                databaseReference.child("ClientUser").child(emailText) .child("firstname").setValue(client.getFirstName());
                                 databaseReference.child("ClientUser").child(emailText).child("lastname").setValue(client.getLastName());
                                 databaseReference.child("ClientUser").child(emailText).child("password").setValue(client.getPassword());
                                 databaseReference.child("ClientUser").child(emailText).child("address").setValue(client.getEmail());

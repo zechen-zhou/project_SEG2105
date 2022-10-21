@@ -118,6 +118,7 @@ public class Login extends Fragment {
                         public void onCancelled(@NonNull DatabaseError error) {
 
                         }
+
                     });
                 } else if (item[0].equals("Cook")) {
                     databaseReference.child("CookUser").addListenerForSingleValueEvent(new ValueEventListener() {
