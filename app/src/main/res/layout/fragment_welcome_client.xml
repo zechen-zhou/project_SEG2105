@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".MainActivity">
+    tools:context=".WelcomeClient">
 
     <TextView
         android:id="@+id/Client"
@@ -44,7 +44,6 @@
         app:layout_constraintTop_toBottomOf="@+id/Client" />
 
 
-
     <TextView
         android:id="@+id/firstNameTitle"
         android:layout_width="wrap_content"
@@ -63,11 +62,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/firstNameTitle"
         app:layout_constraintTop_toTopOf="@+id/firstNameTitle"
-        tools:text="abc"
-        android:layout_marginLeft="16dp" />
+        tools:text="abc" />
 
     <TextView
         android:id="@+id/lastNameTitle"
@@ -87,18 +86,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/lastNameTitle"
         app:layout_constraintTop_toTopOf="@+id/lastNameTitle"
-        tools:text="abc"
-        android:layout_marginLeft="16dp" />
+        tools:text="abc" />
 
     <TextView
         android:id="@+id/emailAddressTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:layout_marginLeft="4dp"
+        android:layout_marginTop="20dp"
         android:text="Email Address: "
         android:textSize="20sp"
         android:textStyle="bold"
@@ -110,11 +109,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/emailAddressTitle"
         app:layout_constraintTop_toTopOf="@+id/emailAddressTitle"
-        tools:text="abc@abc.com"
-        android:layout_marginLeft="16dp" />
+        tools:text="abc@abc.com" />
 
     <TextView
         android:id="@+id/homeAddressTitle"
@@ -179,42 +178,39 @@
         android:id="@+id/administrator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="14dp"
+        android:backgroundTint="#FFC107"
         android:gravity="center"
         android:text="ADMINISTRATOR"
         android:textSize="20sp"
-        android:layout_marginBottom="14dp"
         app:layout_constraintBottom_toTopOf="@+id/orderhistory"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:backgroundTint="#FFC107"
-        />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/orderhistory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="14dp"
+        android:backgroundTint="#FFC107"
         android:gravity="center"
         android:text="ORDER HISTORY"
         android:textSize="20sp"
-        android:layout_marginBottom="14dp"
         app:layout_constraintBottom_toTopOf="@+id/ordernow"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:backgroundTint="#FFC107"
-        />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/ordernow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="#FFC107"
         android:gravity="center"
         android:text="ORDER NOW"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:backgroundTint="#FFC107"
-        />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

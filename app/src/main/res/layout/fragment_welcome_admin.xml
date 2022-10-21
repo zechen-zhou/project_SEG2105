@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".MainActivity">
+    tools:context=".WelcomeAdmin">
 
     <TextView
         android:id="@+id/Admin"
@@ -60,42 +60,39 @@
         android:id="@+id/ContactClient"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="14dp"
+        android:backgroundTint="#FFC107"
         android:gravity="center"
         android:text="CONTACT CLIENT"
         android:textSize="20sp"
-        android:layout_marginBottom="14dp"
-        app:layout_constraintTop_toBottomOf="@+id/ContactCook"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:backgroundTint="#FFC107"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ContactCook" />
 
     <Button
         android:id="@+id/SendNewMsg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="14dp"
+        android:backgroundTint="#FFC107"
         android:gravity="center"
         android:text="NEW MESSAGE"
         android:textSize="20sp"
-        android:layout_marginBottom="14dp"
-        app:layout_constraintTop_toBottomOf="@+id/ContactClient"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:backgroundTint="#FFC107"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ContactClient" />
 
     <Button
         android:id="@+id/INBOX"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="#FFC107"
         android:gravity="center"
         android:text="CHECK INBOX"
         android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@+id/SendNewMsg"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:backgroundTint="#FFC107"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SendNewMsg" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

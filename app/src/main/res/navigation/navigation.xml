@@ -59,7 +59,7 @@
 
     <fragment
         android:id="@+id/welcomeClient"
-        android:name="com.example.projecttraining.WelcomeCook"
+        android:name="com.example.projecttraining.WelcomeClient"
         android:label="fragment_welcome_client"
         tools:layout="@layout/fragment_welcome_client">
         <action

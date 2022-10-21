@@ -57,9 +57,11 @@ public class Login extends Fragment {
         Button login = binding.signIn;
         AutoCompleteTextView autoCompleteTxt = binding.autoCompleteTxt;
 
+        final String[] item = new String[1];
+
         autoCompleteTxt.setOnItemClickListener((AdapterView<?> parent, View view1, int position, long id) -> {
-                String item = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getActivity(), "Item: " + item, Toast.LENGTH_SHORT).show();
+            item[0] = parent.getItemAtPosition(position).toString();
+            Toast.makeText(getActivity(), "Item: " + item[0], Toast.LENGTH_SHORT).show();
         });
         register.setOnClickListener(click -> {
             Navigation.findNavController(view).navigate(R.id.action_login_to_registerSelect);
@@ -71,84 +73,85 @@ public class Login extends Fragment {
             if (emailText.isEmpty() || passwordText.isEmpty()) {
                 Toast.makeText(getActivity(), "Please enter your email or password", Toast.LENGTH_SHORT).show();
             } else {
+                if (item[0].equals("Client")) {
+                    databaseReference.child("ClientUser").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                databaseReference.child("ClientUser").addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.hasChild(emailText)) {
+                                String getPassword = snapshot.child(emailText).child("password").getValue(String.class);
+                                if (getPassword.equals(passwordText)) {
 
-                        if (snapshot.hasChild(emailText)) {
-                           String getPassword = snapshot.child(emailText).child("password").getValue(String.class);
-                           if (getPassword.equals(passwordText)) {
+                                    Toast.makeText(getActivity(), "Logged in! Welcome back", Toast.LENGTH_SHORT).show();
+                                    Navigation.findNavController(view).navigate(R.id.action_login_to_welcomeClient);
 
-                               Toast.makeText(getActivity(), "Logged in! Welcome back", Toast.LENGTH_SHORT).show();
-                               Navigation.findNavController(view).navigate(R.id.action_login_to_welcomeClient);
+                                } else {
 
-                           } else {
-
-                               Toast.makeText(getActivity(), "wrong password" , Toast.LENGTH_SHORT).show();
-                           }
-                        } else {
-                            Toast.makeText(getActivity(), "Wrong email or You haven't register yet!" , Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
-                databaseReference.child("CookUser").addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                        if (snapshot.hasChild(emailText)) {
-                            String getPassword = snapshot.child(emailText).child("password").getValue(String.class);
-                            if (getPassword.equals(passwordText)) {
-
-                                Toast.makeText(getActivity(), "Logged in! Welcome back", Toast.LENGTH_SHORT).show();
-                                Navigation.findNavController(view).navigate(R.id.action_login_to_welcomeCook);
-
+                                    Toast.makeText(getActivity(), "wrong password", Toast.LENGTH_SHORT).show();
+                                }
                             } else {
-
-                                Toast.makeText(getActivity(), "wrong password1" , Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "Wrong email or You haven't register yet!", Toast.LENGTH_SHORT).show();
                             }
-                        } else {
-                            Toast.makeText(getActivity(), "Wrong email or You haven't register yet!" , Toast.LENGTH_SHORT).show();
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
 
-                    }
-                });
+                        }
+                    });
+                } else if (item[0].equals("Cook")) {
+                    databaseReference.child("CookUser").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                databaseReference.child("Admin").addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.hasChild(emailText)) {
+                                String getPassword = snapshot.child(emailText).child("password").getValue(String.class);
+                                if (getPassword.equals(passwordText)) {
 
-                        if (snapshot.hasChild(emailText)) {
-                            String getPassword = snapshot.child(emailText).child("password").getValue(String.class);
-                            if (getPassword.equals(passwordText)) {
+                                    Toast.makeText(getActivity(), "Logged in! Welcome back", Toast.LENGTH_SHORT).show();
+                                    Navigation.findNavController(view).navigate(R.id.action_login_to_welcomeCook);
 
-                                Toast.makeText(getActivity(), "Logged in! Welcome back", Toast.LENGTH_SHORT).show();
-                                Navigation.findNavController(view).navigate(R.id.action_login_to_welcomeCook);
+                                } else {
 
+                                    Toast.makeText(getActivity(), "wrong password1", Toast.LENGTH_SHORT).show();
+                                }
                             } else {
-
-                                Toast.makeText(getActivity(), "wrong password1" , Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "Wrong email or You haven't register yet!", Toast.LENGTH_SHORT).show();
                             }
-                        } else {
-                            Toast.makeText(getActivity(), "Wrong email or You haven't register yet!" , Toast.LENGTH_SHORT).show();
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
 
-                    }
-                });
+                        }
+                    });
+                } else if (item[0].equals("Admin")) {
+                    databaseReference.child("Admin").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                            if (snapshot.hasChild(emailText)) {
+                                String getPassword = snapshot.child(emailText).child("password").getValue(String.class);
+                                if (getPassword.equals(passwordText)) {
+
+                                    Toast.makeText(getActivity(), "Logged in! Welcome back", Toast.LENGTH_SHORT).show();
+                                    Navigation.findNavController(view).navigate(R.id.action_login_to_welcomeCook);
+
+                                } else {
+
+                                    Toast.makeText(getActivity(), "wrong password1", Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                Toast.makeText(getActivity(), "Wrong email or You haven't register yet!", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                }
             }
 
         });
