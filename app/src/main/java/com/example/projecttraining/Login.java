@@ -1,12 +1,10 @@
 package com.example.projecttraining;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
@@ -176,9 +174,16 @@ public class Login extends Fragment {
                                     String lastName = "name";
                                     String password = snapshot.child(emailText).child("password").getValue(String.class);
                                     String address = "123 street";
-                                    String description = snapshot.child(emailText).child("description").getValue(String.class);
 
                                     Administrator user = new Administrator(firstName,lastName,emailText, password, address);
+
+                                    WelcomeAdmin fragment = new WelcomeAdmin();
+                                    Bundle bundle = new Bundle();
+                                    bundle.putParcelable("adminUser", user);
+                                    fragment.setArguments(bundle);
+
+                                    FragmentManager fragmentManager = getParentFragmentManager();
+                                    fragmentManager.beginTransaction().replace(R.id.my_nav_host_fragment, fragment, null).commit();
 
                                     Toast.makeText(getActivity(), "Logged in! Welcome back", Toast.LENGTH_SHORT).show();
                                     Navigation.findNavController(view).navigate(R.id.action_login_to_welcomeAdmin);
