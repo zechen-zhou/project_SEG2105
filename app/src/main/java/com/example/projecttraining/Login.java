@@ -71,11 +71,11 @@ public class Login extends Fragment {
 
         login.setOnClickListener(click -> {
             String oddEmailText = email.getText().toString();
-            String emailText = oddEmailText.replace('.',',');
+            String emailText = oddEmailText.replace('.', ',');
             String passwordText = password.getText().toString();
 
-            if (emailText.isEmpty() || passwordText.isEmpty()) {
-                Toast.makeText(getActivity(), "Please enter your email or password", Toast.LENGTH_SHORT).show();
+            if (emailText.isEmpty() || passwordText.isEmpty() || item[0] == null) {
+                Toast.makeText(getActivity(), "Please select the type of user, enter your email and password", Toast.LENGTH_LONG).show();
             } else {
                 if (item[0].equals("Client")) {
                     databaseReference.child("ClientUser").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -92,7 +92,7 @@ public class Login extends Fragment {
                                     String address = snapshot.child(emailText).child("address").getValue(String.class);
                                     String cardInfo = snapshot.child(emailText).child("creditCardInfo").getValue(String.class);
 
-                                    Client user = new Client(firstName,lastName,emailText, password, address, cardInfo);
+                                    Client user = new Client(firstName, lastName, emailText, password, address, cardInfo);
 
                                     WelcomeClient fragment = new WelcomeClient();
                                     Bundle bundle = new Bundle();
@@ -134,7 +134,7 @@ public class Login extends Fragment {
                                     String address = snapshot.child(emailText).child("address").getValue(String.class);
                                     String description = snapshot.child(emailText).child("description").getValue(String.class);
 
-                                    Cook user = new Cook(firstName,lastName,emailText, password, address, description);
+                                    Cook user = new Cook(firstName, lastName, emailText, password, address, description);
 
                                     WelcomeCook fragment = new WelcomeCook();
                                     Bundle bundle = new Bundle();
@@ -175,7 +175,7 @@ public class Login extends Fragment {
                                     String password = snapshot.child(emailText).child("password").getValue(String.class);
                                     String address = "123 street";
 
-                                    Administrator user = new Administrator(firstName,lastName,emailText, password, address);
+                                    Administrator user = new Administrator(firstName, lastName, emailText, password, address);
 
                                     WelcomeAdmin fragment = new WelcomeAdmin();
                                     Bundle bundle = new Bundle();
