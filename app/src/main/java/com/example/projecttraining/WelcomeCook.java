@@ -52,7 +52,9 @@ public class WelcomeCook extends Fragment {
         //display corresponding Cook information on screen
         firstName.setText(currentUser.getFirstName());
         lastName.setText(currentUser.getLastName());
-        email.setText(currentUser.getEmail());
+        String convertEmail = currentUser.getEmail();
+        String theEmail = convertEmail.replace(',','.');
+        email.setText(theEmail);
         address.setText(currentUser.getAddress());
         description.setText(currentUser.getCookDescription());
 

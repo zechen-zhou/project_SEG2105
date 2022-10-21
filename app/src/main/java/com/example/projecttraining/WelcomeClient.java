@@ -48,11 +48,12 @@ public class WelcomeClient extends Fragment {
 
         Button logout = binding.logout;
 
-        //TODO: get intent of class Person from login page (to be implemented)
         //display corresponding Cook information on screen
         firstName.setText(currentUser.getFirstName());
         lastName.setText(currentUser.getLastName());
-        email.setText(currentUser.getEmail());
+        String convertEmail = currentUser.getEmail();
+        String theEmail = convertEmail.replace(',','.');
+        email.setText(theEmail);
         address.setText(currentUser.getAddress());
         card.setText(currentUser.getCreditCardInfo());
 
