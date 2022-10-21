@@ -135,7 +135,7 @@ public class Login extends Fragment {
                                 if (getPassword.equals(passwordText)) {
 
                                     Toast.makeText(getActivity(), "Logged in! Welcome back", Toast.LENGTH_SHORT).show();
-                                    Navigation.findNavController(view).navigate(R.id.action_login_to_welcomeCook);
+                                    Navigation.findNavController(view).navigate(R.id.action_login_to_welcomeAdmin);
 
                                 } else {
 
