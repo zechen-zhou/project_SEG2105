@@ -27,7 +27,7 @@
         android:id="@+id/registerCook"
         android:name="com.example.projecttraining.RegisterCook"
         android:label="fragment_register_cook"
-        tools:layout="@layout/fragment_register_cook" >
+        tools:layout="@layout/fragment_register_cook">
         <action
             android:id="@+id/action_registerCook_to_login"
             app:destination="@id/login" />
@@ -51,7 +51,7 @@
         android:id="@+id/welcomeCook"
         android:name="com.example.projecttraining.WelcomeCook"
         android:label="fragment_welcome_cook"
-        tools:layout="@layout/fragment_welcome_cook" >
+        tools:layout="@layout/fragment_welcome_cook">
         <action
             android:id="@+id/action_welcomeCook_to_login"
             app:destination="@id/login" />
@@ -61,7 +61,7 @@
         android:id="@+id/welcomeClient"
         android:name="com.example.projecttraining.WelcomeCook"
         android:label="fragment_welcome_client"
-        tools:layout="@layout/fragment_welcome_client" >
+        tools:layout="@layout/fragment_welcome_client">
         <action
             android:id="@+id/action_welcomeClient_to_login"
             app:destination="@id/login" />
@@ -85,7 +85,8 @@
     <fragment
         android:id="@+id/welcomeAdmin"
         android:name="com.example.projecttraining.WelcomeAdmin"
-        android:label="WelcomeAdmin" >
+        android:label="WelcomeAdmin"
+        tools:layout="@layout/fragment_welcome_admin">
         <action
             android:id="@+id/action_welcomeAdmin_to_login"
             app:destination="@id/login" />

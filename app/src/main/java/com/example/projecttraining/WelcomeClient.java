@@ -2,17 +2,16 @@ package com.example.projecttraining;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.projecttraining.databinding.FragmentWelcomeClientBinding;
-import com.example.projecttraining.databinding.FragmentWelcomeCookBinding;
 
 public class WelcomeClient extends Fragment {
 
@@ -29,7 +28,7 @@ public class WelcomeClient extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         TextView firstName = binding.firstName;
@@ -38,13 +37,18 @@ public class WelcomeClient extends Fragment {
         TextView address = binding.homeAddress;
         TextView card = binding.creditInfo;
 
-        //get intent of class Person from login page (to be implemented)
+        Button logout = binding.logout;
 
+        //TODO: get intent of class Person from login page (to be implemented)
         //display corresponding Cook information on screen
         firstName.setText(String.valueOf("placeholder"));
         lastName.setText(String.valueOf("placeholder"));
         email.setText(String.valueOf("placeholder"));
         address.setText(String.valueOf("placeholder"));
         card.setText(String.valueOf("placeholder"));
+
+        logout.setOnClickListener(click -> {
+            Navigation.findNavController(view).navigate(R.id.action_welcomeClient_to_login);
+        });
     }
 }
