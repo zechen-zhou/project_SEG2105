@@ -29,7 +29,7 @@ import com.google.firebase.database.ValueEventListener;
  */
 public class Login extends Fragment {
 
-    String[] items = {"Cook", "Client"};
+    String[] items = {"Cook", "Client", "Admin"};
     ArrayAdapter<String> adapterItems;
 
     private FragmentLoginBinding binding;
