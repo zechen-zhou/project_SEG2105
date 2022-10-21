@@ -61,7 +61,8 @@ public class RegisterCook extends Fragment {
                 //get data from EditText from String variables
                 String firstnameText = firstname.getText().toString();
                 String lastnameText = lastname.getText().toString();
-                String emailText = email.getText().toString();
+                String oddEmailText = email.getText().toString();
+                String emailText = oddEmailText.replace('.',',');
                 String passwordText = password.getText().toString();
                 String addressText = address.getText().toString();
                 String descriptionText = description.getText().toString();
