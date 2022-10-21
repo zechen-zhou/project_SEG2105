@@ -1,6 +1,10 @@
 package com.example.projecttraining.user;
 
-public abstract class Person {
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
+public abstract class Person implements Parcelable {
     protected String firstName;
     protected String lastName;
     protected String email;

@@ -3,33 +3,22 @@ package com.example.projecttraining.user;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Cook extends Person {
-    private String cookDescription;
+public class Administrator extends Person {
 
-    public Cook(String firstName, String lastName, String email, String password, String address, String cookDescription) {
+    public Administrator(String firstName, String lastName, String email, String password, String address) {
         super.setFirstName(firstName);
         super.setLastName(lastName);
         super.setEmail(email);
         super.setPassword(password);
         super.setAddress(address);
-        setCookDescription(cookDescription);
     }
 
-    protected Cook (Parcel in) {
+    protected Administrator (Parcel in) {
         super.setFirstName(in.readString());
         super.setLastName(in.readString());
         super.setEmail(in.readString());
         super.setPassword(in.readString());
         super.setAddress(in.readString());
-        setCookDescription(in.readString());
-    }
-
-    public String getCookDescription() {
-        return cookDescription;
-    }
-
-    public void setCookDescription(String cookDescription) {
-        this.cookDescription = cookDescription;
     }
 
     @Override
@@ -44,18 +33,17 @@ public class Cook extends Person {
         parcel.writeString(this.email);
         parcel.writeString(this.password);
         parcel.writeString(this.address);
-        parcel.writeString(this.cookDescription);
     }
 
     public static final Parcelable.Creator<Person> CREATOR = new Creator<Person>() {
         @Override
-        public Cook createFromParcel(Parcel source) {
-            return new Cook(source);
+        public Administrator createFromParcel(Parcel source) {
+            return new Administrator(source);
         }
 
         @Override
-        public Cook[] newArray(int size) {
-            return new Cook[size];
+        public Administrator[] newArray(int size) {
+            return new Administrator[size];
         }
     };
 }

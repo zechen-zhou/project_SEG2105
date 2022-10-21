@@ -1,9 +1,12 @@
 package com.example.projecttraining;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
@@ -18,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.projecttraining.databinding.FragmentLoginBinding;
+import com.example.projecttraining.user.*;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -70,6 +74,7 @@ public class Login extends Fragment {
         login.setOnClickListener(click -> {
             String emailText = email.getText().toString();
             String passwordText = password.getText().toString();
+
             if (emailText.isEmpty() || passwordText.isEmpty()) {
                 Toast.makeText(getActivity(), "Please enter your email or password", Toast.LENGTH_SHORT).show();
             } else {
@@ -82,8 +87,23 @@ public class Login extends Fragment {
                                 String getPassword = snapshot.child(emailText).child("password").getValue(String.class);
                                 if (getPassword.equals(passwordText)) {
 
+                                    String firstName = snapshot.child(emailText).child("firstname").getValue(String.class);
+                                    String lastName = snapshot.child(emailText).child("lastname").getValue(String.class);
+                                    String password = snapshot.child(emailText).child("password").getValue(String.class);
+                                    String address = snapshot.child(emailText).child("address").getValue(String.class);
+                                    String cardInfo = snapshot.child(emailText).child("creditCardInfo").getValue(String.class);
+
+                                    Client user = new Client(firstName,lastName,emailText, password, address, cardInfo);
+
+                                    WelcomeClient fragment = new WelcomeClient();
+                                    Bundle bundle = new Bundle();
+                                    bundle.putParcelable("clientUser", user);
+                                    fragment.setArguments(bundle);
+
+                                    FragmentManager fragmentManager = getParentFragmentManager();
+                                    fragmentManager.beginTransaction().replace(R.id.my_nav_host_fragment, fragment, null).commit();
+
                                     Toast.makeText(getActivity(), "Logged in! Welcome back", Toast.LENGTH_SHORT).show();
-                                    Navigation.findNavController(view).navigate(R.id.action_login_to_welcomeClient);
 
                                 } else {
 
@@ -108,8 +128,24 @@ public class Login extends Fragment {
                                 String getPassword = snapshot.child(emailText).child("password").getValue(String.class);
                                 if (getPassword.equals(passwordText)) {
 
+                                    String firstName = snapshot.child(emailText).child("firstname").getValue(String.class);
+                                    String lastName = snapshot.child(emailText).child("lastname").getValue(String.class);
+                                    String password = snapshot.child(emailText).child("password").getValue(String.class);
+                                    String address = snapshot.child(emailText).child("address").getValue(String.class);
+                                    String description = snapshot.child(emailText).child("description").getValue(String.class);
+
+                                    Cook user = new Cook(firstName,lastName,emailText, password, address, description);
+
+                                    WelcomeCook fragment = new WelcomeCook();
+                                    Bundle bundle = new Bundle();
+                                    bundle.putParcelable("cookUser", user);
+                                    fragment.setArguments(bundle);
+
+                                    FragmentManager fragmentManager = getParentFragmentManager();
+                                    fragmentManager.beginTransaction().replace(R.id.my_nav_host_fragment, fragment, null).commit();
+
                                     Toast.makeText(getActivity(), "Logged in! Welcome back", Toast.LENGTH_SHORT).show();
-                                    Navigation.findNavController(view).navigate(R.id.action_login_to_welcomeCook);
+//                                    Navigation.findNavController(view).navigate(R.id.action_login_to_welcomeCook);
 
                                 } else {
 
@@ -133,6 +169,14 @@ public class Login extends Fragment {
                             if (snapshot.hasChild(emailText)) {
                                 String getPassword = snapshot.child(emailText).child("password").getValue(String.class);
                                 if (getPassword.equals(passwordText)) {
+
+                                    String firstName = "Admin";
+                                    String lastName = "name";
+                                    String password = snapshot.child(emailText).child("password").getValue(String.class);
+                                    String address = "123 street";
+                                    String description = snapshot.child(emailText).child("description").getValue(String.class);
+
+                                    Administrator user = new Administrator(firstName,lastName,emailText, password, address);
 
                                     Toast.makeText(getActivity(), "Logged in! Welcome back", Toast.LENGTH_SHORT).show();
                                     Navigation.findNavController(view).navigate(R.id.action_login_to_welcomeAdmin);
