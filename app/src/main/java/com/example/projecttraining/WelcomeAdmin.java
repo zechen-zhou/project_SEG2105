@@ -3,7 +3,6 @@ package com.example.projecttraining;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
@@ -36,14 +35,13 @@ public class WelcomeAdmin extends Fragment {
 
         Bundle bundle = this.getArguments();
         if (bundle!=null) {
-            currentUser = (Administrator) bundle.get("adminUser");
+            currentUser = (Administrator) bundle.getParcelable("adminUser");
         }
 
         Button logout = binding.logout;
 
         logout.setOnClickListener(click -> {
-            FragmentManager fragmentManager = getParentFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.my_nav_host_fragment, new Login(), null).commit();
+            Navigation.findNavController(view).navigate(R.id.action_welcomeAdmin_to_login);
         });
     }
 }
