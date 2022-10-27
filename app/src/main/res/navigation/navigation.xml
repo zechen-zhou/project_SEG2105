@@ -19,9 +19,15 @@
         <action
             android:id="@+id/action_login_to_welcomeClient"
             app:destination="@id/welcomeClient" />
+
+        <!--when navigating from login destination to welcomeAdmin destination (logging as Admin),
+        pop the login destination off of the back stack so that the Back button doesn't take users
+        back into the login flow.-->
         <action
             android:id="@+id/action_login_to_welcomeAdmin"
-            app:destination="@id/welcomeAdmin" />
+            app:destination="@id/welcomeAdmin"
+            app:popUpTo="@id/login"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/registerCook"
@@ -87,8 +93,14 @@
         android:name="com.example.projecttraining.WelcomeAdmin"
         android:label="WelcomeAdmin"
         tools:layout="@layout/fragment_welcome_admin">
+
+        <!--when navigating from welcomeAdmin destination to login destination (logging out),
+        pop the welcomeAdmin destination off of the back stack so that the Back button doesn't take
+        users back into the welcome page without logging in.-->
         <action
             android:id="@+id/action_welcomeAdmin_to_login"
-            app:destination="@id/login" />
+            app:destination="@id/login"
+            app:popUpTo="@id/welcomeAdmin"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>
