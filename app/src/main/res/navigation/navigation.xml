@@ -12,7 +12,9 @@
         tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_login_to_welcomeCook"
-            app:destination="@id/welcomeCook" />
+            app:destination="@id/welcomeCook"
+            app:popUpTo="@id/login"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_login_to_registerSelect"
             app:destination="@id/registerSelect" />
@@ -62,7 +64,9 @@
         tools:layout="@layout/fragment_welcome_cook">
         <action
             android:id="@+id/action_welcomeCook_to_login"
-            app:destination="@id/login" />
+            app:destination="@id/login"
+            app:popUpTo="@id/welcomeCook"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment

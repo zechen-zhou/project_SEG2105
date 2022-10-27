@@ -133,16 +133,12 @@ public class Login extends Fragment {
 
                                     Cook user = new Cook(firstName, lastName, emailText, password, address, description);
 
-                                    WelcomeCook fragment = new WelcomeCook();
                                     Bundle bundle = new Bundle();
                                     bundle.putParcelable("cookUser", user);
-                                    fragment.setArguments(bundle);
 
-                                    FragmentManager fragmentManager = getParentFragmentManager();
-                                    fragmentManager.beginTransaction().replace(R.id.my_nav_host_fragment, fragment, null).commit();
+                                    Navigation.findNavController(view).navigate(R.id.action_login_to_welcomeCook, bundle);
 
                                     Toast.makeText(getActivity(), "Logged in! Welcome back", Toast.LENGTH_SHORT).show();
-//                                    Navigation.findNavController(view).navigate(R.id.action_login_to_welcomeCook);
 
                                 } else {
 
