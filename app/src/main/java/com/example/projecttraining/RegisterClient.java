@@ -1,5 +1,6 @@
 package com.example.projecttraining;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,14 +17,11 @@ import android.widget.Toast;
 
 import com.example.projecttraining.databinding.FragmentRegisterClientBinding;
 import com.example.projecttraining.user.Client;
-import com.example.projecttraining.user.Cook;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.function.ToIntBiFunction;
 
 public class RegisterClient extends Fragment {
 
@@ -62,7 +60,7 @@ public class RegisterClient extends Fragment {
                 String firstnameText = firstname.getText().toString();
                 String lastnameText = lastname.getText().toString();
                 String oddEmailText = email.getText().toString();
-                String emailText = oddEmailText.replace('.',',');
+                String emailText = oddEmailText.replace('.', ',');
                 String passwordText = password.getText().toString();
                 String addressText = address.getText().toString();
                 String creditCardInfoText = creditCardInfo.getText().toString();
@@ -71,17 +69,18 @@ public class RegisterClient extends Fragment {
                 if (firstnameText.isEmpty() || lastnameText.isEmpty() || emailText.isEmpty() || passwordText.isEmpty() || addressText.isEmpty()) {
                     Toast.makeText(getActivity(), "Please fill up all fields", Toast.LENGTH_SHORT).show();
                 } else {
+                    Context context = getActivity();
                     client = new Client(firstnameText, lastnameText, emailText, passwordText, addressText, creditCardInfoText);
                     Navigation.findNavController(view).navigate(R.id.action_registerClient_to_login);
-                    Toast.makeText(getActivity(), "Registration complete! Please login", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Registration complete! Please login", Toast.LENGTH_SHORT).show();
 
                     databaseReference.child("ClientUser").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if (snapshot.hasChild(emailText)) {
-                                Toast.makeText(getActivity(), "Email is registered", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "Email is registered", Toast.LENGTH_SHORT).show();
                             } else {
-                                databaseReference.child("ClientUser").child(emailText) .child("firstname").setValue(client.getFirstName());
+                                databaseReference.child("ClientUser").child(emailText).child("firstname").setValue(client.getFirstName());
                                 databaseReference.child("ClientUser").child(emailText).child("lastname").setValue(client.getLastName());
                                 databaseReference.child("ClientUser").child(emailText).child("password").setValue(client.getPassword());
                                 databaseReference.child("ClientUser").child(emailText).child("address").setValue(client.getAddress());
