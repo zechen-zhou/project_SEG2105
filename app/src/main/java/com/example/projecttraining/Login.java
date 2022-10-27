@@ -94,13 +94,10 @@ public class Login extends Fragment {
 
                                     Client user = new Client(firstName, lastName, emailText, password, address, cardInfo);
 
-                                    WelcomeClient fragment = new WelcomeClient();
                                     Bundle bundle = new Bundle();
                                     bundle.putParcelable("clientUser", user);
-                                    fragment.setArguments(bundle);
 
-                                    FragmentManager fragmentManager = getParentFragmentManager();
-                                    fragmentManager.beginTransaction().replace(R.id.my_nav_host_fragment, fragment, null).commit();
+                                    Navigation.findNavController(view).navigate(R.id.action_login_to_welcomeClient, bundle);
 
                                     Toast.makeText(getActivity(), "Logged in! Welcome back", Toast.LENGTH_SHORT).show();
 

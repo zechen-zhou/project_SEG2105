@@ -18,7 +18,9 @@
             app:destination="@id/registerSelect" />
         <action
             android:id="@+id/action_login_to_welcomeClient"
-            app:destination="@id/welcomeClient" />
+            app:destination="@id/welcomeClient"
+            app:popUpTo="@id/login"
+            app:popUpToInclusive="true" />
 
         <!--when navigating from login destination to welcomeAdmin destination (logging as Admin),
         pop the login destination off of the back stack so that the Back button doesn't take users
@@ -70,7 +72,9 @@
         tools:layout="@layout/fragment_welcome_client">
         <action
             android:id="@+id/action_welcomeClient_to_login"
-            app:destination="@id/login" />
+            app:destination="@id/login"
+            app:popUpTo="@id/welcomeClient"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -91,7 +95,7 @@
     <fragment
         android:id="@+id/welcomeAdmin"
         android:name="com.example.projecttraining.WelcomeAdmin"
-        android:label="WelcomeAdmin"
+        android:label="fragment_welcome_admin"
         tools:layout="@layout/fragment_welcome_admin">
 
         <!--when navigating from welcomeAdmin destination to login destination (logging out),
