@@ -43,9 +43,6 @@
             app:destination="@id/login"
             app:popUpTo="@id/login"
             app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_registerCook_to_welcomeCook"
-            app:destination="@id/welcomeCook" />
     </fragment>
     <fragment
         android:id="@+id/registerClient"
@@ -57,9 +54,6 @@
             app:destination="@id/login"
             app:popUpTo="@id/login"
             app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_registerClient_to_welcomeClient"
-            app:destination="@id/welcomeClient" />
     </fragment>
     <fragment
         android:id="@+id/welcomeCook"
@@ -72,7 +66,6 @@
             app:popUpTo="@id/welcomeCook"
             app:popUpToInclusive="true" />
     </fragment>
-
     <fragment
         android:id="@+id/welcomeClient"
         android:name="com.example.projecttraining.WelcomeClient"
@@ -84,7 +77,6 @@
             app:popUpTo="@id/welcomeClient"
             app:popUpToInclusive="true" />
     </fragment>
-
     <fragment
         android:id="@+id/registerSelect"
         android:name="com.example.projecttraining.Register"
