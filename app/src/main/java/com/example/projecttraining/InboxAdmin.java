@@ -112,6 +112,7 @@ public class InboxAdmin extends AppCompatActivity{
         final TextView editTextDescription  = dialogView.findViewById(R.id.complaintDescription);
         final Spinner decisionDropdown = dialogView.findViewById(R.id.decisionSelect);
         final Button confirm = dialogView.findViewById(R.id.decisionConfirmButton);
+        final EditText dateText = dialogView.findViewById(R.id.editDate);
 
         editTextFromClient.setText("From: "+clientName);
         editTextDescription.setText("Description: "+description);
@@ -139,8 +140,19 @@ public class InboxAdmin extends AppCompatActivity{
 
                 case 2: //temporary suspension
                     //TODO: temporary suspension implementation
-                    //create a time selection that is only used when temporary suspension is chosen?
-                    deleteComplaint(complaintId);
+                    String endDate = dateText.getText().toString();
+
+                    if (endDate.equals("")) {
+                        Toast.makeText(this, "Please enter an end date", Toast.LENGTH_LONG).show();
+
+                    } else if (!endDate.matches("^\\d{4}-\\d{2}-\\d{2}$")) { //regex to check correct format -- can be improved, maybe later?
+                        Toast.makeText(this, "Please use the correct format (YYYY-MM-DD)", Toast.LENGTH_LONG).show();
+
+                    } else {
+                        //change cook user's status + add end date
+                        deleteComplaint(complaintId);
+                    }
+
                     break;
 
                 case 3: //permanent suspension
@@ -151,7 +163,7 @@ public class InboxAdmin extends AppCompatActivity{
         });
     }
 
-    //TODO: change to update cook's status and delete complaint from inbox
+    //TODO: change to update cook's status
     private void updateCookUser(String id, String name, String cookUser, String description) {
 
     }

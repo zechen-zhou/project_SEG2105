@@ -68,7 +68,22 @@
         <TextView
             android:id="@+id/space"
             android:layout_width="match_parent"
-            android:layout_height="32dp" />
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/editDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="YYYY-MM-DD"
+            android:inputType="date"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/textEndDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="end date of suspension, if applicable (YYYY-MM-DD)" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
