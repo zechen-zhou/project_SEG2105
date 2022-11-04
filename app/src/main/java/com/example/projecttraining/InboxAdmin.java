@@ -1,6 +1,7 @@
 package com.example.projecttraining;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -10,13 +11,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,42 +28,50 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InboxAdmin extends AppCompatActivity{
-    EditText editTextName;
+    EditText editTextClientUser;
     EditText editTextCookUser;
     EditText editTextDescription;
     Button buttonAddComplaint;
+    Button backButton;
+
     ListView listViewComplaints;
     List<Complaint> complaints;
 
     DatabaseReference databaseComplaints;
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_inbox_admin);
+        setContentView(R.layout.activity_inbox_admin);
 
-        databaseComplaints = FirebaseDatabase.getInstance().getReference("complaints");
+        databaseComplaints = FirebaseDatabase.getInstance().getReference("Complaints");
 
-        editTextName = (EditText) findViewById(R.id.editTextName);
+        //delete later
+        editTextClientUser = (EditText) findViewById(R.id.editTextClientUser);
         editTextCookUser = (EditText) findViewById(R.id.editTextCookUser);
         editTextDescription = (EditText) findViewById(R.id.editTextDescription);
-        listViewComplaints = (ListView) findViewById(R.id.listViewComplaints);
         buttonAddComplaint = (Button) findViewById(R.id.addButton);
+
+        listViewComplaints = (ListView) findViewById(R.id.listViewComplaints);
+        backButton = (Button) findViewById(R.id.backButton);
 
         complaints = new ArrayList<>();
 
-        //adding an onclicklistener to button
+        //delete later
         buttonAddComplaint.setOnClickListener(view -> addComplaint());
 
-        listViewComplaints.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        listViewComplaints.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Complaint complaint = complaints.get(i);
-                showUpdateDeleteDialog(complaint.getId(), complaint.getComplaintName());
-                return true;
+                showDecisionDialog(complaint.getId(), complaint.getCookUser(), complaint.getClientUser(), complaint.getDescription());
+            }
+        });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), WelcomeAdmin.class));
             }
         });
     }
@@ -92,69 +101,78 @@ public class InboxAdmin extends AppCompatActivity{
     }
 
 
-    private void showUpdateDeleteDialog(final String complaintId, String complaintName) {
+    private void showDecisionDialog(final String complaintId, String cookName, String clientName, String description) {
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
-        final View dialogView = inflater.inflate(R.layout.update_dialog, null);
+        final View dialogView = inflater.inflate(R.layout.complaint_decision_dialog, null);
         dialogBuilder.setView(dialogView);
 
-        final EditText editTextName = (EditText) dialogView.findViewById(R.id.editTextName);
-        final EditText editTextCookUser  = (EditText) dialogView.findViewById(R.id.editTextCookUser);
-        final EditText editTextDescription  = (EditText) dialogView.findViewById(R.id.editTextDescription);
-        final Button buttonUpdate = (Button) dialogView.findViewById(R.id.buttonUpdateComplaint);
-        final Button buttonDelete = (Button) dialogView.findViewById(R.id.buttonDeleteComplaint);
+        final TextView editTextFromClient = dialogView.findViewById(R.id.fromClient);
+        final TextView editTextDescription  = dialogView.findViewById(R.id.complaintDescription);
+        final Spinner decisionDropdown = dialogView.findViewById(R.id.decisionSelect);
+        final Button confirm = dialogView.findViewById(R.id.decisionConfirmButton);
 
-        dialogBuilder.setTitle(complaintName);
+        editTextFromClient.setText("From: "+clientName);
+        editTextDescription.setText("Description: "+description);
+
+        String[] decisionOptions = {"","dismiss", "suspend temporarily","suspend permanently"};
+        ArrayAdapter<String> optionAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, decisionOptions);
+        decisionDropdown.setAdapter(optionAdapter);
+
+        dialogBuilder.setTitle(cookName);
         final AlertDialog b = dialogBuilder.create();
         b.show();
 
-        buttonUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String name = editTextName.getText().toString().trim();
-                String cookUser = editTextCookUser.getText().toString().trim();
-                String description = editTextDescription.getText().toString().trim();
-                if (!TextUtils.isEmpty(name)) {
-                    updateComplaint(complaintId, name, cookUser, description);
-                    b.dismiss();
-                }
-            }
-        });
+        confirm.setOnClickListener(view -> {
 
-        buttonDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                deleteComplaint(complaintId);
-                b.dismiss();
+            switch (decisionDropdown.getSelectedItemPosition()) {
+                case 0:
+                    Toast.makeText(this,"Please select an option first", Toast.LENGTH_LONG).show();
+                    break;
+
+                case 1: //dismiss
+                    deleteComplaint(complaintId);
+                    Toast.makeText(getApplicationContext(), "Dismissed: Complaint Deleted", Toast.LENGTH_LONG).show();
+                    b.dismiss();
+                    break;
+
+                case 2: //temporary suspension
+                    //TODO: temporary suspension implementation
+                    //create a time selection that is only used when temporary suspension is chosen?
+                    deleteComplaint(complaintId);
+                    break;
+
+                case 3: //permanent suspension
+                    //TODO: permanent suspension implementation
+                    //change cook user's status (add another data point in firebase)
+                    break;
             }
         });
     }
 
-    private void updateComplaint(String id, String name, String cookUser, String description) {
-        DatabaseReference dR = FirebaseDatabase.getInstance().getReference("complaints").child(id);
-        Complaint complaint = new Complaint(id, name, cookUser, description);
-        dR.setValue(complaint);
-
-        Toast.makeText(getApplicationContext(), "Complaint Updated", Toast.LENGTH_LONG).show();
+    //TODO: change to update cook's status and delete complaint from inbox
+    private void updateCookUser(String id, String name, String cookUser, String description) {
 
     }
 
     private void deleteComplaint(String id) {
-        DatabaseReference dR = FirebaseDatabase.getInstance().getReference("complaints").child(id);
+        DatabaseReference dR = FirebaseDatabase.getInstance().getReference("Complaints").child(id);
         dR.removeValue();
-        Toast.makeText(getApplicationContext(), "Complaint Deleted", Toast.LENGTH_LONG).show();
     }
 
+    //TODO: delete addComplaint functionality and corresponding UI elements in xml file (at the end)
+    //used for testing purposes (will delete after database has a few complaints)
     private void addComplaint() {
-        String name = editTextName.getText().toString().trim();
-        String cookUser = editTextName.getText().toString().trim();
-        String description = editTextName.getText().toString().trim();
-        if(!TextUtils.isEmpty(name)){
+        String clientUser = editTextClientUser.getText().toString().trim();
+        String cookUser = editTextCookUser.getText().toString().trim();
+        String description = editTextDescription.getText().toString().trim();
+
+        if(!TextUtils.isEmpty(clientUser)){
             String id = databaseComplaints.push().getKey();
-            Complaint complaint = new Complaint(id, name, cookUser, description);
+            Complaint complaint = new Complaint(id, clientUser, cookUser, description);
             databaseComplaints.child(id).setValue(complaint);
-            editTextName.setText("");
+            editTextClientUser.setText("");
             editTextCookUser.setText("");
             editTextDescription.setText("");
             Toast.makeText(this, "Complaint Added", Toast.LENGTH_LONG).show();

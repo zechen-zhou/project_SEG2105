@@ -24,15 +24,15 @@ public class ComplaintList extends ArrayAdapter<Complaint> {
         LayoutInflater inflater = context.getLayoutInflater();
         View listViewItem = inflater.inflate(R.layout.layout_complaint_list, null, true);
 
-        TextView textViewName = (TextView) listViewItem.findViewById(R.id.textViewName);
         TextView textViewCookUser = (TextView) listViewItem.findViewById(R.id.textViewCookUser);
+        TextView textViewClientUser = (TextView) listViewItem.findViewById(R.id.textViewClientName);
         TextView textViewDescription = (TextView) listViewItem.findViewById(R.id.textViewDescription);
 
 
         Complaint complaint = complaints.get(position);
-        textViewName.setText(complaint.getComplaintName());
         textViewCookUser.setText(String.valueOf(complaint.getCookUser()));
-        textViewDescription.setText(String.valueOf(complaint.getDescription()));
+        textViewClientUser.setText("From: "+complaint.getClientUser());
+        textViewDescription.setText("Description: "+String.valueOf(complaint.getDescription()));
         return listViewItem;
     }
 }

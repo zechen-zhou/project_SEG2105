@@ -1,27 +1,25 @@
 package com.example.projecttraining;
 
-/**
- * Created by Miguel Garzón on 2017-05-07.
- */
-
 public class Complaint {
     private String _id;
-    private String _complaintname;
+    private String _clientUser;
     private String _cookUser;
     private String _description;
 
 
     public Complaint() {
     }
-    public Complaint(String id, String complaintname, String cookUser, String description) {
+
+    public Complaint(String id, String clientUser, String cookUser, String description) {
         _id = id;
-        _complaintname = complaintname;
+        _clientUser = clientUser;
         _cookUser = cookUser;
         _description = description;
     }
-    public Complaint(String complaintname, String cookUser, String description) {
-        _complaintname = complaintname;
+
+    public Complaint(String cookUser, String clientUser, String description) {
         _cookUser = cookUser;
+        _clientUser = clientUser;
         _description = description;
     }
 
@@ -31,11 +29,9 @@ public class Complaint {
     public String getId() {
         return _id;
     }
-    public void setComplaintName(String complaintname) {
-        _complaintname = complaintname;
-    }
-    public String getComplaintName() {
-        return _complaintname;
+    public void setClientUser(String clientUser) {_clientUser = clientUser;}
+    public String getClientUser() {
+        return _clientUser;
     }
     public void setCookUser(String cookUser) {
         _cookUser = cookUser;

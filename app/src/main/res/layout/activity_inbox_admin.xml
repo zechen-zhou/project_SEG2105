@@ -1,22 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
+    android:id="@+id/activity_admin_inbox"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="mgarzon.createbest.productcatalog.MainActivity">
+    tools:context=".InboxAdmin">
+
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="224dp"
+        android:text="Back to Home" />
 
     <EditText
-        android:id="@+id/editTextName"
+        android:id="@+id/editTextClientUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/backButton"
+        android:layout_marginTop="5dp"
         android:hint="Enter name" />
 
     <EditText
         android:id="@+id/editTextCookUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editTextName"
+        android:layout_below="@id/editTextClientUser"
         android:hint="Enter Cook User" />
 
     <EditText

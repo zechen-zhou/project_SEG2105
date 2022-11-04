@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <EditText
-        android:id="@+id/editTextName"
+        android:id="@+id/editTextClientUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter name" />
@@ -14,7 +14,7 @@
         android:id="@+id/editTextCookUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editTextName"
+        android:layout_below="@id/editTextClientUser"
         android:hint="Enter Cook User" />
 
     <EditText
