@@ -3,4 +3,6 @@
     <string name="select">I am a...</string>
     <string name="login">Login</string>
     <string name="slogan">Meals made with love</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

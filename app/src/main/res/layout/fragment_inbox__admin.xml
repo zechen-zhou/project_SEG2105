@@ -4,25 +4,14 @@
     android:id="@+id/activity_admin_inbox"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".InboxAdmin">
+    android:padding="16dp"
+    tools:context=".Inbox_Admin">
 
-    <Button
-        android:id="@+id/backButton"
-        android:layout_width="175dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="224dp"
-        android:text="Back to Home" />
 
     <EditText
         android:id="@+id/editTextClientUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/backButton"
         android:layout_marginTop="5dp"
         android:hint="Enter name" />
 
@@ -45,8 +34,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/editTextDescription"
-        android:layout_weight="1"
         android:layout_centerInParent="true"
+        android:layout_weight="1"
         android:text="Add" />
 
 
@@ -56,14 +45,12 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/addButton"
         android:text="Complaints"
-        android:textAlignment="center"
-        />
+        android:textAlignment="center" />
 
     <ListView
         android:id="@+id/listViewComplaints"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView">
-    </ListView>
+        android:layout_below="@+id/textView"></ListView>
 
 </RelativeLayout>
