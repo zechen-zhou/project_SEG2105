@@ -76,6 +76,12 @@
             app:destination="@id/login"
             app:popUpTo="@id/welcomeClient"
             app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_welcomeClient_to_complain"
+            app:destination="@id/complain"
+            app:popUpTo="@id/welcomeClient"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/registerSelect"
@@ -108,5 +114,18 @@
             app:destination="@id/login"
             app:popUpTo="@id/welcomeAdmin"
             app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/complain"
+        android:name="com.example.projecttraining.Complain"
+        android:label="fragment_complain_cook"
+        tools:layout="@layout/fragment_complain_cook" >
+
+        <action
+            android:id="@+id/action_complain_to_welcome"
+            app:destination="@id/welcomeClient"
+            app:popUpTo="@id/complain"
+            app:popUpToInclusive="true" />
+
     </fragment>
 </navigation>

@@ -71,8 +71,6 @@ public class RegisterClient extends Fragment {
                 } else {
                     Context context = getActivity();
                     client = new Client(firstnameText, lastnameText, emailText, passwordText, addressText, creditCardInfoText);
-                    Navigation.findNavController(view).navigate(R.id.action_registerClient_to_login);
-                    Toast.makeText(context, "Registration complete! Please login", Toast.LENGTH_SHORT).show();
 
                     databaseReference.child("ClientUser").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -80,13 +78,14 @@ public class RegisterClient extends Fragment {
                             if (snapshot.hasChild(emailText)) {
                                 Toast.makeText(context, "Email is registered", Toast.LENGTH_SHORT).show();
                             } else {
+                                Navigation.findNavController(view).navigate(R.id.action_registerClient_to_login);
+                                Toast.makeText(context, "Registration complete! Please login", Toast.LENGTH_SHORT).show();
+
                                 databaseReference.child("ClientUser").child(emailText).child("firstname").setValue(client.getFirstName());
                                 databaseReference.child("ClientUser").child(emailText).child("lastname").setValue(client.getLastName());
                                 databaseReference.child("ClientUser").child(emailText).child("password").setValue(client.getPassword());
                                 databaseReference.child("ClientUser").child(emailText).child("address").setValue(client.getAddress());
                                 databaseReference.child("ClientUser").child(emailText).child("creditCardInfo").setValue(client.getCreditCardInfo());
-
-
                             }
                         }
 

@@ -71,8 +71,7 @@ public class RegisterCook extends Fragment {
                 } else {
                     Context context = getActivity();
                     cook = new Cook(firstnameText, lastnameText, emailText, passwordText, addressText, descriptionText);
-                    Navigation.findNavController(view).navigate(R.id.action_registerCook_to_login);
-                    Toast.makeText(context, "Registration complete! Please login", Toast.LENGTH_SHORT).show();
+
 
                     databaseReference.child("CookUser").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -80,6 +79,9 @@ public class RegisterCook extends Fragment {
                             if (snapshot.hasChild(emailText)) {
                                 Toast.makeText(context, "Email is registered", Toast.LENGTH_SHORT).show();
                             } else {
+                                Navigation.findNavController(view).navigate(R.id.action_registerCook_to_login);
+                                Toast.makeText(context, "Registration complete! Please login", Toast.LENGTH_SHORT).show();
+
                                 databaseReference.child("CookUser").child(emailText).child("firstname").setValue(cook.getFirstName());
                                 databaseReference.child("CookUser").child(emailText).child("lastname").setValue(cook.getLastName());
                                 databaseReference.child("CookUser").child(emailText).child("password").setValue(cook.getPassword());

@@ -45,8 +45,8 @@ public class WelcomeClient extends Fragment {
         TextView card = binding.creditInfo;
 
         Button logout = binding.logout;
+        Button complain = binding.administrator;
 
-        //display corresponding Cook information on screen
         firstName.setText(currentUser.getFirstName());
         lastName.setText(currentUser.getLastName());
         String convertEmail = currentUser.getEmail();
@@ -57,6 +57,10 @@ public class WelcomeClient extends Fragment {
 
         logout.setOnClickListener(click -> {
             Navigation.findNavController(view).navigate(R.id.action_welcomeClient_to_login);
+        });
+
+        complain.setOnClickListener(click -> {
+            Navigation.findNavController(view).navigate(R.id.action_welcomeClient_to_complain);
         });
     }
 }
