@@ -181,7 +181,7 @@
         android:layout_marginBottom="14dp"
         android:backgroundTint="#FFC107"
         android:gravity="center"
-        android:text="ADMINISTRATOR"
+        android:text="COMPLAIN THE COOK"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/orderhistory"
         app:layout_constraintEnd_toEndOf="parent"
