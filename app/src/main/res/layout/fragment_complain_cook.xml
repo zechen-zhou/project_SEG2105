@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".Complain">
+    tools:context=".Client_Complain">
 
     <TextView
         android:id="@+id/Client"

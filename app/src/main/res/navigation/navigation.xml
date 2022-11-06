@@ -127,7 +127,7 @@
     </fragment>
     <fragment
         android:id="@+id/complain"
-        android:name="com.example.projecttraining.Complain"
+        android:name="com.example.projecttraining.Client_Complain"
         android:label="fragment_complain_cook"
         tools:layout="@layout/fragment_complain_cook" >
 

@@ -116,14 +116,14 @@ public class Inbox_Admin extends Fragment {
         final Button confirm = dialogView.findViewById(R.id.decisionConfirmButton);
         final EditText dateText = dialogView.findViewById(R.id.editDate);
 
-        editTextFromClient.setText("From: "+clientName);
+        editTextFromClient.setText("From: "+clientName.replace(",", "."));
         editTextDescription.setText("Description: "+description);
 
         String[] decisionOptions = {"","dismiss", "suspend temporarily","suspend permanently"};
         ArrayAdapter<String> optionAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, decisionOptions);
         decisionDropdown.setAdapter(optionAdapter);
 
-        dialogBuilder.setTitle(cookName);
+        dialogBuilder.setTitle(cookName.replace(",", "."));
         final AlertDialog b = dialogBuilder.create();
         b.show();
 

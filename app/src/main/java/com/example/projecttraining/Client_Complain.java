@@ -11,14 +11,14 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-import androidx.navigation.PopUpToBuilder;
 
 import com.example.projecttraining.databinding.FragmentComplainCookBinding;
+import com.example.projecttraining.user.Client;
 import com.example.projecttraining.user.Person;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class Complain extends Fragment {
+public class Client_Complain extends Fragment {
 
     Person person;
     private FragmentComplainCookBinding binding;
@@ -36,6 +36,11 @@ public class Complain extends Fragment {
     public void onViewCreated(@Nullable View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            person = (Client) bundle.getParcelable("clientUser");
+        }
+
         Button submitText = binding.submitComplain;
         Button backToCook = binding.backToWelcomeCook;
 
@@ -48,6 +53,7 @@ public class Complain extends Fragment {
             public void onClick(View view) {
                 String description = complaint.getText().toString();
 
+                //TODO: add (1) check if cook entered exists (2) check if cook name is empty
                 if (description.isEmpty()) {
                     Toast.makeText(getActivity(),"Please fill up your complaint", Toast.LENGTH_SHORT).show();
                 } else {
@@ -62,7 +68,7 @@ public class Complain extends Fragment {
         backToCook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.action_complain_to_welcome);
+                Navigation.findNavController(view).navigate(R.id.action_complain_to_welcome, bundle);
             }
         });
     }

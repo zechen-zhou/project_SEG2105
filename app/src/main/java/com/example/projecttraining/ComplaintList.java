@@ -30,8 +30,8 @@ public class ComplaintList extends ArrayAdapter<Complaint> {
 
 
         Complaint complaint = complaints.get(position);
-        textViewCookUser.setText(String.valueOf(complaint.getCookUser()));
-        textViewClientUser.setText("From: "+complaint.getClientUser());
+        textViewCookUser.setText(String.valueOf(complaint.getCookUser()).replace(",", "."));
+        textViewClientUser.setText("From: "+complaint.getClientUser().replace(",", "."));
         textViewDescription.setText("Description: "+String.valueOf(complaint.getDescription()));
         return listViewItem;
     }
