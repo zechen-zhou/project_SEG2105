@@ -85,6 +85,7 @@ public class RegisterCook extends Fragment {
                                 databaseReference.child("CookUser").child(emailText).child("password").setValue(cook.getPassword());
                                 databaseReference.child("CookUser").child(emailText).child("address").setValue(cook.getAddress());
                                 databaseReference.child("CookUser").child(emailText).child("description").setValue(cook.getCookDescription());
+                                databaseReference.child("CookUser").child(emailText).child("status").setValue(0);
                             }
                         }
 

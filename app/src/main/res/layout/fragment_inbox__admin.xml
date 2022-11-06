@@ -8,44 +8,14 @@
     tools:context=".Inbox_Admin">
 
 
-    <EditText
-        android:id="@+id/editTextClientUser"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:hint="Enter name" />
-
-    <EditText
-        android:id="@+id/editTextCookUser"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/editTextClientUser"
-        android:hint="Enter Cook User" />
-
-    <EditText
-        android:id="@+id/editTextDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/editTextCookUser"
-        android:hint="Enter Description" />
-
-    <Button
-        android:id="@+id/addButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/editTextDescription"
-        android:layout_centerInParent="true"
-        android:layout_weight="1"
-        android:text="Add" />
-
-
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/addButton"
         android:text="Complaints"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textSize="25sp"
+        android:textStyle="bold" />
 
     <ListView
         android:id="@+id/listViewComplaints"

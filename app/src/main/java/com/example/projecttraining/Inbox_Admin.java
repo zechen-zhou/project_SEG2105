@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -22,9 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.projecttraining.databinding.FragmentInboxAdminBinding;
-import com.example.projecttraining.databinding.FragmentWelcomeCookBinding;
 import com.example.projecttraining.user.Administrator;
-import com.example.projecttraining.user.Cook;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,12 +37,6 @@ import java.util.List;
 public class Inbox_Admin extends Fragment {
     private FragmentInboxAdminBinding binding;
     private Administrator currentAdmin;
-
-    EditText editTextClientUser;
-    EditText editTextCookUser;
-    EditText editTextDescription;
-    Button buttonAddComplaint;
-
     ListView listViewComplaints;
     List<Complaint> complaints;
 
@@ -64,21 +57,10 @@ public class Inbox_Admin extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         databaseComplaints = FirebaseDatabase.getInstance().getReference("Complaints");
-
-        //delete later
-        editTextClientUser = binding.editTextClientUser;
-        editTextCookUser = binding.editTextCookUser;
-        editTextDescription = binding.editTextDescription;
-        buttonAddComplaint = binding.addButton;
-
         listViewComplaints = binding.listViewComplaints;
 
         complaints = new ArrayList<>();
 
-        //delete later
-        buttonAddComplaint.setOnClickListener(click->{
-            addComplaint();
-        });
 
         listViewComplaints.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -93,9 +75,14 @@ public class Inbox_Admin extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 complaints.clear();
 
-                for(DataSnapshot postSnapchot : dataSnapshot.getChildren()){
-                    Complaint complaint = postSnapchot.getValue(Complaint.class);
-                    complaints.add(complaint);
+                for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+                    boolean isRead = postSnapshot.child("read").getValue(Boolean.class);
+                    Complaint complaint = postSnapshot.getValue(Complaint.class);
+                    complaint.setReadStatus(isRead);
+
+                    if (!isRead) {
+                        complaints.add(complaint);
+                    }
                 }
                 ComplaintList complaintAdapter = new ComplaintList(getActivity(), complaints);
                 listViewComplaints.setAdapter(complaintAdapter);
@@ -103,33 +90,17 @@ public class Inbox_Admin extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
 
-
     }
 
-    //TODO: delete addComplaint functionality and corresponding UI elements in xml file (at the end)
-    //used for testing purposes (will delete after database has a few complaints)
-    private void addComplaint() {
-        String clientUser = editTextClientUser.getText().toString().trim();
-        String cookUser = editTextCookUser.getText().toString().trim();
-        String description = editTextDescription.getText().toString().trim();
+    private void editCookStatus(String cookName, int status) {
+        FirebaseDatabase.getInstance().getReference("CookUser").child(cookName).child("status").setValue(status);
+    }
 
-        if(!TextUtils.isEmpty(clientUser)){
-            String id = databaseComplaints.push().getKey();
-            Complaint complaint = new Complaint(id, clientUser, cookUser, description);
-            databaseComplaints.child(id).setValue(complaint);
-            editTextClientUser.setText("");
-            editTextCookUser.setText("");
-            editTextDescription.setText("");
-            Toast.makeText(getActivity(), "Complaint Added", Toast.LENGTH_LONG).show();
-        }
-        else{
-            Toast.makeText(getActivity(), "Please enter a name", Toast.LENGTH_LONG).show();
-        }
-
+    private void editComplaintRead (String id, boolean status) {
+        FirebaseDatabase.getInstance().getReference("Complaints").child(id).child("read").setValue(status);
     }
 
     private void showDecisionDialog(final String complaintId, String cookName, String clientName, String description) {
@@ -156,6 +127,8 @@ public class Inbox_Admin extends Fragment {
         final AlertDialog b = dialogBuilder.create();
         b.show();
 
+        String cookID = cookName.replace(".",",");
+
         confirm.setOnClickListener(view -> {
 
             switch (decisionDropdown.getSelectedItemPosition()) {
@@ -164,13 +137,13 @@ public class Inbox_Admin extends Fragment {
                     break;
 
                 case 1: //dismiss
-                    deleteComplaint(complaintId);
-                    Toast.makeText(getActivity(), "Dismissed: Complaint Deleted", Toast.LENGTH_LONG).show();
+                    //changes complaint read element to true
+                    editComplaintRead(complaintId, true);
+                    Toast.makeText(getActivity(), "Dismissed", Toast.LENGTH_LONG).show();
                     b.dismiss();
                     break;
 
                 case 2: //temporary suspension
-                    //TODO: temporary suspension implementation
                     String endDate = dateText.getText().toString();
 
                     if (endDate.equals("")) {
@@ -180,17 +153,23 @@ public class Inbox_Admin extends Fragment {
                         Toast.makeText(getActivity(), "Please use the correct format (YYYY-MM-DD)", Toast.LENGTH_LONG).show();
 
                     } else {
-                        //change cook user's status + add end date
-                        deleteComplaint(complaintId);
+                        //change cook user's status to 1 (temp)
+                        editCookStatus(cookID, 1);
+                        //changes complaint suspensionDate element to endDate
+                        FirebaseDatabase.getInstance().getReference("Complaints").child(complaintId).child("suspensionDate").setValue(endDate);
+                        //changes complaint read element to true
+                        editComplaintRead(complaintId, true);
                     }
-
                     break;
 
                 case 3: //permanent suspension
-                    //TODO: permanent suspension implementation
-                    //change cook user's status (add another data point in firebase)
+                    //change cook user's status to 2 (permanent)
+                    editCookStatus(cookID, 2);
+                    //change complaint read element to true
+                    editComplaintRead(complaintId, true);
                     break;
             }
+            b.dismiss();
         });
     }
 
