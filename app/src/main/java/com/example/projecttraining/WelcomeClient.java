@@ -60,7 +60,7 @@ public class WelcomeClient extends Fragment {
         });
 
         complain.setOnClickListener(click -> {
-            Navigation.findNavController(view).navigate(R.id.action_welcomeClient_to_complain);
+            Navigation.findNavController(view).navigate(R.id.action_welcomeClient_to_complain, bundle);
         });
     }
 }
