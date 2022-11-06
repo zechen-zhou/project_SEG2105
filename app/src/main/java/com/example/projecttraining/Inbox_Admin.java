@@ -95,15 +95,15 @@ public class Inbox_Admin extends Fragment {
 
     }
 
-    private void editCookStatus(String cookName, int status) {
+    public void editCookStatus(String cookName, int status) {
         FirebaseDatabase.getInstance().getReference("CookUser").child(cookName).child("status").setValue(status);
     }
 
-    private void editComplaintRead (String id, boolean status) {
+    public void editComplaintRead (String id, boolean status) {
         FirebaseDatabase.getInstance().getReference("Complaints").child(id).child("read").setValue(status);
     }
 
-    private void showDecisionDialog(final String complaintId, String cookName, String clientName, String description) {
+    public void showDecisionDialog(final String complaintId, String cookName, String clientName, String description) {
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getLayoutInflater();
