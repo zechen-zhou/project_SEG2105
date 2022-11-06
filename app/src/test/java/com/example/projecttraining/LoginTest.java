@@ -15,7 +15,7 @@ import org.junit.Test;
 public class LoginTest {
     @Test
     public void testlogginIn(){
-        String[] item = {"admin"};
+        String[] item = {"client"};
         Login login = new Login();
     }
 }

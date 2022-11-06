@@ -13,7 +13,7 @@ public class Inbox_AdminTest {
 
     @Test
     public void editCookStatus() {
-        String cookName = "Mary";
+        String cookName = "Marie";
         int status = 1;
         Inbox_Admin inbox_admin = new Inbox_Admin();
     }

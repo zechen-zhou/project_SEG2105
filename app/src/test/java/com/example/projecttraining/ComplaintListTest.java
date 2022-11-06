@@ -1,6 +1,6 @@
 package com.example.projecttraining;
 
-import static org.junit.Assert.*;
+
 
 import android.app.Activity;
 

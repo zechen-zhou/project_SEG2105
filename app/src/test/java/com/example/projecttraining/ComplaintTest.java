@@ -15,7 +15,7 @@ public class ComplaintTest {
 
         String id = "123456";
         String clientUser = "John";
-        String cookUser = "Mary";
+        String cookUser = "Marie";
         String description = "Mary chicken was under-seasoned and undercooked";
         Boolean read = false;
         String suspensionDate = " 8 Nov 22";
