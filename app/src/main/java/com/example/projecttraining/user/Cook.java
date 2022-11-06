@@ -6,6 +6,13 @@ import android.os.Parcelable;
 public class Cook extends Person {
     private String cookDescription;
 
+    /**
+     * 0 --> no suspensions applied
+     * 1 --> temporarily suspended
+     * 2 --> permanently suspended
+     */
+    private int status;
+
     public Cook(String firstName, String lastName, String email, String password, String address, String cookDescription) {
         super.setFirstName(firstName);
         super.setLastName(lastName);
@@ -13,6 +20,7 @@ public class Cook extends Person {
         super.setPassword(password);
         super.setAddress(address);
         setCookDescription(cookDescription);
+        status = 0;
     }
 
     protected Cook (Parcel in) {
@@ -58,4 +66,12 @@ public class Cook extends Person {
             return new Cook[size];
         }
     };
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public int getStatus() {
+        return status;
+    }
 }

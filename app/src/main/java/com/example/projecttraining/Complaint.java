@@ -5,7 +5,8 @@ public class Complaint {
     private String _clientUser;
     private String _cookUser;
     private String _description;
-
+    private boolean _read;
+    private String _suspensionDate;
 
     public Complaint() {
     }
@@ -15,12 +16,25 @@ public class Complaint {
         _clientUser = clientUser;
         _cookUser = cookUser;
         _description = description;
+        _read = false;
+        _suspensionDate = "N/A";
+    }
+
+    public Complaint(String id, String clientUser, String cookUser, String description, boolean read) {
+        _id = id;
+        _clientUser = clientUser;
+        _cookUser = cookUser;
+        _description = description;
+        _read = read;
+        _suspensionDate = "N/A";
     }
 
     public Complaint(String cookUser, String clientUser, String description) {
         _cookUser = cookUser;
         _clientUser = clientUser;
         _description = description;
+        _read = false;
+        _suspensionDate = "N/A";
     }
 
     public void setId(String id) {
@@ -46,6 +60,10 @@ public class Complaint {
         return _description;
     }
 
+    public boolean isRead() {return _read;}
+    public void setReadStatus(boolean status) {_read = status;}
+    public String getSuspensionDate() {return _suspensionDate;}
+    public void setSuspensionDate(String date) {_suspensionDate = date;}
 
 }
 

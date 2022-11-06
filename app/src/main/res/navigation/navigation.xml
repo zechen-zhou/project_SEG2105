@@ -114,6 +114,16 @@
             app:destination="@id/login"
             app:popUpTo="@id/welcomeAdmin"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_welcomeAdmin_to_inbox_Admin"
+            app:destination="@id/inbox_Admin" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/inbox_Admin"
+        android:name="com.example.projecttraining.Inbox_Admin"
+        android:label="fragment_inbox__admin"
+        tools:layout="@layout/fragment_inbox__admin" >
     </fragment>
     <fragment
         android:id="@+id/complain"

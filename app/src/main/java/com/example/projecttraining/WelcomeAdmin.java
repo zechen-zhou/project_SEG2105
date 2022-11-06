@@ -47,7 +47,7 @@ public class WelcomeAdmin extends Fragment {
         });
 
         inbox.setOnClickListener(click -> {
-            startActivity(new Intent(getContext(), InboxAdmin.class));
+            Navigation.findNavController(view).navigate(R.id.action_welcomeAdmin_to_inbox_Admin);
         });
     }
 }
