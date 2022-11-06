@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
@@ -15,8 +16,11 @@ import androidx.navigation.Navigation;
 import com.example.projecttraining.databinding.FragmentComplainCookBinding;
 import com.example.projecttraining.user.Client;
 import com.example.projecttraining.user.Person;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Client_Complain extends Fragment {
 
@@ -47,21 +51,39 @@ public class Client_Complain extends Fragment {
         EditText complaint = binding.complaintxt;
         EditText cook = binding.cookName;
         String clientUser = person.getEmail();
+        String cookUser = person.getEmail();
 
         submitText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String description = complaint.getText().toString();
+                String cookName = cook.getText().toString();
 
-                //TODO: add (1) check if cook entered exists (2) check if cook name is empty
                 if (description.isEmpty()) {
                     Toast.makeText(getActivity(),"Please fill up your complaint", Toast.LENGTH_SHORT).show();
-                } else {
-                    String id = databaseReference.push().getKey();
-                    String cookUser = cook.getText().toString();
-                    Complaint complaint = new Complaint(id, clientUser, cookUser, description);
-                    databaseReference.child(id).setValue(complaint);
                 }
+                if(cookName.isEmpty()) {
+                    Toast.makeText(getActivity(), "Please fill up the cook's name", Toast.LENGTH_SHORT).show();
+                }
+
+                databaseReference.child("CookUser").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.hasChild(cookUser)) {
+                            String id = databaseReference.push().getKey();
+                            String cookUser = cook.getText().toString();
+                            Complaint complaint = new Complaint(id, clientUser, cookUser, description);
+                            databaseReference.child(id).setValue(complaint);
+                        } else {
+                            Toast.makeText(getActivity(),"The cook isn't exist. Please enter the valid cook's name", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
             }
         });
 
