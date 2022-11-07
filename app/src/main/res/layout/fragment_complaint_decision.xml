@@ -10,9 +10,18 @@
         android:layout_marginStart="25dp"
         android:layout_marginEnd="25dp"
         android:orientation="vertical"
+        android:paddingTop="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/complaintTitle"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:text="COOKUSER"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/fromClient"
@@ -24,7 +33,7 @@
         <TextView
             android:id="@+id/complaintDescription"
             android:layout_width="match_parent"
-            android:layout_height="133dp"
+            android:layout_height="148dp"
             android:text="Description: "
             android:textSize="16sp" />
 
@@ -68,22 +77,27 @@
         <TextView
             android:id="@+id/space"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <EditText
-            android:id="@+id/editDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="YYYY-MM-DD"
-            android:inputType="date"
-            android:textSize="13sp" />
+            android:layout_height="46dp" />
 
         <TextView
             android:id="@+id/textEndDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="end date of suspension, if applicable (YYYY-MM-DD)" />
+            android:text="end date of suspension, if applicable" />
+
+        <TextView
+            android:id="@+id/endDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="YYYY-MM-DD"
+            android:textColor="@color/material_dynamic_neutral60"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/setDateButton"
+            android:layout_width="146dp"
+            android:layout_height="37dp"
+            android:text="set date" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

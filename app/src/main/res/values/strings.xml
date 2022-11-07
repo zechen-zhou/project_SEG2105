@@ -11,4 +11,6 @@
     <string name="account_temporarily_suspended_text">Your account has been suspended until</string>
     <string name="account_permanently_suspended_text">Your account has been suspended permanently.</string>
     <string name="account_suspended_text">Sorry for the inconvenience.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

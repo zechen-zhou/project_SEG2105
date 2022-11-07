@@ -124,6 +124,9 @@
         android:name="com.example.projecttraining.Inbox_Admin"
         android:label="fragment_inbox__admin"
         tools:layout="@layout/fragment_inbox__admin" >
+        <action
+            android:id="@+id/action_inbox_Admin_to_complaintDecision"
+            app:destination="@id/complaintDecision" />
     </fragment>
     <fragment
         android:id="@+id/complain"
@@ -138,4 +141,8 @@
             app:popUpToInclusive="true" />
 
     </fragment>
+    <fragment
+        android:id="@+id/complaintDecision"
+        android:name="com.example.projecttraining.ComplaintDecision"
+        android:label="ComplaintDecision" />
 </navigation>
