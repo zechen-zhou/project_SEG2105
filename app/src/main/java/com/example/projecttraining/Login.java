@@ -53,8 +53,8 @@ public class Login extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        EditText email = binding.email;
-        EditText password = binding.password;
+        EditText email = binding.emailInputEditText;
+        EditText password = binding.passwordInputEditText;
         TextView register = binding.register;
         Button login = binding.signIn;
         AutoCompleteTextView autoCompleteTxt = binding.autoCompleteTxt;
