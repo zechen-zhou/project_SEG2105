@@ -18,4 +18,12 @@
     <string name="email_text">Email</string>
     <string name="password_text">Password</string>
 
+    <!--fragment_register_client.xml-->
+    <string name="register_firstName_text">First name</string>
+    <string name="register_lastName_text">Last name</string>
+    <string name="register_emailAddress_text">Email Address</string>
+    <string name="register_newPassword_text">New Password</string>
+    <string name="register_homeAddress_text">Home Address</string>
+    <string name="register_creditCardInfo_text">CreditCard Number</string>
+
 </resources>

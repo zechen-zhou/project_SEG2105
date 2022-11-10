@@ -44,12 +44,12 @@ public class RegisterClient extends Fragment {
         Button welcomeClient = binding.submit;
         Button backToSignIn = binding.backToSignIn;
 
-        EditText firstname = binding.firstName;
-        EditText lastname = binding.lastName;
-        EditText email = binding.email;
-        EditText password = binding.password;
-        EditText address = binding.homeAddress;
-        EditText creditCardInfo = binding.creditCardInfo;
+        EditText firstname = binding.firstNameInputEditText;
+        EditText lastname = binding.lastNameInputEditText;
+        EditText email = binding.registerEmailInputEditText;
+        EditText password = binding.registerPasswordInputEditText;
+        EditText address = binding.homeAddressEditText;
+        EditText creditCardInfo = binding.creditCardInfoEditText;
 
         welcomeClient.setOnClickListener(new View.OnClickListener() {
             @Override
