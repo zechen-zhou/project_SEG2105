@@ -26,4 +26,12 @@
     <string name="register_homeAddress_text">Home Address</string>
     <string name="register_creditCardInfo_text">CreditCard Number</string>
 
+    <!--fragment_register_cook.xml-->
+    <string name="cook_firstName_text">First name</string>
+    <string name="cook_lastName_text">Last name</string>
+    <string name="cook_emailAddress_text">Email Address</string>
+    <string name="cook_newPassword_text">New Password</string>
+    <string name="cook_homeAddress_text">Home Address</string>
+    <string name="cook_description_text">Add a description</string>
+    <string name="cook_pictureVoidCheque_text">Submit picture of Void Cheque</string>
 </resources>

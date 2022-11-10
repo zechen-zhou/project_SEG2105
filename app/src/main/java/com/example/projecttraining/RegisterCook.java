@@ -44,12 +44,13 @@ public class RegisterCook extends Fragment {
         Button welcomeCook = binding.submit;
         Button backToSignIn = binding.backToSignIn;
 
-        EditText firstname = binding.firstName;
-        EditText lastname = binding.lastName;
-        EditText email = binding.email;
-        EditText password = binding.password;
-        EditText address = binding.homeAddress;
-        EditText description = binding.cookDescription;
+        EditText firstname = binding.cookFirstNameInputEditText;
+        EditText lastname = binding.cookLastNameInputEditText;
+        EditText email = binding.cookemailAddressEdittext;
+        EditText password = binding.cooknewPasswordEdittext;
+        EditText address = binding.cookhomeAddressEdittext;
+        EditText description = binding.cookdescriptionEdittext;
+
 
         welcomeCook.setOnClickListener(new View.OnClickListener() {
             @Override
