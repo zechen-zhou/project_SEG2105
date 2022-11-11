@@ -75,9 +75,7 @@ public class Inbox_Admin extends Fragment {
                     Complaint complaint = postSnapshot.getValue(Complaint.class);
                     complaint.setReadStatus(isRead);
 
-                    if (!isRead) {
-                        complaints.add(complaint);
-                    }
+                    complaint.addComplaint(complaints, isRead, complaint);
                 }
                 ComplaintList complaintAdapter = new ComplaintList(getActivity(), complaints);
                 listViewComplaints.setAdapter(complaintAdapter);

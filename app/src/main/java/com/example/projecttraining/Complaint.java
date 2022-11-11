@@ -1,5 +1,7 @@
 package com.example.projecttraining;
 
+import java.util.List;
+
 public class Complaint {
     private String _id;
     private String _clientUser;
@@ -65,5 +67,17 @@ public class Complaint {
     public String getSuspensionDate() {return _suspensionDate;}
     public void setSuspensionDate(String date) {_suspensionDate = date;}
 
+    /**
+     * Add a complaint to the complaint list "complaints" if the complaint status is unread.
+     *
+     * @param complaints the complaint list
+     * @param readStatus the read status of the complaints, true is read, false is unread
+     * @param complaint the Complaint information
+     */
+    public void addComplaint(List<Complaint> complaints, boolean readStatus, Complaint complaint){
+        if (!readStatus) {
+            complaints.add(complaint);
+        }
+    }
 }
 
