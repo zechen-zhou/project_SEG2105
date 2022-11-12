@@ -20,13 +20,17 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class OfferedMeals extends Fragment {
 
     private FragmentOfferedMealsBinding binding;
     private ListView offeredMealsListView;
     private List<Meal> mealList;
+
+    private Map<String, Boolean> cookStatus;
 
     DatabaseReference databaseMeals;
     DatabaseReference databaseCooks;
@@ -44,6 +48,7 @@ public class OfferedMeals extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        cookStatus = new HashMap<>();
         databaseMeals = FirebaseDatabase.getInstance().getReference("Meals");
         databaseCooks = FirebaseDatabase.getInstance().getReference("CookUser");
         offeredMealsListView = binding.mealsList;
@@ -51,8 +56,13 @@ public class OfferedMeals extends Fragment {
         mealList = new ArrayList<>();
 
 
-        //DELETE LATER
-        //Used for testing only -- click "Offered Meals" Title to add meal into the database
+
+
+        /*
+        DELETE LATER
+        Used for testing only -- click "Offered Meals" Title to add meal into the database
+        --> customize meal object and add it to database
+         */
         TextView title = binding.offeredMealsTitle;
 
         title.setOnClickListener(new View.OnClickListener() {
@@ -67,10 +77,30 @@ public class OfferedMeals extends Fragment {
                 allergens.add("z");
                 Meal meal = new Meal("name", "type", ingredients, allergens,12.32, "description", "888" );
                 meal.setOffered(true);
+
+                
                 databaseMeals.child(id).setValue(meal);
             }
         });
         //end of testing only
+
+
+
+        //listens for cooks status changes and adds them to a map
+        databaseCooks.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot snap:snapshot.getChildren()) {
+                    cookStatus.put(snap.getKey(), snap.child("status").getValue(Integer.class)==0);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
         //get all offered meals
@@ -84,23 +114,7 @@ public class OfferedMeals extends Fragment {
 
                     boolean isOffered = postSnapshot.child("offered").getValue(Boolean.class);
 
-                    //TODO: figure out how to check cook's status without the blank list error
-//                    databaseCooks.child(meal.getCookUser()).child("status").addListenerForSingleValueEvent(new ValueEventListener() {
-//                        @Override
-//                        public void onDataChange(@NonNull DataSnapshot snap) {
-//                            boolean cookActive = snap.getValue(Integer.class)==0;
-//                            if (isOffered && cookActive) {
-//                                mealList.add(meal);
-//                            }
-//                            return;
-//                        }
-//
-//                        @Override
-//                        public void onCancelled(@NonNull DatabaseError error) {
-//                        }
-//                    });
-
-                    if (isOffered) {
+                    if (isOffered && cookStatus.get(meal.getCookUser())) {
                         mealList.add(meal);
                     }
 
