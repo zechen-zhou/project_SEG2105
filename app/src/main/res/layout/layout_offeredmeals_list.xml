@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/mealNameText"
+            android:layout_width="278dp"
+            android:layout_height="wrap_content"
+            android:text="Meal Name"
+            android:textSize="16sp"
+            android:textStyle="bold|italic" />
+
+        <TextView
+            android:id="@+id/priceText"
+            android:layout_width="match_parent"
+            android:layout_height="22dp"
+            android:inputType="numberDecimal"
+            android:text="price"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/mealTypeText"
+            android:layout_width="198dp"
+            android:layout_height="31dp"
+            android:text="meal type" />
+
+        <TextView
+            android:id="@+id/byCookText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="by cook" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/ingredientsText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ingredients" />
+
+    <TextView
+        android:id="@+id/allergensText"
+        android:layout_width="match_parent"
+        android:layout_height="31dp"
+        android:text="allergens" />
+
+    <TextView
+        android:id="@+id/mealDescriptionText"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:text="description" />
+
+</LinearLayout>

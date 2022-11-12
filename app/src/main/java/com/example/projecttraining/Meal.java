@@ -13,6 +13,8 @@ public class Meal {
     private String _cookUser;
     private boolean _offered;
 
+    public Meal() {}
+
     public Meal(String name, String type, ArrayList ingredients, ArrayList allergens, double price, String description, String cook) {
         this._mealName = name;
         this._mealType = type;
