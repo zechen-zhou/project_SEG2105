@@ -64,6 +64,7 @@ public class Complaint {
 
     public boolean isRead() {return _read;}
     public void setReadStatus(boolean status) {_read = status;}
+    public boolean getReadStatus() {return this._read;}
     public String getSuspensionDate() {return _suspensionDate;}
     public void setSuspensionDate(String date) {_suspensionDate = date;}
 
