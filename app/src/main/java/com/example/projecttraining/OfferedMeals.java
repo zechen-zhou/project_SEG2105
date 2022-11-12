@@ -29,6 +29,8 @@ public class OfferedMeals extends Fragment {
     private FragmentOfferedMealsBinding binding;
     private ListView offeredMealsListView;
     private List<Meal> mealList;
+    private List<Meal> fromSuspended;
+    private OfferedMealsList offeredAdapter;
 
     private Map<String, Boolean> cookStatus;
 
@@ -51,10 +53,11 @@ public class OfferedMeals extends Fragment {
         cookStatus = new HashMap<>();
         databaseMeals = FirebaseDatabase.getInstance().getReference("Meals");
         databaseCooks = FirebaseDatabase.getInstance().getReference("CookUser");
+
         offeredMealsListView = binding.mealsList;
 
         mealList = new ArrayList<>();
-
+        fromSuspended = new ArrayList<>();
 
 
 
@@ -78,7 +81,7 @@ public class OfferedMeals extends Fragment {
                 Meal meal = new Meal("name", "type", ingredients, allergens,12.32, "description", "888" );
                 meal.setOffered(true);
 
-                
+
                 databaseMeals.child(id).setValue(meal);
             }
         });
@@ -94,6 +97,24 @@ public class OfferedMeals extends Fragment {
                 for (DataSnapshot snap:snapshot.getChildren()) {
                     cookStatus.put(snap.getKey(), snap.child("status").getValue(Integer.class)==0);
                 }
+
+                //re-check list
+                for (Meal m:mealList) {
+                    if (!cookStatus.get(m.getCookUser())) { //previously active, now suspended
+                        mealList.remove(m);
+                        fromSuspended.add(m);
+                    }
+                }
+
+                for (Meal m:fromSuspended) {
+                    if (cookStatus.get(m.getCookUser())) { //previously suspended, now active
+                        mealList.add(m);
+                        fromSuspended.remove(m);
+                    }
+                }
+
+                offeredAdapter = new OfferedMealsList(getActivity(), mealList);
+                offeredMealsListView.setAdapter(offeredAdapter);
             }
 
             @Override
@@ -116,10 +137,13 @@ public class OfferedMeals extends Fragment {
 
                     if (isOffered && cookStatus.get(meal.getCookUser())) {
                         mealList.add(meal);
+
+                    } else if (isOffered) {
+                        fromSuspended.add(meal);
                     }
 
                 }
-                OfferedMealsList offeredAdapter = new OfferedMealsList(getActivity(), mealList);
+                offeredAdapter = new OfferedMealsList(getActivity(), mealList);
                 offeredMealsListView.setAdapter(offeredAdapter);
             }
 
