@@ -1,4 +1,4 @@
 # project-group-2
-The account of admin: 
-email: Admin1
-password: 123456
+The account for Administrator: 
+* Email: admin@mealer.com
+* Password: 123456

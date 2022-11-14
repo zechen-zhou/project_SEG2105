@@ -82,6 +82,9 @@
             app:destination="@id/complain"
             app:popUpTo="@id/welcomeClient"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_welcomeClient_to_offeredMeals"
+            app:destination="@id/offeredMeals" />
     </fragment>
     <fragment
         android:id="@+id/registerSelect"
@@ -145,4 +148,9 @@
         android:id="@+id/complaintDecision"
         android:name="com.example.projecttraining.ComplaintDecision"
         android:label="ComplaintDecision" />
+    <fragment
+        android:id="@+id/offeredMeals"
+        android:name="com.example.projecttraining.OfferedMeals"
+        android:label="fragment_offered_meals"
+        tools:layout="@layout/fragment_offered_meals" />
 </navigation>

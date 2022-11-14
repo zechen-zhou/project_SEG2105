@@ -46,6 +46,7 @@ public class WelcomeClient extends Fragment {
 
         Button logout = binding.logout;
         Button complain = binding.administrator;
+        Button order = binding.ordernow;
 
         firstName.setText(currentUser.getFirstName());
         lastName.setText(currentUser.getLastName());
@@ -54,6 +55,10 @@ public class WelcomeClient extends Fragment {
         email.setText(theEmail);
         address.setText(currentUser.getAddress());
         card.setText(currentUser.getCreditCardInfo());
+
+        order.setOnClickListener(click -> {
+            Navigation.findNavController(view).navigate(R.id.action_welcomeClient_to_offeredMeals);
+        });
 
         logout.setOnClickListener(click -> {
             Navigation.findNavController(view).navigate(R.id.action_welcomeClient_to_login);
