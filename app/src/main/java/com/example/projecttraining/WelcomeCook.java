@@ -60,6 +60,7 @@ public class WelcomeCook extends Fragment {
         TextView description = binding.shortDescription;
 
         Button logout = binding.logout;
+        Button accessMenu = binding.accessMenu;
 
         //display corresponding Cook information on screen
         firstName.setText(currentUser.getFirstName());
@@ -72,6 +73,10 @@ public class WelcomeCook extends Fragment {
 
         logout.setOnClickListener(click -> {
             Navigation.findNavController(view).navigate(R.id.action_welcomeCook_to_login);
+        });
+
+        accessMenu.setOnClickListener(click -> {
+            Navigation.findNavController(view).navigate(R.id.action_welcomeCook_to_menu);
         });
 
         // Check the cook's account status and show the account warning dialog if the account has been temporarily or permanently suspended

@@ -65,6 +65,11 @@
             app:destination="@id/login"
             app:popUpTo="@id/welcomeCook"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_welcomeCook_to_menu"
+            app:destination="@id/menu"
+            app:popUpTo="@id/welcomeCook"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/welcomeClient"
@@ -153,4 +158,22 @@
         android:name="com.example.projecttraining.OfferedMeals"
         android:label="fragment_offered_meals"
         tools:layout="@layout/fragment_offered_meals" />
+    <fragment
+        android:id="@+id/menu"
+        android:name="com.example.projecttraining.mealList"
+        android:label="fragment_meal_list"
+        tools:layout="@layout/fragment_meal_list" >
+
+        <action
+            android:id="@+id/action_menu_add"
+            app:destination="@id/addMenu"
+            app:popUpTo="@id/menu"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/addMenu"
+        android:name="com.example.projecttraining.addMenu"
+        android:label="fragment_add_menu"
+        tools:layout="@layout/fragment_add_menu" />
+
 </navigation>
