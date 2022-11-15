@@ -298,7 +298,7 @@ public class Login extends Fragment {
      * @param email an email address
      * @return true if the email address is valid, false otherwise.
      */
-    private boolean isValidEmail(String email) {
+    public static boolean isValidEmail(String email) {
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
         return email.matches(emailPattern);
     }
