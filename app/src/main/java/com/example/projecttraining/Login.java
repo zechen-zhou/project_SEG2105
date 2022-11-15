@@ -56,9 +56,12 @@ public class Login extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        TextInputLayout userTypeInputLayout = binding.Iama;
+        AutoCompleteTextView userTypeTextView = binding.autoCompleteTxt;
         EditText emailInputEditText = binding.emailInputEditText;
         TextInputLayout emailInputLayout = binding.emailInputLayout;
-        EditText password = binding.passwordInputEditText;
+        EditText passwordInputEditText = binding.passwordInputEditText;
+        TextInputLayout passwordInputLayout = binding.passwordInputLayout;
         TextView register = binding.register;
         Button login = binding.signIn;
         AutoCompleteTextView autoCompleteTxt = binding.autoCompleteTxt;
@@ -73,10 +76,41 @@ public class Login extends Fragment {
             Navigation.findNavController(view).navigate(R.id.action_login_to_registerSelect);
         });
 
+        userTypeTextView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                //remove userTypeInputLayout error when the text length is changed
+                userTypeInputLayout.setError(null);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
+
+        passwordInputEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                //remove passwordInputLayout error when the text length is changed
+                passwordInputLayout.setError(null);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
+
         emailInputEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             @Override
@@ -87,14 +121,26 @@ public class Login extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-
             }
         });
 
         login.setOnClickListener(click -> {
             String oddEmailText = emailInputEditText.getText().toString();
             String emailText;
-            String passwordText = password.getText().toString();
+            String passwordText = passwordInputEditText.getText().toString();
+
+            // User type is not selected
+            if (item[0] == null) {
+                userTypeInputLayout.setError(getString(R.string.user_type_empty_message));
+            }
+
+            // Password is empty
+            if (passwordText.equals("")) {
+                passwordInputLayout.setError(getString(R.string.password_empty_message));
+
+                // Remove the error icon, so it will keep using the "password_toggle" mode
+                passwordInputLayout.setErrorIconDrawable(null);
+            }
 
             // Email is empty
             if (oddEmailText.equals("")) {
@@ -102,140 +148,134 @@ public class Login extends Fragment {
 
                 // Remove the error icon, so it will keep using the "clear_text" mode
                 emailInputLayout.setErrorIconDrawable(null);
-            }
-
-            // Email is not valid
-            else if (!isValidEmail(oddEmailText)) {
+            } else if (!isValidEmail(oddEmailText)) { // Email is not valid
                 emailInputLayout.setError(getString(R.string.email_error_message));
 
                 // Remove the error icon, so it will keep using the "clear_text" mode
                 emailInputLayout.setErrorIconDrawable(null);
             }
 
-            // Email is valid
-            else {
+            // User type is selected, email is valid and password is not empty
+            if (item[0] != null && isValidEmail(oddEmailText) && !passwordText.equals("")) {
                 emailText = oddEmailText.replace('.', ',');
 
-                if (passwordText.isEmpty() || item[0] == null) {
-                    Toast.makeText(getActivity(), "Please select the type of user, enter your email and password", Toast.LENGTH_LONG).show();
-                } else {
-                    if (item[0].equals("Client")) {
-                        databaseReference.child("ClientUser").addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                if (item[0] == null) {
+//                    Toast.makeText(getActivity(), "Please select the type of user", Toast.LENGTH_LONG).show();
+//                } else {
+                if (item[0].equals("Client")) {
+                    databaseReference.child("ClientUser").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                                if (snapshot.hasChild(emailText)) {
-                                    String getPassword = snapshot.child(emailText).child("password").getValue(String.class);
-                                    if (getPassword.equals(passwordText)) {
+                            if (snapshot.hasChild(emailText)) {
+                                String getPassword = snapshot.child(emailText).child("password").getValue(String.class);
+                                if (getPassword.equals(passwordText)) {
 
-                                        String firstName = snapshot.child(emailText).child("firstname").getValue(String.class);
-                                        String lastName = snapshot.child(emailText).child("lastname").getValue(String.class);
-                                        String password = snapshot.child(emailText).child("password").getValue(String.class);
-                                        String address = snapshot.child(emailText).child("address").getValue(String.class);
-                                        String cardInfo = snapshot.child(emailText).child("creditCardInfo").getValue(String.class);
+                                    String firstName = snapshot.child(emailText).child("firstname").getValue(String.class);
+                                    String lastName = snapshot.child(emailText).child("lastname").getValue(String.class);
+                                    String password = snapshot.child(emailText).child("password").getValue(String.class);
+                                    String address = snapshot.child(emailText).child("address").getValue(String.class);
+                                    String cardInfo = snapshot.child(emailText).child("creditCardInfo").getValue(String.class);
 
-                                        Client user = new Client(firstName, lastName, emailText, password, address, cardInfo);
+                                    Client user = new Client(firstName, lastName, emailText, password, address, cardInfo);
 
-                                        Bundle bundle = new Bundle();
-                                        bundle.putParcelable("clientUser", user);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putParcelable("clientUser", user);
 
-                                        Navigation.findNavController(view).navigate(R.id.action_login_to_welcomeClient, bundle);
+                                    Navigation.findNavController(view).navigate(R.id.action_login_to_welcomeClient, bundle);
 
-                                        Toast.makeText(getActivity(), "Logged in! Welcome back", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), "Logged in! Welcome back", Toast.LENGTH_SHORT).show();
 
-                                    } else {
-
-                                        Toast.makeText(getActivity(), "wrong password", Toast.LENGTH_SHORT).show();
-                                    }
                                 } else {
-                                    Toast.makeText(getActivity(), "Wrong email or You haven't register yet!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), "Wrong password", Toast.LENGTH_SHORT).show();
                                 }
+                            } else {
+                                Toast.makeText(getActivity(), "Wrong email or You haven't register yet!", Toast.LENGTH_SHORT).show();
                             }
+                        }
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
 
-                            }
+                        }
 
-                        });
-                    } else if (item[0].equals("Cook")) {
-                        databaseReference.child("CookUser").addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    });
+                } else if (item[0].equals("Cook")) {
+                    databaseReference.child("CookUser").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                                if (snapshot.hasChild(emailText)) {
-                                    String getPassword = snapshot.child(emailText).child("password").getValue(String.class);
-                                    if (getPassword.equals(passwordText)) {
+                            if (snapshot.hasChild(emailText)) {
+                                String getPassword = snapshot.child(emailText).child("password").getValue(String.class);
+                                if (getPassword.equals(passwordText)) {
 
-                                        String firstName = snapshot.child(emailText).child("firstname").getValue(String.class);
-                                        String lastName = snapshot.child(emailText).child("lastname").getValue(String.class);
-                                        String password = snapshot.child(emailText).child("password").getValue(String.class);
-                                        String address = snapshot.child(emailText).child("address").getValue(String.class);
-                                        String description = snapshot.child(emailText).child("description").getValue(String.class);
+                                    String firstName = snapshot.child(emailText).child("firstname").getValue(String.class);
+                                    String lastName = snapshot.child(emailText).child("lastname").getValue(String.class);
+                                    String password = snapshot.child(emailText).child("password").getValue(String.class);
+                                    String address = snapshot.child(emailText).child("address").getValue(String.class);
+                                    String description = snapshot.child(emailText).child("description").getValue(String.class);
 
-                                        Cook user = new Cook(firstName, lastName, emailText, password, address, description);
+                                    Cook user = new Cook(firstName, lastName, emailText, password, address, description);
 
-                                        Bundle bundle = new Bundle();
-                                        bundle.putParcelable("cookUser", user);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putParcelable("cookUser", user);
 
-                                        Navigation.findNavController(view).navigate(R.id.action_login_to_welcomeCook, bundle);
+                                    Navigation.findNavController(view).navigate(R.id.action_login_to_welcomeCook, bundle);
 
-                                        Toast.makeText(getActivity(), "Logged in! Welcome back", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), "Logged in! Welcome back", Toast.LENGTH_SHORT).show();
 
-                                    } else {
-
-                                        Toast.makeText(getActivity(), "wrong password1", Toast.LENGTH_SHORT).show();
-                                    }
                                 } else {
-                                    Toast.makeText(getActivity(), "Wrong email or You haven't register yet!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), "Wrong password", Toast.LENGTH_SHORT).show();
                                 }
+                            } else {
+                                Toast.makeText(getActivity(), "Wrong email or You haven't register yet!", Toast.LENGTH_SHORT).show();
                             }
+                        }
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
 
-                            }
-                        });
-                    } else if (item[0].equals("Admin")) {
-                        databaseReference.child("Admin").addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        }
+                    });
+                } else if (item[0].equals("Admin")) {
+                    databaseReference.child("Admin").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                                if (snapshot.hasChild(emailText)) {
-                                    String getPassword = snapshot.child(emailText).child("password").getValue(String.class);
-                                    if (getPassword.equals(passwordText)) {
+                            if (snapshot.hasChild(emailText)) {
+                                String getPassword = snapshot.child(emailText).child("password").getValue(String.class);
+                                if (getPassword.equals(passwordText)) {
 
-                                        String firstName = "Admin";
-                                        String lastName = "name";
-                                        String password = snapshot.child(emailText).child("password").getValue(String.class);
-                                        String address = "123 street";
+                                    String firstName = "Admin";
+                                    String lastName = "name";
+                                    String password = snapshot.child(emailText).child("password").getValue(String.class);
+                                    String address = "123 street";
 
-                                        Administrator user = new Administrator(firstName, lastName, emailText, password, address);
+                                    Administrator user = new Administrator(firstName, lastName, emailText, password, address);
 
-                                        Bundle bundle = new Bundle();
-                                        bundle.putParcelable("adminUser", user);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putParcelable("adminUser", user);
 
-                                        Navigation.findNavController(view).navigate(R.id.action_login_to_welcomeAdmin, bundle);
+                                    Navigation.findNavController(view).navigate(R.id.action_login_to_welcomeAdmin, bundle);
 
-                                        Toast.makeText(getActivity(), "Logged in! Welcome back", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), "Logged in! Welcome back", Toast.LENGTH_SHORT).show();
 
-                                    } else {
-
-                                        Toast.makeText(getActivity(), "wrong password1", Toast.LENGTH_SHORT).show();
-                                    }
                                 } else {
-                                    Toast.makeText(getActivity(), "Wrong email or You haven't register yet!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), "Wrong password", Toast.LENGTH_SHORT).show();
                                 }
+                            } else {
+                                Toast.makeText(getActivity(), "Wrong email or You haven't register yet!", Toast.LENGTH_SHORT).show();
                             }
+                        }
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
 
-                            }
-                        });
-                    }
+                        }
+                    });
                 }
             }
+//            }
 
         });
     }

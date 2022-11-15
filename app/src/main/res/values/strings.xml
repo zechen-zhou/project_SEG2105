@@ -17,6 +17,8 @@
     <!--fragment_login.xml-->
     <string name="email_text">Email</string>
     <string name="password_text">Password</string>
+    <string name="user_type_empty_message">The type of user is required.</string>
+    <string name="password_empty_message">Password is required.</string>
     <string name="email_empty_message">Email is required.</string>
     <string name="email_error_message">Wrong email address format.</string>
 
