@@ -12,8 +12,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.example.projecttraining.databinding.FragmentAddMenuBinding;
+import com.example.projecttraining.user.Cook;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,7 +30,9 @@ public class addMenu extends Fragment {
 
     private FragmentAddMenuBinding binding;
 
-    DatabaseReference db = FirebaseDatabase.getInstance().getReferenceFromUrl("https://mealer-dd302-default-rtdb.firebaseio.com/");
+    private Cook currentUser;
+
+    DatabaseReference db = FirebaseDatabase.getInstance().getReference("Meals");
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceSate) {
@@ -40,6 +44,11 @@ public class addMenu extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            currentUser = (Cook) bundle.getParcelable("cookUser");
+        }
 
         Button submit = binding.add;
 
@@ -64,6 +73,9 @@ public class addMenu extends Fragment {
 
                 if (meal_nameText.isEmpty() || meal_typeText.isEmpty() || meal_ingredientsText.isEmpty() || meal_allergensText.isEmpty() || meal_descriptionText.isEmpty()) {
                     Toast.makeText(getActivity(), "Please fill up all fields", Toast.LENGTH_SHORT).show();
+
+                    //TODO: check if prices is in number format (will cause error if it is string)
+
                 } else {
                     Context context = getActivity();
                     double price = Double.parseDouble(meal_priceNumber);
@@ -71,7 +83,7 @@ public class addMenu extends Fragment {
                     ArrayList<String> allergensList = new ArrayList<String>(Arrays.asList(meal_allergensText.split(",")));
                     String id = db.push().getKey();
 
-                    meal = new Meal(id, meal_nameText, meal_typeText, ingredientsList, allergensList, price, meal_descriptionText, null );
+                    meal = new Meal(id, meal_nameText, meal_typeText, ingredientsList, allergensList, price, meal_descriptionText, currentUser.getEmail() );
 
                     db.child("Meal").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -88,6 +100,9 @@ public class addMenu extends Fragment {
 
                         }
                     });
+
+                    Toast.makeText(getActivity(), "Meal Added!", Toast.LENGTH_SHORT).show();
+                    Navigation.findNavController(view).navigate(R.id.action_addMenu_to_menu, bundle);
                 }
             }
         });

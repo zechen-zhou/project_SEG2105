@@ -76,7 +76,7 @@ public class WelcomeCook extends Fragment {
         });
 
         accessMenu.setOnClickListener(click -> {
-            Navigation.findNavController(view).navigate(R.id.action_welcomeCook_to_menu);
+            Navigation.findNavController(view).navigate(R.id.action_welcomeCook_to_menu, bundle);
         });
 
         // Check the cook's account status and show the account warning dialog if the account has been temporarily or permanently suspended

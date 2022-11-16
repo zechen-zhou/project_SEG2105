@@ -1,5 +1,6 @@
 package com.example.projecttraining;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.example.projecttraining.databinding.FragmentMealListBinding;
+import com.example.projecttraining.user.Cook;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,9 +34,10 @@ public class mealList extends Fragment {
     private ListView MealListView;
     private OfferedMealsList Adapter;
 
-    Button add = binding.addButton;
+    private Cook currentUser;
+    private Button add;
 
-    DatabaseReference databaseMeals = FirebaseDatabase.getInstance().getReferenceFromUrl("https://mealer-dd302-default-rtdb.firebaseio.com/");
+    DatabaseReference databaseMeals = FirebaseDatabase.getInstance().getReference("Meals");
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,15 +51,30 @@ public class mealList extends Fragment {
     public void onViewCreated(@NonNull View view, @NonNull Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            currentUser = (Cook) bundle.getParcelable("cookUser");
+        }
+
         mealList = new ArrayList<>();
         MealListView = binding.mealsList;
+        add = binding.addButton;
 
         databaseMeals.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                if (getActivity()==null) {
+                    return;
+                }
+                mealList.clear();
+
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                     Meal meal = postSnapshot.getValue(Meal.class);
-                    mealList.add(meal);
+
+                    if (meal.getCookUser().equals(currentUser.getEmail())) {
+                        mealList.add(meal);
+                    }
                 }
                 Adapter = new OfferedMealsList(getActivity(), mealList);
                 MealListView.setAdapter(Adapter);
@@ -69,7 +87,7 @@ public class mealList extends Fragment {
         });
 
         add.setOnClickListener(click -> {
-            Navigation.findNavController(view).navigate(R.id.action_menu_add);
+            Navigation.findNavController(view).navigate(R.id.action_menu_add, bundle);
         });
 
         MealListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -79,8 +97,6 @@ public class mealList extends Fragment {
                 showDeleteMeal(meal.getId());
             }
         });
-
-
     }
 
     private void showDeleteMeal(String mealId) {
@@ -102,11 +118,7 @@ public class mealList extends Fragment {
             }
         });
 
-
     }
-
-
-
 
 
     private boolean deleteProduct(String id) {
@@ -115,9 +127,5 @@ public class mealList extends Fragment {
         Toast.makeText(getActivity(), "Meal deleted", Toast.LENGTH_LONG).show();
         return true;
     }
-
-
-
-
 
 }
