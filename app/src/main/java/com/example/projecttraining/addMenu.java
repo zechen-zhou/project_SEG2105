@@ -69,7 +69,9 @@ public class addMenu extends Fragment {
                     double price = Double.parseDouble(meal_priceNumber);
                     ArrayList<String> ingredientsList = new ArrayList<String>(Arrays.asList(meal_ingredientsText.split(",")));
                     ArrayList<String> allergensList = new ArrayList<String>(Arrays.asList(meal_allergensText.split(",")));
-                    meal = new Meal(meal_nameText, meal_typeText, ingredientsList, allergensList, price, meal_descriptionText, null );
+                    String id = db.push().getKey();
+
+                    meal = new Meal(id, meal_nameText, meal_typeText, ingredientsList, allergensList, price, meal_descriptionText, null );
 
                     db.child("Meal").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -77,14 +79,7 @@ public class addMenu extends Fragment {
                             if (snapshot.hasChild(meal_nameText)) {
                                 Toast.makeText(context, "The meal is added", Toast.LENGTH_SHORT).show();
                             } else {
-                                String id = db.push().getKey();
-                                db.child(id).child("mealName").setValue(meal.getMealName());
-                                db.child(id).child("mealType").setValue(meal.getMealType());
-                                db.child(id).child("ingredients").setValue(meal.getIngredients());
-                                db.child(id).child("allergens").setValue(meal.getAllergens());
-                                db.child(id).child("price").setValue(meal.getPrice());
-                                db.child(id).child("description").setValue(meal.getDescription());
-
+                                db.child(id).setValue(meal);
                             }
                         }
 

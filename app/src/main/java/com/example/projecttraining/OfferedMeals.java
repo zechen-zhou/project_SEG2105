@@ -78,7 +78,7 @@ public class OfferedMeals extends Fragment {
                 ingredients.add("B");
                 ArrayList<String> allergens = new ArrayList<>();
                 allergens.add("z");
-                Meal meal = new Meal("name", "type", ingredients, allergens,12.32, "description", "888" );
+                Meal meal = new Meal("id", "name", "type", ingredients, allergens,12.32, "description", "888" );
                 meal.setOffered(true);
 
 

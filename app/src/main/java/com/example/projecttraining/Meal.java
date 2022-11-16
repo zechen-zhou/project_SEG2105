@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Meal {
 
+    private String id;
     private String _mealName;
     private String _mealType;
     private ArrayList<String> _ingredients;
@@ -15,7 +16,8 @@ public class Meal {
 
     public Meal() {}
 
-    public Meal(String name, String type, ArrayList ingredients, ArrayList allergens, double price, String description, String cook) {
+    public Meal(String id, String name, String type, ArrayList ingredients, ArrayList allergens, double price, String description, String cook) {
+        this.id = id;
         this._mealName = name;
         this._mealType = type;
         this._ingredients = ingredients;
@@ -28,6 +30,14 @@ public class Meal {
 
 
     //getters and setters
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getMealName() {
         return _mealName;
     }
