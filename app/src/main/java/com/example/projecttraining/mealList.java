@@ -1,13 +1,11 @@
 package com.example.projecttraining;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -36,6 +34,7 @@ public class mealList extends Fragment {
 
     private Cook currentUser;
     private Button add;
+    private Button back;
 
     DatabaseReference databaseMeals = FirebaseDatabase.getInstance().getReference("Meals");
 
@@ -59,6 +58,7 @@ public class mealList extends Fragment {
         mealList = new ArrayList<>();
         MealListView = binding.mealsList;
         add = binding.addButton;
+        back = binding.menuBackBtn;
 
         databaseMeals.addValueEventListener(new ValueEventListener() {
             @Override
@@ -94,18 +94,23 @@ public class mealList extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Meal meal = mealList.get(i);
-                showDeleteMeal(meal.getId());
+                showUpdateMeal(meal.getId());
             }
+        });
+
+        back.setOnClickListener(click -> {
+            Navigation.findNavController(view).navigate(R.id.action_menu_to_welcomeCook, bundle);
         });
     }
 
-    private void showDeleteMeal(String mealId) {
+    private void showUpdateMeal(String mealId) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getLayoutInflater();
-        final View dialogView = inflater.inflate(R.layout.layout_delete_meal, null);
+        final View dialogView = inflater.inflate(R.layout.layout_update_meal, null);
         dialogBuilder.setView(dialogView);
 
         Button delete = (Button) dialogView.findViewById(R.id.deleteMeal);
+        Button offer = dialogView.findViewById(R.id.offerMealBtn);
 
         final AlertDialog b = dialogBuilder.create();
         b.show();
@@ -118,6 +123,29 @@ public class mealList extends Fragment {
             }
         });
 
+
+        offer.setOnClickListener(view -> {
+            databaseMeals.child(mealId).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                    boolean offered = snapshot.child("offered").getValue(Boolean.class);
+
+                    if (offered) {
+                        Toast.makeText(getActivity(), "Is already offered", Toast.LENGTH_LONG).show();
+
+                    } else {
+                        databaseMeals.child(mealId).child("offered").setValue(true);
+                        Toast.makeText(getActivity(), "Meal offered!", Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        });
     }
 
 

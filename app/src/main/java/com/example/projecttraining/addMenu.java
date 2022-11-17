@@ -58,6 +58,7 @@ public class addMenu extends Fragment {
         EditText meal_allergens = binding.mealAllergens;
         EditText meal_price = binding.mealPrice;
         EditText meal_description = binding.mealDescription;
+        Button back = binding.addMenuBackBtn;
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,37 +75,44 @@ public class addMenu extends Fragment {
                 if (meal_nameText.isEmpty() || meal_typeText.isEmpty() || meal_ingredientsText.isEmpty() || meal_allergensText.isEmpty() || meal_descriptionText.isEmpty()) {
                     Toast.makeText(getActivity(), "Please fill up all fields", Toast.LENGTH_SHORT).show();
 
-                    //TODO: check if prices is in number format (will cause error if it is string)
-
                 } else {
-                    Context context = getActivity();
-                    double price = Double.parseDouble(meal_priceNumber);
-                    ArrayList<String> ingredientsList = new ArrayList<String>(Arrays.asList(meal_ingredientsText.split(",")));
-                    ArrayList<String> allergensList = new ArrayList<String>(Arrays.asList(meal_allergensText.split(",")));
-                    String id = db.push().getKey();
+                    try {
+                        Context context = getActivity();
+                        double price = Double.parseDouble(meal_priceNumber);
+                        ArrayList<String> ingredientsList = new ArrayList<String>(Arrays.asList(meal_ingredientsText.split(",")));
+                        ArrayList<String> allergensList = new ArrayList<String>(Arrays.asList(meal_allergensText.split(",")));
+                        String id = db.push().getKey();
 
-                    meal = new Meal(id, meal_nameText, meal_typeText, ingredientsList, allergensList, price, meal_descriptionText, currentUser.getEmail() );
+                        meal = new Meal(id, meal_nameText, meal_typeText, ingredientsList, allergensList, price, meal_descriptionText, currentUser.getEmail());
 
-                    db.child("Meal").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.hasChild(meal_nameText)) {
-                                Toast.makeText(context, "The meal is added", Toast.LENGTH_SHORT).show();
-                            } else {
-                                db.child(id).setValue(meal);
+                        db.child("Meal").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if (snapshot.hasChild(meal_nameText)) {
+                                    Toast.makeText(context, "The meal is added", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    db.child(id).setValue(meal);
+                                }
                             }
-                        }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
 
-                        }
-                    });
+                            }
+                        });
 
-                    Toast.makeText(getActivity(), "Meal Added!", Toast.LENGTH_SHORT).show();
-                    Navigation.findNavController(view).navigate(R.id.action_addMenu_to_menu, bundle);
+                        Toast.makeText(getActivity(), "Meal Added!", Toast.LENGTH_SHORT).show();
+                        Navigation.findNavController(view).navigate(R.id.action_addMenu_to_menu, bundle);
+
+                    } catch (IllegalArgumentException e) {
+                        Toast.makeText(getActivity(), "price must be a number", Toast.LENGTH_LONG).show();
+                    }
                 }
             }
+        });
+
+        back.setOnClickListener(click -> {
+            Navigation.findNavController(view).navigate(R.id.action_addMenu_to_menu, bundle);
         });
     }
 
