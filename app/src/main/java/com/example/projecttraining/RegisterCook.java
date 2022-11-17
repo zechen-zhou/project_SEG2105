@@ -100,7 +100,7 @@ public class RegisterCook extends Fragment {
                 }
 
                 // check if user fill all the fields
-                if (firstnameText.isEmpty() || lastnameText.isEmpty() || !login.isValidEmail(oddEmailText) || passwordText.isEmpty() || addressText.isEmpty()) {
+                if (firstnameText.isEmpty() || lastnameText.isEmpty() || !login.isValidEmail(oddEmailText) || passwordText.isEmpty() || addressText.isEmpty() || descriptionText.isEmpty()) {
                     Toast.makeText(getActivity(), "Please fill up all fields", Toast.LENGTH_SHORT).show();
                 } else {
                     emailText = oddEmailText.replace('.', ',');
