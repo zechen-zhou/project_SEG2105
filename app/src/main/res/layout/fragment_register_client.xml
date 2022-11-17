@@ -105,7 +105,7 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/email"
+        android:id="@+id/emailInputLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -124,13 +124,13 @@
         app:layout_constraintTop_toBottomOf="@+id/firstName" >
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/registerEmailInputEditText"
+            android:id="@+id/emailInputEditText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/password"
+        android:id="@+id/passwordInputLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -146,10 +146,10 @@
         app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/email">
+            app:layout_constraintTop_toBottomOf="@+id/emailInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/registerPasswordInputEditText"
+            android:id="@+id/passwordInputEditText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="textPassword" />
@@ -172,7 +172,7 @@
         app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/password">
+            app:layout_constraintTop_toBottomOf="@+id/passwordInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/homeAddressEditText"
