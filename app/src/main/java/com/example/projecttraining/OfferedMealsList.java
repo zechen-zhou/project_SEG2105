@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,7 +15,7 @@ import androidx.annotation.Nullable;
 import java.text.DecimalFormat;
 import java.util.List;
 
-public class OfferedMealsList extends ArrayAdapter<Meal> {
+public class OfferedMealsList extends ArrayAdapter<Meal> implements Filterable {
 
     private Activity context;
     private List<Meal> meals;
@@ -63,5 +65,20 @@ public class OfferedMealsList extends ArrayAdapter<Meal> {
         textDescription.setText("Description: "+meal.getDescription());
 
         return listView;
+    }
+
+    //implement the filter logic (filter by name) -- youtube videos and google how to create filter
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                return null;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+
+            }
+        };
     }
 }

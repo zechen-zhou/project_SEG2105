@@ -7,9 +7,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.SearchEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.example.projecttraining.databinding.FragmentOfferedMealsBinding;
@@ -59,7 +61,21 @@ public class OfferedMeals extends Fragment {
         mealList = new ArrayList<>();
         fromSuspended = new ArrayList<>();
 
+        //search bar
+        SearchView searchbar = binding.mealSearch;
 
+        //copy what you have here, might have to make some small changes
+        searchbar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
 
         /*
         DELETE LATER
