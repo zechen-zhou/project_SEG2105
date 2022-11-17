@@ -111,6 +111,7 @@ public class mealList extends Fragment {
 
         Button delete = (Button) dialogView.findViewById(R.id.deleteMeal);
         Button offer = dialogView.findViewById(R.id.offerMealBtn);
+        Button unoffer = dialogView.findViewById(R.id.unofferMealBtn);
 
         final AlertDialog b = dialogBuilder.create();
         b.show();
@@ -118,8 +119,27 @@ public class mealList extends Fragment {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                deleteProduct(mealId);
-                b.dismiss();
+
+                databaseMeals.child(mealId).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        boolean offered = snapshot.child("offered").getValue(Boolean.class);
+
+                        if (offered) {
+                            Toast.makeText(getActivity(), "Can't delete offered meal", Toast.LENGTH_LONG).show();
+
+                        } else {
+                            deleteProduct(mealId);
+                            b.dismiss();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
             }
         });
 
@@ -137,6 +157,28 @@ public class mealList extends Fragment {
                     } else {
                         databaseMeals.child(mealId).child("offered").setValue(true);
                         Toast.makeText(getActivity(), "Meal offered!", Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        });
+
+        unoffer.setOnClickListener(view -> {
+            databaseMeals.child(mealId).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    boolean offered = snapshot.child("offered").getValue(Boolean.class);
+
+                    if (!offered) {
+                        Toast.makeText(getActivity(), "Already not offered", Toast.LENGTH_LONG).show();
+
+                    } else {
+                        databaseMeals.child(mealId).child("offered").setValue(false);
+                        Toast.makeText(getActivity(), "Meal is unoffered", Toast.LENGTH_LONG).show();
                     }
                 }
 
