@@ -7,6 +7,7 @@ public class Meal {
     private String id;
     private String _mealName;
     private String _mealType;
+    private String _cuisineType;
     private ArrayList<String> _ingredients;
     private ArrayList<String> _allergens;
     private double _price;
@@ -16,10 +17,11 @@ public class Meal {
 
     public Meal() {}
 
-    public Meal(String id, String name, String type, ArrayList ingredients, ArrayList allergens, double price, String description, String cook) {
+    public Meal(String id, String name, String mealType, String cuisineType, ArrayList ingredients, ArrayList allergens, double price, String description, String cook) {
         this.id = id;
         this._mealName = name;
-        this._mealType = type;
+        this._mealType = mealType;
+        this._cuisineType = cuisineType;
         this._ingredients = ingredients;
         this._allergens = allergens;
         this._price = price;
@@ -53,6 +55,12 @@ public class Meal {
     public void setMealType(String _mealType) {
         this._mealType = _mealType;
     }
+
+    public String getCuisineType() {
+        return _cuisineType;
+    }
+
+    public void setCuisineType(String cuisineType) { this._cuisineType = cuisineType;}
 
     public ArrayList<String> getIngredients() {
         return _ingredients;

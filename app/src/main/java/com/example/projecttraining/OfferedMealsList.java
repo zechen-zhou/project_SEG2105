@@ -36,6 +36,7 @@ public class OfferedMealsList extends ArrayAdapter<Meal> implements Filterable {
         TextView textMealName = listView.findViewById(R.id.mealNameText);
         TextView price = listView.findViewById(R.id.priceText);
         TextView textMealType = listView.findViewById(R.id.mealTypeText);
+        TextView textCuisine = listView.findViewById(R.id.cuisineTypeText);
         TextView byCook = listView.findViewById(R.id.byCookText);
         TextView ingredients = listView.findViewById(R.id.ingredientsText);
         TextView allergens = listView.findViewById(R.id.allergensText);
@@ -47,6 +48,7 @@ public class OfferedMealsList extends ArrayAdapter<Meal> implements Filterable {
         price.setText("$"+String.valueOf(priceFormat.format(meal.getPrice())));
 
         textMealType.setText("Type: "+meal.getMealType());
+        textCuisine.setText("Cuisine: "+meal.getCuisineType());
         byCook.setText("By: "+meal.getCookUser().replace(",","."));
 
         StringBuilder ingrStr = new StringBuilder("");

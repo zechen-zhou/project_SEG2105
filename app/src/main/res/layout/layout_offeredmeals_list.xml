@@ -34,9 +34,15 @@
 
         <TextView
             android:id="@+id/mealTypeText"
-            android:layout_width="198dp"
+            android:layout_width="105dp"
             android:layout_height="31dp"
             android:text="meal type" />
+
+        <TextView
+            android:id="@+id/cuisineTypeText"
+            android:layout_width="133dp"
+            android:layout_height="29dp"
+            android:text="Cuisine type" />
 
         <TextView
             android:id="@+id/byCookText"

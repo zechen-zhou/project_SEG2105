@@ -54,6 +54,7 @@ public class addMenu extends Fragment {
 
         EditText meal_name = binding.mealName;
         EditText meal_type = binding.mealType;
+        EditText meal_cuisine = binding.cuisineType;
         EditText meal_ingredients = binding.mealIngredients;
         EditText meal_allergens = binding.mealAllergens;
         EditText meal_price = binding.mealPrice;
@@ -67,39 +68,25 @@ public class addMenu extends Fragment {
 
                 String meal_nameText = meal_name.getText().toString();
                 String meal_typeText = meal_type.getText().toString();
+                String meal_cuisineText = meal_cuisine.getText().toString();
                 String meal_ingredientsText = meal_ingredients.getText().toString();
                 String meal_allergensText = meal_allergens.getText().toString();
                 String meal_priceNumber = meal_price.getText().toString();
                 String meal_descriptionText = meal_description.getText().toString();
 
-                if (meal_nameText.isEmpty() || meal_typeText.isEmpty() || meal_ingredientsText.isEmpty() || meal_allergensText.isEmpty() || meal_descriptionText.isEmpty()) {
+                if (meal_nameText.isEmpty() || meal_typeText.isEmpty() || meal_cuisineText.isEmpty() || meal_ingredientsText.isEmpty() || meal_allergensText.isEmpty() || meal_descriptionText.isEmpty()) {
                     Toast.makeText(getActivity(), "Please fill up all fields", Toast.LENGTH_SHORT).show();
 
                 } else {
                     try {
-                        Context context = getActivity();
                         double price = Double.parseDouble(meal_priceNumber);
                         ArrayList<String> ingredientsList = new ArrayList<String>(Arrays.asList(meal_ingredientsText.split(",")));
                         ArrayList<String> allergensList = new ArrayList<String>(Arrays.asList(meal_allergensText.split(",")));
                         String id = db.push().getKey();
 
-                        meal = new Meal(id, meal_nameText, meal_typeText, ingredientsList, allergensList, price, meal_descriptionText, currentUser.getEmail());
-
-                        db.child("Meal").addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                if (snapshot.hasChild(meal_nameText)) {
-                                    Toast.makeText(context, "The meal is added", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    db.child(id).setValue(meal);
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
+                        //create and add new meal to firebase
+                        meal = new Meal(id, meal_nameText, meal_typeText, meal_cuisineText, ingredientsList, allergensList, price, meal_descriptionText, currentUser.getEmail());
+                        db.child(id).setValue(meal);
 
                         Toast.makeText(getActivity(), "Meal Added!", Toast.LENGTH_SHORT).show();
                         Navigation.findNavController(view).navigate(R.id.action_addMenu_to_menu, bundle);
