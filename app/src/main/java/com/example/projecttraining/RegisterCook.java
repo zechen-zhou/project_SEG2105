@@ -8,6 +8,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.projecttraining.databinding.FragmentRegisterCookBinding;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.example.projecttraining.user.Cook;
@@ -25,6 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class RegisterCook extends Fragment {
 
+    Login login;
     private FragmentRegisterCookBinding binding;
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://mealer-dd302-default-rtdb.firebaseio.com/");
@@ -46,11 +50,27 @@ public class RegisterCook extends Fragment {
 
         EditText firstname = binding.cookFirstNameInputEditText;
         EditText lastname = binding.cookLastNameInputEditText;
-        EditText email = binding.cookemailAddressEdittext;
+        EditText emailInputEditText = binding.emailInputEditText;
+        TextInputLayout emailInputLayout = binding.emailInputLayout;
         EditText password = binding.cooknewPasswordEdittext;
         EditText address = binding.cookhomeAddressEdittext;
         EditText description = binding.cookdescriptionEdittext;
 
+        emailInputEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                //remove emailInputLayout error when the text length is changed
+                emailInputLayout.setError(null);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
 
         welcomeCook.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,16 +80,30 @@ public class RegisterCook extends Fragment {
                 //get data from EditText from String variables
                 String firstnameText = firstname.getText().toString();
                 String lastnameText = lastname.getText().toString();
-                String oddEmailText = email.getText().toString();
-                String emailText = oddEmailText.replace('.', ',');
+                String oddEmailText = emailInputEditText.getText().toString();
+                String emailText;
                 String passwordText = password.getText().toString();
                 String addressText = address.getText().toString();
                 String descriptionText = description.getText().toString();
 
+                // Email is empty
+                if (oddEmailText.equals("")) {
+                    emailInputLayout.setError(getString(R.string.email_empty_message));
+
+                    // Remove the error icon, so it will keep using the "clear_text" mode
+                    emailInputLayout.setErrorIconDrawable(null);
+                } else if (!login.isValidEmail(oddEmailText)) { // Email is not valid
+                    emailInputLayout.setError(getString(R.string.email_error_message));
+
+                    // Remove the error icon, so it will keep using the "clear_text" mode
+                    emailInputLayout.setErrorIconDrawable(null);
+                }
+
                 // check if user fill all the fields
-                if (firstnameText.isEmpty() || lastnameText.isEmpty() || emailText.isEmpty() || passwordText.isEmpty() || addressText.isEmpty()) {
+                if (firstnameText.isEmpty() || lastnameText.isEmpty() || !login.isValidEmail(oddEmailText) || passwordText.isEmpty() || addressText.isEmpty() || descriptionText.isEmpty()) {
                     Toast.makeText(getActivity(), "Please fill up all fields", Toast.LENGTH_SHORT).show();
                 } else {
+                    emailText = oddEmailText.replace('.', ',');
                     Context context = getActivity();
                     cook = new Cook(firstnameText, lastnameText, emailText, passwordText, addressText, descriptionText);
 
