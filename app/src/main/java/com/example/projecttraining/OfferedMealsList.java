@@ -13,17 +13,25 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class OfferedMealsList extends ArrayAdapter<Meal> implements Filterable {
 
     private Activity context;
     private List<Meal> meals;
+    List<Meal> mStringFilterList; //added this line
 
     public OfferedMealsList (Activity context, List<Meal> meals) {
         super(context, R.layout.layout_offeredmeals_list, meals);
         this.context = context;
         this.meals = meals;
+        mStringFilterList = meals; //added this line
+    }
+
+    public int getCount() {
+        return meals.size();
     }
 
     @NonNull
@@ -41,6 +49,10 @@ public class OfferedMealsList extends ArrayAdapter<Meal> implements Filterable {
         TextView ingredients = listView.findViewById(R.id.ingredientsText);
         TextView allergens = listView.findViewById(R.id.allergensText);
         TextView textDescription = listView.findViewById(R.id.mealDescriptionText);
+
+        if (!(position<meals.size())){
+            return listView;
+        }
 
         Meal meal = meals.get(position);
         textMealName.setText(meal.getMealName());
@@ -64,7 +76,7 @@ public class OfferedMealsList extends ArrayAdapter<Meal> implements Filterable {
         }
         String allergensList = allerStr.toString();
         allergens.setText("Allergens: " + allergensList.toString().substring(0, allergensList.length()-1));
-        textDescription.setText("Description: "+meal.getDescription());
+        textDescription.setText("Description: " + meal.getDescription());
 
         return listView;
     }
@@ -74,12 +86,29 @@ public class OfferedMealsList extends ArrayAdapter<Meal> implements Filterable {
         return new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence charSequence) {
-                return null;
+                FilterResults results = new FilterResults();
+                if(charSequence != null && charSequence.length() > 0){
+                    ArrayList<Meal> filteredMeals = new ArrayList<Meal>();
+                    for(int i = 0 ; i < mStringFilterList.size() ; i++){
+                        if(mStringFilterList.get(i).getMealName().toUpperCase().contains(charSequence.toString().toUpperCase())){
+                            //Meal meal = new Meal(mStringFilterList.get(i).getMealName(),
+                            //        mStringFilterList.get(i).getMealType()); //create a new meal that takes as parameters the attributes
+                            filteredMeals.add(mStringFilterList.get(i));
+                        }
+                    }
+                    results.count = filteredMeals.size();
+                    results.values = filteredMeals;
+                } else{
+                    results.count = mStringFilterList.size();
+                    results.values = mStringFilterList;
+                }
+                return results;
             }
 
             @Override
-            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-
+            protected void publishResults(CharSequence charSequence, FilterResults results) {
+                meals = (ArrayList<Meal>) results.values;
+                notifyDataSetChanged();
             }
         };
     }

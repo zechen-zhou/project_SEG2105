@@ -7,12 +7,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
-import android.view.SearchEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.projecttraining.databinding.FragmentOfferedMealsBinding;
 import com.google.firebase.database.DataSnapshot;
@@ -61,47 +61,26 @@ public class OfferedMeals extends Fragment {
         mealList = new ArrayList<>();
         fromSuspended = new ArrayList<>();
 
-        //search bar
         SearchView searchbar = binding.mealSearch;
 
-        //copy what you have here, might have to make some small changes
         searchbar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(String s) {
+            public boolean onQueryTextSubmit(String query) {
+                if(mealList.contains(query)){
+                    offeredAdapter.getFilter().filter(query);
+                }
+                else{
+                    Toast.makeText(getActivity(), "Not found", Toast.LENGTH_LONG).show();
+                }
                 return false;
             }
 
             @Override
-            public boolean onQueryTextChange(String s) {
+            public boolean onQueryTextChange(String newText) {
+                offeredAdapter.getFilter().filter(newText);
                 return false;
             }
         });
-
-        /*
-        DELETE LATER
-        Used for testing only -- click "Offered Meals" Title to add meal into the database
-        --> customize meal object and add it to database
-         */
-        TextView title = binding.offeredMealsTitle;
-
-        title.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String id = databaseMeals.push().getKey();
-
-                ArrayList<String> ingredients = new ArrayList<>();
-                ingredients.add("A");
-                ingredients.add("B");
-                ArrayList<String> allergens = new ArrayList<>();
-                allergens.add("z");
-                Meal meal = new Meal("id", "name", "type", ingredients, allergens,12.32, "description", "888" );
-                meal.setOffered(true);
-
-
-                databaseMeals.child(id).setValue(meal);
-            }
-        });
-        //end of testing only
 
 
 
