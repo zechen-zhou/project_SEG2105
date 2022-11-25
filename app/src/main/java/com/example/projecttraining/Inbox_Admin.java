@@ -1,8 +1,10 @@
 package com.example.projecttraining;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -56,7 +58,7 @@ public class Inbox_Admin extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Complaint complaint = complaints.get(i);
-                String[] complaintInfo = {complaint. getId(), complaint.getCookUser(), complaint.getClientUser(), complaint.getDescription()};
+                String[] complaintInfo = {complaint.getId(), complaint.getCookUser(), complaint.getClientUser(), complaint.getDescription()};
 
                 Bundle bundle = new Bundle();
                 bundle.putStringArray("complaint", complaintInfo);
@@ -70,15 +72,18 @@ public class Inbox_Admin extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 complaints.clear();
 
-                for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     boolean isRead = postSnapshot.child("read").getValue(Boolean.class);
                     Complaint complaint = postSnapshot.getValue(Complaint.class);
                     complaint.setReadStatus(isRead);
 
                     complaint.addComplaint(complaints, isRead, complaint);
                 }
-                ComplaintList complaintAdapter = new ComplaintList(getActivity(), complaints);
-                listViewComplaints.setAdapter(complaintAdapter);
+                Activity activity = getActivity();
+                if (activity != null) {
+                    ComplaintList complaintAdapter = new ComplaintList(activity, complaints);
+                    listViewComplaints.setAdapter(complaintAdapter);
+                }
             }
 
             @Override
