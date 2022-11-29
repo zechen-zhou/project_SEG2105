@@ -53,6 +53,15 @@
 
     </LinearLayout>
 
+    <RatingBar
+        android:id="@+id/cookRatingBar"
+        style="@android:style/Widget.DeviceDefault.Light.RatingBar.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:isIndicator="true"
+        android:numStars="5"
+        android:progressTint="@color/yellow" />
+
     <TextView
         android:id="@+id/ingredientsText"
         android:layout_width="match_parent"

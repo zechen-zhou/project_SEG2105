@@ -7,27 +7,33 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class OfferedMealsList extends ArrayAdapter<Meal> implements Filterable {
 
     private Activity context;
     private List<Meal> meals;
-    List<Meal> mStringFilterList; //added this line
+    List<Meal> mStringFilterList;
 
     public OfferedMealsList (Activity context, List<Meal> meals) {
         super(context, R.layout.layout_offeredmeals_list, meals);
         this.context = context;
         this.meals = meals;
-        mStringFilterList = meals; //added this line
+        mStringFilterList = meals;
     }
 
     public int getCount() {
@@ -49,6 +55,8 @@ public class OfferedMealsList extends ArrayAdapter<Meal> implements Filterable {
         TextView ingredients = listView.findViewById(R.id.ingredientsText);
         TextView allergens = listView.findViewById(R.id.allergensText);
         TextView textDescription = listView.findViewById(R.id.mealDescriptionText);
+
+        RatingBar cookRating = listView.findViewById(R.id.cookRatingBar);
 
         if (!(position<meals.size())){
             return listView;
@@ -78,6 +86,20 @@ public class OfferedMealsList extends ArrayAdapter<Meal> implements Filterable {
         allergens.setText("Allergens: " + allergensList.toString().substring(0, allergensList.length()-1));
         textDescription.setText("Description: " + meal.getDescription());
 
+        //get and display cook's rating
+        DatabaseReference cookDB = FirebaseDatabase.getInstance().getReference("CookUser").child(meal.getCookUser());
+
+        cookDB.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                cookRating.setRating(snapshot.child("rating").getValue(Float.class));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
         return listView;
     }
 
@@ -91,8 +113,7 @@ public class OfferedMealsList extends ArrayAdapter<Meal> implements Filterable {
                     ArrayList<Meal> filteredMeals = new ArrayList<Meal>();
                     for(int i = 0 ; i < mStringFilterList.size() ; i++){
                         if(mStringFilterList.get(i).getMealName().toUpperCase().contains(charSequence.toString().toUpperCase())){
-                            //Meal meal = new Meal(mStringFilterList.get(i).getMealName(),
-                            //        mStringFilterList.get(i).getMealType()); //create a new meal that takes as parameters the attributes
+
                             filteredMeals.add(mStringFilterList.get(i));
                         }
                     }
