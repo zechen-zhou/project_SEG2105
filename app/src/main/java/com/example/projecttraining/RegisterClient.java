@@ -113,7 +113,6 @@ public class RegisterClient extends Fragment {
                             if (snapshot.hasChild(emailText)) {
                                 Toast.makeText(context, "Email is registered", Toast.LENGTH_SHORT).show();
                             } else {
-                                Navigation.findNavController(view).navigate(R.id.action_registerClient_to_login);
                                 Toast.makeText(context, "Registration complete! Please login", Toast.LENGTH_SHORT).show();
 
                                 databaseReference.child("ClientUser").child(emailText).child("firstname").setValue(client.getFirstName());
@@ -121,6 +120,9 @@ public class RegisterClient extends Fragment {
                                 databaseReference.child("ClientUser").child(emailText).child("password").setValue(client.getPassword());
                                 databaseReference.child("ClientUser").child(emailText).child("address").setValue(client.getAddress());
                                 databaseReference.child("ClientUser").child(emailText).child("creditCardInfo").setValue(client.getCreditCardInfo());
+                                databaseReference.child("ClientUser").child(emailText).child("history").setValue("");
+
+                                Navigation.findNavController(view).navigate(R.id.action_registerClient_to_login);
                             }
                         }
 

@@ -90,6 +90,9 @@
         <action
             android:id="@+id/action_welcomeClient_to_offeredMeals"
             app:destination="@id/offeredMeals" />
+        <action
+            android:id="@+id/action_welcomeClient_to_client_OrderHistory"
+            app:destination="@id/client_OrderHistory" />
     </fragment>
     <fragment
         android:id="@+id/registerSelect"
@@ -182,5 +185,19 @@
             android:id="@+id/action_addMenu_to_menu"
             app:destination="@id/menu" />
     </fragment>
+    <fragment
+        android:id="@+id/client_OrderHistory"
+        android:name="com.example.projecttraining.Client_OrderHistory"
+        android:label="fragment_client__order_history"
+        tools:layout="@layout/fragment_client__order_history" >
+        <action
+            android:id="@+id/action_client_OrderHistory_to_rateMeal"
+            app:destination="@id/rateMeal" />
+    </fragment>
+    <fragment
+        android:id="@+id/rateMeal"
+        android:name="com.example.projecttraining.RateMeal"
+        android:label="fragment_rate_meal"
+        tools:layout="@layout/fragment_rate_meal" />
 
 </navigation>
