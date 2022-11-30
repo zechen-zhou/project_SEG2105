@@ -114,7 +114,6 @@ public class RegisterCook extends Fragment {
                             if (snapshot.hasChild(emailText)) {
                                 Toast.makeText(context, "Email is registered", Toast.LENGTH_SHORT).show();
                             } else {
-                                Navigation.findNavController(view).navigate(R.id.action_registerCook_to_login);
                                 Toast.makeText(context, "Registration complete! Please login", Toast.LENGTH_SHORT).show();
 
                                 databaseReference.child("CookUser").child(emailText).child("firstname").setValue(cook.getFirstName());
@@ -123,6 +122,9 @@ public class RegisterCook extends Fragment {
                                 databaseReference.child("CookUser").child(emailText).child("address").setValue(cook.getAddress());
                                 databaseReference.child("CookUser").child(emailText).child("description").setValue(cook.getCookDescription());
                                 databaseReference.child("CookUser").child(emailText).child("status").setValue(0);
+                                databaseReference.child("CookUser").child(emailText).child("rating").setValue(0);
+
+                                Navigation.findNavController(view).navigate(R.id.action_registerCook_to_login);
                             }
                         }
 
