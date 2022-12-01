@@ -45,7 +45,6 @@ public class WelcomeClient extends Fragment {
         TextView card = binding.creditInfo;
 
         Button logout = binding.logout;
-        Button complain = binding.administrator;
         Button order = binding.ordernow;
         Button history = binding.orderhistory;
 
@@ -63,10 +62,6 @@ public class WelcomeClient extends Fragment {
 
         logout.setOnClickListener(click -> {
             Navigation.findNavController(view).navigate(R.id.action_welcomeClient_to_login);
-        });
-
-        complain.setOnClickListener(click -> {
-            Navigation.findNavController(view).navigate(R.id.action_welcomeClient_to_complain, bundle);
         });
 
         history.setOnClickListener(click -> {

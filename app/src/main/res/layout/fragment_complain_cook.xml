@@ -20,43 +20,46 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <TextView
-        android:id="@+id/Complain_cook"
-        android:layout_width="257dp"
+        android:id="@+id/complainCookTitle"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:text="Complain the Cook"
+        android:layout_marginTop="76dp"
+        android:text="Not happy with your purchase? Tell us why"
         android:textColor="#F38525"
         android:textSize="30dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Client" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:textAlignment="center" />
 
-    <EditText
+    <TextView
         android:id="@+id/cookName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="68dp"
-        android:hint="Please enter the cook name"
+        android:layout_marginTop="8dp"
         android:inputType="textPersonName"
+        android:text="Made by: cook user"
         android:textColor="#949494"
-        app:layout_constraintTop_toBottomOf="@+id/Complain_cook"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="77dp" />
-
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mealName"
+        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/submit_complain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="156dp"
+        android:layout_marginTop="152dp"
         android:gravity="center"
-        android:text="Submit it"
-        android:textSize="30dp"
+        android:text="submit"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.578"
-        app:layout_constraintStart_toEndOf="@+id/backToWelcomeCook"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/complaintxt" />
 
     <EditText
@@ -71,17 +74,16 @@
         app:layout_constraintTop_toBottomOf="@+id/cookName"
         android:hint="Type the complaint here!"/>
 
-    <Button
-        android:id="@+id/backToWelcomeCook"
+    <TextView
+        android:id="@+id/mealName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="156dp"
-        android:text="Back"
-        android:textSize="30dp"
+        android:layout_marginTop="20dp"
+        android:text="Meal"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.144"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/complaintxt"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintTop_toBottomOf="@+id/complainCookTitle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

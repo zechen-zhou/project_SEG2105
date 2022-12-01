@@ -165,23 +165,10 @@
         android:id="@+id/personinfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="14dp"
+        android:layout_marginBottom="4dp"
         android:backgroundTint="#FFC107"
         android:gravity="center"
         android:text="PERSONAL PROFILE"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/administrator"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/administrator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="14dp"
-        android:backgroundTint="#FFC107"
-        android:gravity="center"
-        android:text="COMPLAIN THE COOK"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/orderhistory"
         app:layout_constraintEnd_toEndOf="parent"
@@ -191,7 +178,7 @@
         android:id="@+id/orderhistory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="14dp"
+        android:layout_marginBottom="4dp"
         android:backgroundTint="#FFC107"
         android:gravity="center"
         android:text="ORDER HISTORY"
@@ -204,12 +191,14 @@
         android:id="@+id/ordernow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
         android:backgroundTint="#FFC107"
         android:gravity="center"
         android:text="ORDER NOW"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent" />
 
 

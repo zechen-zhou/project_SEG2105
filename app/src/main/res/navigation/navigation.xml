@@ -83,11 +83,6 @@
             app:popUpToInclusive="true" />
 
         <action
-            android:id="@+id/action_welcomeClient_to_complain"
-            app:destination="@id/complain"
-            app:popUpTo="@id/welcomeClient"
-            app:popUpToInclusive="true" />
-        <action
             android:id="@+id/action_welcomeClient_to_offeredMeals"
             app:destination="@id/offeredMeals" />
         <action
@@ -144,13 +139,9 @@
         android:name="com.example.projecttraining.Client_Complain"
         android:label="fragment_complain_cook"
         tools:layout="@layout/fragment_complain_cook" >
-
         <action
-            android:id="@+id/action_complain_to_welcome"
-            app:destination="@id/welcomeClient"
-            app:popUpTo="@id/complain"
-            app:popUpToInclusive="true" />
-
+            android:id="@+id/action_complain_to_client_OrderHistory"
+            app:destination="@id/client_OrderHistory" />
     </fragment>
     <fragment
         android:id="@+id/complaintDecision"
@@ -193,6 +184,9 @@
         <action
             android:id="@+id/action_client_OrderHistory_to_rateMeal"
             app:destination="@id/rateMeal" />
+        <action
+            android:id="@+id/action_client_OrderHistory_to_complain2"
+            app:destination="@id/complain" />
     </fragment>
     <fragment
         android:id="@+id/rateMeal"

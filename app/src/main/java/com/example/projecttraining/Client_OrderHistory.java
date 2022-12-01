@@ -138,7 +138,11 @@ public class Client_OrderHistory extends Fragment {
                 });
 
                 complain.setOnClickListener(view1 ->{
-
+                    dialog.dismiss();
+                    //send cook user to complain fragment
+                    bundle.putString("complainCook", meal.getCookUser().replace(",", "."));
+                    bundle.putString("complainMeal", meal.getMealName());
+                    Navigation.findNavController(view).navigate(R.id.action_client_OrderHistory_to_complain2, bundle);
                 });
 
             }

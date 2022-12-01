@@ -1,5 +1,6 @@
 package com.example.projecttraining;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -108,8 +109,12 @@ public class OfferedMeals extends Fragment {
                     }
                 }
 
-                offeredAdapter = new OfferedMealsList(getActivity(), mealList);
-                offeredMealsListView.setAdapter(offeredAdapter);
+                Activity activity = getActivity();
+
+                if (activity!=null) {
+                    offeredAdapter = new OfferedMealsList(getActivity(), mealList);
+                    offeredMealsListView.setAdapter(offeredAdapter);
+                }
             }
 
             @Override
@@ -138,8 +143,13 @@ public class OfferedMeals extends Fragment {
                     }
 
                 }
-                offeredAdapter = new OfferedMealsList(getActivity(), mealList);
-                offeredMealsListView.setAdapter(offeredAdapter);
+
+                Activity activity = getActivity();
+
+                if (activity!=null) {
+                    offeredAdapter = new OfferedMealsList(getActivity(), mealList);
+                    offeredMealsListView.setAdapter(offeredAdapter);
+                }
             }
 
             @Override
