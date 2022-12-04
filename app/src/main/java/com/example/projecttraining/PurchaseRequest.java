@@ -4,15 +4,30 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ListView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.example.projecttraining.databinding.FragmentCookPurchaseRequestBinding;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PurchaseRequest extends Fragment {
 
     private FragmentCookPurchaseRequestBinding binding;
+    private ListView requestListView;
+    private List<Meal> requestList;
+    private OfferedMealsList Adapter;
 
     DatabaseReference databaseRequest;
 
@@ -29,6 +44,63 @@ public class PurchaseRequest extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        requestListView = binding.requestListView;
+        databaseRequest = FirebaseDatabase.getInstance().getReference("request");
+        requestList = new ArrayList<>();
 
+        databaseRequest.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                requestList.clear();
+
+                for(DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    Meal request = postSnapshot.getValue(Meal.class);
+                    requestList.add(request);
+                }
+                Adapter = new OfferedMealsList(getActivity(), requestList);
+                requestListView.setAdapter(Adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        requestListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Meal meal = requestList.get(i);
+                requestMeal(meal.getId());
+
+            }
+        });
+    }
+
+    private void requestMeal(String mealId) {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.layout_request_change, null);
+        dialogBuilder.setView(dialogView);
+
+        Button accept = (Button) dialogView.findViewById(R.id.accept);
+        Button dismiss = dialogView.findViewById((R.id.dismiss));
+
+        final AlertDialog b = dialogBuilder.create();
+        b.show();
+
+        accept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                databaseRequest.child("Request_type").setValue(Request_type.APPROVED);
+            }
+        });
+
+        dismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                databaseRequest.child("Request_type").setValue(Request_type.REJECTED);
+            }
+        });
     }
 }
