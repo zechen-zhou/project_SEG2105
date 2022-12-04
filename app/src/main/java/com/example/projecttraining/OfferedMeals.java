@@ -1,21 +1,27 @@
 package com.example.projecttraining;
 
 import android.app.Activity;
+import android.app.Person;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.projecttraining.databinding.FragmentOfferedMealsBinding;
+import com.example.projecttraining.user.Client;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,6 +45,7 @@ public class OfferedMeals extends Fragment {
 
     DatabaseReference databaseMeals;
     DatabaseReference databaseCooks;
+    DatabaseReference databaseOrder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,6 +63,11 @@ public class OfferedMeals extends Fragment {
         cookStatus = new HashMap<>();
         databaseMeals = FirebaseDatabase.getInstance().getReference("Meals");
         databaseCooks = FirebaseDatabase.getInstance().getReference("CookUser");
+        Client currentUser = null;
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            currentUser = (Client) bundle.getParcelable("clientUser");
+        }
 
         offeredMealsListView = binding.mealsList;
 
@@ -155,6 +167,45 @@ public class OfferedMeals extends Fragment {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+
+        Client finalCurrentUser = currentUser;
+        offeredMealsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Meal meal = mealList.get(i);
+                String clientUser = finalCurrentUser.getEmail();
+                requestOrder(meal.getId(), clientUser);
+
+            }
+        });
+    }
+
+    private void requestOrder(String mealId, String clientUser) {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.layout_request_order, null);
+        dialogBuilder.setView(dialogView);
+
+        Button order = dialogView.findViewById(R.id.order);
+        Bundle bundle = this.getArguments();
+
+
+        final AlertDialog b = dialogBuilder.create();
+        b.show();
+
+        order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Meal meal = null;
+                if (bundle != null) {
+                    meal = (Meal) bundle.getParcelable("meal");
+                }
+                String requestId = databaseOrder.push().getKey();
+                databaseOrder = FirebaseDatabase.getInstance().getReference("request/" + meal.getCookUser());
+                databaseOrder.push().setValue(new Request(requestId, clientUser, meal, Request_type.PENDING));
             }
         });
     }
