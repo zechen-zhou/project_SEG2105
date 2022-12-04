@@ -57,16 +57,16 @@
         android:layout_marginTop="3dp"
         android:layout_marginEnd="4dp"
         android:ems="10"
-        android:textSize="20sp"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:hint="@string/cook_firstName_text"
+        android:textSize="20sp"
 
         app:endIconMode="clear_text"
         app:errorEnabled="true"
-            app:layout_constraintEnd_toStartOf="@+id/lastName"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/registerAs" >
+        app:layout_constraintEnd_toStartOf="@+id/lastName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registerAs">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/cookFirstNameInputEditText"
@@ -83,21 +83,21 @@
         android:layout_marginTop="3dp"
         android:layout_marginEnd="16dp"
         android:ems="10"
-        android:textSize="20sp"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:hint="@string/cook_lastName_text"
+        android:textSize="20sp"
 
         app:endIconMode="clear_text"
         app:errorEnabled="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/firstName"
-            app:layout_constraintTop_toBottomOf="@+id/registerAs">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/firstName"
+        app:layout_constraintTop_toBottomOf="@+id/registerAs">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/cookLastNameInputEditText"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -116,16 +116,15 @@
 
         app:endIconMode="clear_text"
         app:errorEnabled="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/firstName">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/firstName">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/emailInputEditText"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
     </com.google.android.material.textfield.TextInputLayout>
-
 
 
     <com.google.android.material.textfield.TextInputLayout
@@ -177,36 +176,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/cookhomeAddressEdittext"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
     </com.google.android.material.textfield.TextInputLayout>
-
-
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/pictureVoidCheque"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="16dp"
-        android:ems="10"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:hint="@string/cook_pictureVoidCheque_text"
-
-        app:endIconMode="clear_text"
-        app:errorEnabled="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/homeAddress">
-<!--picture needed-->
-<!--        android:id="@+id/registerEmailInputEditText"-->
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </com.google.android.material.textfield.TextInputLayout>
-
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/cookDescription"
@@ -223,15 +194,36 @@
 
         app:endIconMode="clear_text"
         app:errorEnabled="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/pictureVoidCheque" >
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/homeAddress">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/cookdescriptionEdittext"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <ImageView
+        android:id="@+id/voidChequeImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cookDescription"
+        app:srcCompat="@android:drawable/ic_menu_camera" />
+
+    <TextView
+        android:id="@+id/captureVoidChequeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/capture_void_cheque_text"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/voidChequeImageView"
+        app:layout_constraintStart_toStartOf="@+id/voidChequeImageView"
+        app:layout_constraintTop_toBottomOf="@+id/voidChequeImageView" />
 
     <Button
         android:id="@+id/backToSignIn"

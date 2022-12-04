@@ -37,5 +37,6 @@
     <string name="cook_newPassword_text">New Password</string>
     <string name="cook_homeAddress_text">Home Address</string>
     <string name="cook_description_text">Add a description</string>
-    <string name="cook_pictureVoidCheque_text">Submit picture of Void Cheque</string>
+    <string name="capture_void_cheque_text">Capture void cheque image</string>
+    <string name="capture_void_cheque_error_message">Void cheque image is required</string>
 </resources>
