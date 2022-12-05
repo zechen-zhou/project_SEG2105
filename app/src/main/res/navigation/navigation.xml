@@ -67,9 +67,7 @@
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_welcomeCook_to_menu"
-            app:destination="@id/menu"
-            app:popUpTo="@id/welcomeCook"
-            app:popUpToInclusive="true" />
+            app:destination="@id/menu" />
     </fragment>
     <fragment
         android:id="@+id/welcomeClient"
@@ -129,7 +127,7 @@
         android:id="@+id/inbox_Admin"
         android:name="com.example.projecttraining.Inbox_Admin"
         android:label="fragment_inbox__admin"
-        tools:layout="@layout/fragment_inbox__admin" >
+        tools:layout="@layout/fragment_inbox__admin">
         <action
             android:id="@+id/action_inbox_Admin_to_complaintDecision"
             app:destination="@id/complaintDecision" />
@@ -138,7 +136,7 @@
         android:id="@+id/complain"
         android:name="com.example.projecttraining.Client_Complain"
         android:label="fragment_complain_cook"
-        tools:layout="@layout/fragment_complain_cook" >
+        tools:layout="@layout/fragment_complain_cook">
         <action
             android:id="@+id/action_complain_to_client_OrderHistory"
             app:destination="@id/client_OrderHistory" />
@@ -156,31 +154,33 @@
         android:id="@+id/menu"
         android:name="com.example.projecttraining.mealList"
         android:label="fragment_meal_list"
-        tools:layout="@layout/fragment_meal_list" >
+        tools:layout="@layout/fragment_meal_list">
 
         <action
             android:id="@+id/action_menu_add"
-            app:destination="@id/addMenu"
-            app:popUpTo="@id/menu"
-            app:popUpToInclusive="true" />
+            app:destination="@id/addMenu" />
         <action
             android:id="@+id/action_menu_to_welcomeCook"
-            app:destination="@id/welcomeCook" />
+            app:destination="@id/welcomeCook"
+            app:popUpTo="@id/welcomeCook"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/addMenu"
         android:name="com.example.projecttraining.addMenu"
         android:label="fragment_add_menu"
-        tools:layout="@layout/fragment_add_menu" >
+        tools:layout="@layout/fragment_add_menu">
         <action
             android:id="@+id/action_addMenu_to_menu"
-            app:destination="@id/menu" />
+            app:destination="@id/menu"
+            app:popUpTo="@id/menu"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/client_OrderHistory"
         android:name="com.example.projecttraining.Client_OrderHistory"
         android:label="fragment_client__order_history"
-        tools:layout="@layout/fragment_client__order_history" >
+        tools:layout="@layout/fragment_client__order_history">
         <action
             android:id="@+id/action_client_OrderHistory_to_rateMeal"
             app:destination="@id/rateMeal" />
