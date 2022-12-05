@@ -63,6 +63,8 @@ public class OfferedMeals extends Fragment {
         cookStatus = new HashMap<>();
         databaseMeals = FirebaseDatabase.getInstance().getReference("Meals");
         databaseCooks = FirebaseDatabase.getInstance().getReference("CookUser");
+        databaseOrder = FirebaseDatabase.getInstance().getReference("Request");
+
         Client currentUser = null;
         Bundle bundle = this.getArguments();
         if (bundle != null) {
@@ -176,13 +178,13 @@ public class OfferedMeals extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Meal meal = mealList.get(i);
                 String clientUser = finalCurrentUser.getEmail();
-                requestOrder(meal.getId(), clientUser);
+                requestOrder(meal, clientUser);
 
             }
         });
     }
 
-    private void requestOrder(String mealId, String clientUser) {
+    private void requestOrder(Meal meal, String clientUser) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.layout_request_order, null);
@@ -191,21 +193,17 @@ public class OfferedMeals extends Fragment {
         Button order = dialogView.findViewById(R.id.order);
         Bundle bundle = this.getArguments();
 
-
         final AlertDialog b = dialogBuilder.create();
         b.show();
 
         order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Meal meal = null;
-                if (bundle != null) {
-                    meal = (Meal) bundle.getParcelable("meal");
-                }
                 String requestId = databaseOrder.push().getKey();
-                databaseOrder = FirebaseDatabase.getInstance().getReference("request/" + meal.getCookUser());
-                databaseOrder.push().setValue(new Request(requestId, clientUser, meal, Request_type.PENDING));
+                databaseOrder.push().setValue(new Request(requestId, clientUser, meal.getId(), Request_type.PENDING));
+
+                Toast.makeText(getActivity(), "thanks for ordering!", Toast.LENGTH_SHORT).show();
+                b.dismiss();
             }
         });
     }
