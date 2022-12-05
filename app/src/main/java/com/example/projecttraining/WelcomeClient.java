@@ -57,7 +57,7 @@ public class WelcomeClient extends Fragment {
         card.setText(currentUser.getCreditCardInfo());
 
         order.setOnClickListener(click -> {
-            Navigation.findNavController(view).navigate(R.id.action_welcomeClient_to_offeredMeals);
+            Navigation.findNavController(view).navigate(R.id.action_welcomeClient_to_offeredMeals, bundle);
         });
 
         logout.setOnClickListener(click -> {
