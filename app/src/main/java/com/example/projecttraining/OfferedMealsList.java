@@ -116,6 +116,12 @@ public class OfferedMealsList extends ArrayAdapter<Meal> implements Filterable {
 
                             filteredMeals.add(mStringFilterList.get(i));
                         }
+                        if(mStringFilterList.get(i).getMealType().toUpperCase().contains(charSequence.toString().toUpperCase())){
+                            filteredMeals.add(mStringFilterList.get(i));
+                        }
+                        if(mStringFilterList.get(i).getCuisineType().toUpperCase().contains(charSequence.toString().toUpperCase())){
+                            filteredMeals.add(mStringFilterList.get(i));
+                        }
                     }
                     results.count = filteredMeals.size();
                     results.values = filteredMeals;
