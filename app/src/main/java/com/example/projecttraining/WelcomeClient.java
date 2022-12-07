@@ -46,7 +46,8 @@ public class WelcomeClient extends Fragment {
 
         Button logout = binding.logout;
         Button order = binding.ordernow;
-        Button history = binding.orderhistory;
+        Button history = binding.orderHistory;
+        Button status = binding.orderStatus;
 
         firstName.setText(currentUser.getFirstName());
         lastName.setText(currentUser.getLastName());
@@ -66,6 +67,10 @@ public class WelcomeClient extends Fragment {
 
         history.setOnClickListener(click -> {
             Navigation.findNavController(view).navigate(R.id.action_welcomeClient_to_client_OrderHistory, bundle);
+        });
+
+        status.setOnClickListener(click -> {
+            Navigation.findNavController(view).navigate(R.id.action_welcomeClient_to_client_order_status);
         });
     }
 }

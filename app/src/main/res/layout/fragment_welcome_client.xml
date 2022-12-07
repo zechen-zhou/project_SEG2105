@@ -170,12 +170,12 @@
         android:gravity="center"
         android:text="PERSONAL PROFILE"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/orderhistory"
+        app:layout_constraintBottom_toTopOf="@+id/orderHistory"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/orderhistory"
+        android:id="@+id/orderHistory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
@@ -191,14 +191,28 @@
         android:id="@+id/ordernow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="4dp"
         android:backgroundTint="#FFC107"
         android:gravity="center"
         android:text="ORDER NOW"
         android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/orderStatus"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/orderStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="28dp"
+        android:backgroundTint="#FFC107"
+        android:gravity="center"
+        android:text="My order status"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent" />
 
 
