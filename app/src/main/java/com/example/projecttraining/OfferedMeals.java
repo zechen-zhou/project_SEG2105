@@ -1,8 +1,6 @@
 package com.example.projecttraining;
 
 import android.app.Activity;
-import android.app.Person;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,7 +15,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.projecttraining.databinding.FragmentOfferedMealsBinding;
@@ -81,10 +78,9 @@ public class OfferedMeals extends Fragment {
         searchbar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                if(mealList.contains(query)){
+                if (mealList.contains(query)) {
                     offeredAdapter.getFilter().filter(query);
-                }
-                else{
+                } else {
                     Toast.makeText(getActivity(), "Not found", Toast.LENGTH_LONG).show();
                 }
                 return false;
@@ -98,34 +94,42 @@ public class OfferedMeals extends Fragment {
         });
 
 
-
         //listens for cooks status changes and adds them to a map
         databaseCooks.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                for (DataSnapshot snap:snapshot.getChildren()) {
-                    cookStatus.put(snap.getKey(), snap.child("status").getValue(Integer.class)==0);
-                }
-
-                //re-check list
-                for (Meal m:mealList) {
-                    if (!cookStatus.get(m.getCookUser())) { //previously active, now suspended
-                        mealList.remove(m);
-                        fromSuspended.add(m);
+                for (DataSnapshot snap : snapshot.getChildren()) {
+                    Integer temp = snap.child("status").getValue(Integer.class);
+                    if (temp != null) {
+                        cookStatus.put(snap.getKey(), temp == 0);
                     }
                 }
 
-                for (Meal m:fromSuspended) {
-                    if (cookStatus.get(m.getCookUser())) { //previously suspended, now active
-                        mealList.add(m);
-                        fromSuspended.remove(m);
+                //re-check list
+                for (Meal m : mealList) {
+                    Boolean temp = cookStatus.get(m.getCookUser());
+                    if (temp != null) {
+                        if (!temp) { //previously active, now suspended
+                            mealList.remove(m);
+                            fromSuspended.add(m);
+                        }
+                    }
+                }
+
+                for (Meal m : fromSuspended) {
+                    Boolean temp = cookStatus.get(m.getCookUser());
+                    if (temp != null) {
+                        if (temp) { //previously suspended, now active
+                            mealList.add(m);
+                            fromSuspended.remove(m);
+                        }
                     }
                 }
 
                 Activity activity = getActivity();
 
-                if (activity!=null) {
+                if (activity != null) {
                     offeredAdapter = new OfferedMealsList(getActivity(), mealList);
                     offeredMealsListView.setAdapter(offeredAdapter);
                 }
@@ -144,23 +148,28 @@ public class OfferedMeals extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 mealList.clear();
 
-                for(DataSnapshot postSnapshot : snapshot.getChildren()){
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                     Meal meal = postSnapshot.getValue(Meal.class);
 
-                    boolean isOffered = postSnapshot.child("offered").getValue(Boolean.class);
+                    Boolean isOffered = postSnapshot.child("offered").getValue(Boolean.class);
 
-                    if (isOffered && cookStatus.get(meal.getCookUser())) {
-                        mealList.add(meal);
+                    if (isOffered != null && meal != null) {
+                        Boolean temp = cookStatus.get(meal.getCookUser());
+                        if (temp != null) {
+                            if (isOffered && temp) {
+                                mealList.add(meal);
 
-                    } else if (isOffered) {
-                        fromSuspended.add(meal);
+                            } else if (isOffered) {
+                                fromSuspended.add(meal);
+                            }
+                        }
                     }
 
                 }
 
                 Activity activity = getActivity();
 
-                if (activity!=null) {
+                if (activity != null) {
                     offeredAdapter = new OfferedMealsList(getActivity(), mealList);
                     offeredMealsListView.setAdapter(offeredAdapter);
                 }
@@ -177,34 +186,40 @@ public class OfferedMeals extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Meal meal = mealList.get(i);
-                String clientUser = finalCurrentUser.getEmail();
-                requestOrder(meal, clientUser);
+
+                if (finalCurrentUser != null) {
+                    String clientUser = finalCurrentUser.getEmail();
+                    requestOrder(meal, clientUser);
+                }
 
             }
         });
     }
 
     private void requestOrder(Meal meal, String clientUser) {
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
-        LayoutInflater inflater = getLayoutInflater();
-        final View dialogView = inflater.inflate(R.layout.layout_request_order, null);
-        dialogBuilder.setView(dialogView);
+        Activity activity = getActivity();
+        if (activity != null) {
+            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(activity);
+            LayoutInflater inflater = getLayoutInflater();
+            final View dialogView = inflater.inflate(R.layout.layout_request_order, null);
+            dialogBuilder.setView(dialogView);
 
-        Button order = dialogView.findViewById(R.id.order);
-        Bundle bundle = this.getArguments();
+            Button order = dialogView.findViewById(R.id.order);
+            Bundle bundle = this.getArguments();
 
-        final AlertDialog b = dialogBuilder.create();
-        b.show();
+            final AlertDialog b = dialogBuilder.create();
+            b.show();
 
-        order.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String requestId = databaseOrder.push().getKey();
-                databaseOrder.push().setValue(new Request(requestId, clientUser, meal.getId(), Request_type.PENDING));
+            order.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String requestId = databaseOrder.push().getKey();
+                    databaseOrder.push().setValue(new Request(requestId, clientUser, meal.getId(), Request_type.PENDING));
 
-                Toast.makeText(getActivity(), "thanks for ordering!", Toast.LENGTH_SHORT).show();
-                b.dismiss();
-            }
-        });
+                    Toast.makeText(getActivity(), "thanks for ordering!", Toast.LENGTH_SHORT).show();
+                    b.dismiss();
+                }
+            });
+        }
     }
 }
