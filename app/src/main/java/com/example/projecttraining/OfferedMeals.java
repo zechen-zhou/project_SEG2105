@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.projecttraining.databinding.FragmentOfferedMealsBinding;
 import com.example.projecttraining.user.Client;
+import com.example.projecttraining.user.Cook;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -60,13 +61,19 @@ public class OfferedMeals extends Fragment {
         cookStatus = new HashMap<>();
         databaseMeals = FirebaseDatabase.getInstance().getReference("Meals");
         databaseCooks = FirebaseDatabase.getInstance().getReference("CookUser");
-        databaseOrder = FirebaseDatabase.getInstance().getReference("Request");
 
         Client currentUser = null;
+        Meal meal = null;
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             currentUser = (Client) bundle.getParcelable("clientUser");
+            meal = (Meal) bundle.getParcelable("meal");
         }
+
+        String cookName = meal.getCookUser();
+        databaseOrder = FirebaseDatabase.getInstance().getReference("Request/" + cookName);
+
+
 
         offeredMealsListView = binding.mealsList;
 
@@ -214,7 +221,7 @@ public class OfferedMeals extends Fragment {
                 @Override
                 public void onClick(View view) {
                     String requestId = databaseOrder.push().getKey();
-                    databaseOrder.push().setValue(new Request(requestId, clientUser, meal.getId(), Request_type.PENDING));
+                    databaseOrder.push().setValue(new Request(requestId, clientUser, meal, Request_type.PENDING));
 
                     Toast.makeText(getActivity(), "thanks for ordering!", Toast.LENGTH_SHORT).show();
                     b.dismiss();

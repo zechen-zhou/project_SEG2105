@@ -13,6 +13,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.example.projecttraining.databinding.FragmentCookPurchaseRequestBinding;
+import com.example.projecttraining.user.Cook;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,6 +29,8 @@ public class PurchaseRequest extends Fragment {
     private ListView requestListView;
     private List<Meal> requestList;
     private OfferedMealsList Adapter;
+    private Request request;
+    private Cook cookUser;
 
     DatabaseReference databaseRequest;
 
@@ -44,15 +47,19 @@ public class PurchaseRequest extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
         requestListView = binding.requestListView;
-        databaseRequest = FirebaseDatabase.getInstance().getReference("request");
         requestList = new ArrayList<>();
 
-        Request request = null;
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             request = (Request) bundle.getParcelable("request");
+            cookUser = (Cook) bundle.getParcelable("cookUser");
         }
+
+        String cookName = cookUser.getEmail();
+        String requestId = request.getKey();
+        databaseRequest = FirebaseDatabase.getInstance().getReference("request/" +cookName + "/" +requestId);
 
         databaseRequest.addValueEventListener(new ValueEventListener() {
             @Override
@@ -73,12 +80,11 @@ public class PurchaseRequest extends Fragment {
             }
         });
 
-        Request finalRequest = request;
         requestListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Meal meal = requestList.get(i);
-                String id = finalRequest.getKey();
+                String id = request.getKey();
                 requestMeal(meal.getId(),id);
 
             }
