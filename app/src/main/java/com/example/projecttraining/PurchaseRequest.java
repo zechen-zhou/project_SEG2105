@@ -48,6 +48,12 @@ public class PurchaseRequest extends Fragment {
         databaseRequest = FirebaseDatabase.getInstance().getReference("request");
         requestList = new ArrayList<>();
 
+        Request request = null;
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            request = (Request) bundle.getParcelable("request");
+        }
+
         databaseRequest.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -67,17 +73,19 @@ public class PurchaseRequest extends Fragment {
             }
         });
 
+        Request finalRequest = request;
         requestListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Meal meal = requestList.get(i);
-                requestMeal(meal.getId());
+                String id = finalRequest.getKey();
+                requestMeal(meal.getId(),id);
 
             }
         });
     }
 
-    private void requestMeal(String mealId) {
+    private void requestMeal(String mealId, String id) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.layout_request_change, null);
@@ -92,14 +100,14 @@ public class PurchaseRequest extends Fragment {
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                databaseRequest.child("Request_type").setValue(Request_type.APPROVED);
+                databaseRequest.child(id).child("Request_type").setValue(Request_type.APPROVED);
             }
         });
 
         dismiss.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                databaseRequest.child("Request_type").setValue(Request_type.REJECTED);
+                databaseRequest.child(id).child("Request_type").setValue(Request_type.REJECTED);
             }
         });
     }

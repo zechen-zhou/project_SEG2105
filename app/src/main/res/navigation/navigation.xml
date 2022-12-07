@@ -68,6 +68,9 @@
         <action
             android:id="@+id/action_welcomeCook_to_menu"
             app:destination="@id/menu" />
+        <action
+            android:id="@+id/action_welcomeCook_to_purchaseRequest"
+            app:destination="@id/purchaseRequest"/>
     </fragment>
     <fragment
         android:id="@+id/welcomeClient"
@@ -86,6 +89,9 @@
         <action
             android:id="@+id/action_welcomeClient_to_client_OrderHistory"
             app:destination="@id/client_OrderHistory" />
+        <action
+            android:id="@+id/action_welcomeClient_to_client_order_status"
+            app:destination="@id/client_order_status" />
     </fragment>
     <fragment
         android:id="@+id/registerSelect"
@@ -193,5 +199,15 @@
         android:name="com.example.projecttraining.RateMeal"
         android:label="fragment_rate_meal"
         tools:layout="@layout/fragment_rate_meal" />
+    <fragment
+        android:id="@+id/purchaseRequest"
+        android:name="com.example.projecttraining.PurchaseRequest"
+        android:label="fragment_cook_purchase_request"
+        tools:layout="@layout/fragment_cook_purchase_request" />
+    <fragment
+        android:id="@+id/client_order_status"
+        android:name="com.example.projecttraining.Client_order_status"
+        android:label="fragment_client_order_status"
+        tools:layout="@layout/fragment_client_order_status" />
 
 </navigation>
