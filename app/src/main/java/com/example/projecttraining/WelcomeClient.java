@@ -70,7 +70,7 @@ public class WelcomeClient extends Fragment {
         });
 
         status.setOnClickListener(click -> {
-            Navigation.findNavController(view).navigate(R.id.action_welcomeClient_to_client_order_status);
+            Navigation.findNavController(view).navigate(R.id.action_welcomeClient_to_client_order_status, bundle);
         });
     }
 }
