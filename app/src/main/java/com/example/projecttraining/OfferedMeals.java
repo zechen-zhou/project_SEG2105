@@ -63,17 +63,11 @@ public class OfferedMeals extends Fragment {
         databaseCooks = FirebaseDatabase.getInstance().getReference("CookUser");
 
         Client currentUser = null;
-        Meal meal = null;
+
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             currentUser = (Client) bundle.getParcelable("clientUser");
-            meal = (Meal) bundle.getParcelable("meal");
         }
-
-        String cookName = meal.getCookUser();
-        databaseOrder = FirebaseDatabase.getInstance().getReference("Request/" + cookName);
-
-
 
         offeredMealsListView = binding.mealsList;
 
@@ -196,14 +190,14 @@ public class OfferedMeals extends Fragment {
 
                 if (finalCurrentUser != null) {
                     String clientUser = finalCurrentUser.getEmail();
-                    requestOrder(meal, clientUser);
+                    requestOrder(meal.getId(),meal.getCookUser(), clientUser);
                 }
 
             }
         });
     }
 
-    private void requestOrder(Meal meal, String clientUser) {
+    private void requestOrder(String mealID, String cookUser, String clientUser) {
         Activity activity = getActivity();
         if (activity != null) {
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(activity);
@@ -212,7 +206,6 @@ public class OfferedMeals extends Fragment {
             dialogBuilder.setView(dialogView);
 
             Button order = dialogView.findViewById(R.id.order);
-            Bundle bundle = this.getArguments();
 
             final AlertDialog b = dialogBuilder.create();
             b.show();
@@ -220,8 +213,10 @@ public class OfferedMeals extends Fragment {
             order.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    databaseOrder = FirebaseDatabase.getInstance().getReference("Request");
+
                     String requestId = databaseOrder.push().getKey();
-                    databaseOrder.push().setValue(new Request(requestId, clientUser, meal, Request_type.PENDING));
+                    databaseOrder.child(requestId).setValue(new Request(requestId, clientUser, mealID, cookUser, Request_type.PENDING));
 
                     Toast.makeText(getActivity(), "thanks for ordering!", Toast.LENGTH_SHORT).show();
                     b.dismiss();

@@ -1,5 +1,6 @@
 package com.example.projecttraining;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -27,12 +29,12 @@ public class PurchaseRequest extends Fragment {
 
     private FragmentCookPurchaseRequestBinding binding;
     private ListView requestListView;
-    private List<Meal> requestList;
-    private OfferedMealsList Adapter;
-    private Request request;
+    private List<Request> requestList;
+    private RequestList Adapter;
     private Cook cookUser;
 
     DatabaseReference databaseRequest;
+    DatabaseReference databaseMeal;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,25 +55,33 @@ public class PurchaseRequest extends Fragment {
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            request = (Request) bundle.getParcelable("request");
             cookUser = (Cook) bundle.getParcelable("cookUser");
         }
 
-        String cookName = cookUser.getEmail();
-        String requestId = request.getKey();
-        databaseRequest = FirebaseDatabase.getInstance().getReference("request/" +cookName + "/" +requestId);
+        databaseRequest = FirebaseDatabase.getInstance().getReference("Request");
+        databaseMeal = FirebaseDatabase.getInstance().getReference("Meals");
 
+        //traverse through all requests to find requests for this cook
         databaseRequest.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 requestList.clear();
 
                 for(DataSnapshot postSnapshot : snapshot.getChildren()) {
-                    Meal request = postSnapshot.getValue(Meal.class);
-                    requestList.add(request);
+                    Request request = postSnapshot.getValue(Request.class);
+
+                    //if the request is for this cook --> add to request list
+                    if (request.cookID.equals(cookUser.getEmail()) && request.getRequest_type()==Request_type.PENDING) {
+                        requestList.add(request);
+                    }
+
                 }
-                Adapter = new OfferedMealsList(getActivity(), requestList);
-                requestListView.setAdapter(Adapter);
+
+                Activity activity = getActivity();
+                if (activity != null) {
+                    Adapter = new RequestList(getActivity(), requestList);
+                    requestListView.setAdapter(Adapter);
+                }
             }
 
             @Override
@@ -83,15 +93,14 @@ public class PurchaseRequest extends Fragment {
         requestListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Meal meal = requestList.get(i);
-                String id = request.getKey();
-                requestMeal(meal.getId(),id);
+                Request request = requestList.get(i);
+                reviewRequest(request);
 
             }
         });
     }
 
-    private void requestMeal(String mealId, String id) {
+    private void reviewRequest(Request request) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.layout_request_change, null);
@@ -106,14 +115,19 @@ public class PurchaseRequest extends Fragment {
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                databaseRequest.child(id).child("Request_type").setValue(Request_type.APPROVED);
+                databaseRequest.child(request.getKey()).child("request_type").setValue(Request_type.APPROVED);
+
+                //update client's order history
+                FirebaseDatabase.getInstance().getReference("ClientUser").child(request.getClientId()).child("history").push().setValue(request.getMealID());
+                Toast.makeText(getActivity(), "Approved!", Toast.LENGTH_SHORT).show();
             }
         });
 
         dismiss.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                databaseRequest.child(id).child("Request_type").setValue(Request_type.REJECTED);
+                databaseRequest.child(request.getKey()).child("request_type").setValue(Request_type.REJECTED);
+                Toast.makeText(getActivity(), "Rejected", Toast.LENGTH_SHORT).show();
             }
         });
     }
